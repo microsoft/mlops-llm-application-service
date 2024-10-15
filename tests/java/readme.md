@@ -1,1 +1,0 @@
-Tests related to java are in here.
