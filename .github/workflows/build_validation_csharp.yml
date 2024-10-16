@@ -1,0 +1,93 @@
+name: Build Validation Workflow
+
+on:
+  workflow_call:
+
+env:
+  PYTHON_VERSION: "3.12"
+  JAVA_VERSION: "21"
+  DOTNET_VERSION: "8.0"
+
+jobs:
+  lint-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Load Python Dependencies
+        shell: bash
+        run: |
+          set -e
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade -r .github/requirements/build_validation_requirements.txt
+
+      - name: Lint Python Code
+        run: flake8
+
+      - name: Run Python Unit Tests
+        shell: bash
+        run: |
+          pytest --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+
+      - name: Publish Python Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-test-results
+          path: "**/test-*.xml"
+
+  lint-java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'adopt'
+
+      - name: Lint Java Code
+        run: |
+          ./gradlew checkstyleMain
+
+      - name: Run Java Unit Tests
+        run: |
+          ./gradlew test
+
+      - name: Publish Java Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: java-test-results
+          path: "**/build/test-results/**/*.xml"
+
+  lint-csharp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Lint C# Code
+        run: dotnet format --check
+
+      - name: Run C# Unit Tests
+        run: dotnet test --logger "trx;LogFileName=test-results.trx"
+
+      - name: Publish C# Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: csharp-test-results
+          path: "**/TestResults/*.trx"

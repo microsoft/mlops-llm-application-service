@@ -1,0 +1,39 @@
+name: Build Validation Workflow
+
+on:
+  workflow_call:
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  run-unit-tests-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Load Python Dependencies
+        shell: bash
+        run: |
+          set -e
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade -r ..\..\python\common\build_validation_requirements_python.txt
+
+      - name: Lint Python Code
+        run: flake8
+
+      - name: Run Python Unit Tests
+        shell: bash
+        run: |
+          pytest --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+
+      - name: Publish Python Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-test-results
+          path: "**/test-*.xml"
