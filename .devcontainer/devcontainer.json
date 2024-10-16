@@ -1,33 +1,33 @@
 {
-    "name": "Azure Functions (Python 3)",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "app",
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-    "forwardPorts": [
-      7071,
-      10000,
-      10001,
-      10002
-    ],
-    "otherPortsAttributes": {
-      "onAutoForward": "ignore"
-    },
-    "features": {
-      "ghcr.io/devcontainers/features/azure-cli:1": {},
-      "ghcr.io/devcontainers/features/dotnet:2": "latest",
-      "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-    },
-    "customizations": {
-      "vscode": {
-        "extensions": [
-          "ms-azuretools.vscode-docker",
-          "ms-python.python",
-          "ms-toolsai.jupyter",
-          "ms-toolsai.vscode-jupyter-powertoys",
-          "streetsidesoftware.code-spell-checker",
-          "ms-dotnettools.csharp"
-        ]
-      }
-    },
-    "postCreateCommand": "pip install semantic-kernel azure-ai-evaluation"
-  }
+  "name": "Azure Functions (Python 3)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": [
+    7071,
+    10000,
+    10001,
+    10002
+  ],
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/dotnet:2": "latest",
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.vscode-jupyter-powertoys",
+        "streetsidesoftware.code-spell-checker",
+        "ms-dotnettools.csharp"
+      ]
+    }
+  },
+  "postCreateCommand": "pip install semantic-kernel azure-ai-evaluation  && git config --global --add safe.directory /workspaces/mlops-llm-application-service"
+}
