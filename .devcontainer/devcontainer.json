@@ -15,13 +15,11 @@
     "features": {
       "ghcr.io/devcontainers/features/azure-cli:1": {},
       "ghcr.io/devcontainers/features/dotnet:2": "latest",
-      "ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools:1": {},
       "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
       "vscode": {
         "extensions": [
-          "ms-azuretools.vscode-azurefunctions",
           "ms-azuretools.vscode-docker",
           "ms-python.python",
           "streetsidesoftware.code-spell-checker",
