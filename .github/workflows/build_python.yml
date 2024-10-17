@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         with:
@@ -33,7 +33,7 @@ jobs:
           pytest --junitxml=junit/test-results.xml --cov=. --cov-report=xml
 
       - name: Publish Python Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: python-test-results
           path: "**/test-*.xml"
