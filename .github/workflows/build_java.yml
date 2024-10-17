@@ -1,4 +1,4 @@
-name: Build Validation Workflow
+name: Build Java Validation Workflow
 
 on:
   workflow_call:

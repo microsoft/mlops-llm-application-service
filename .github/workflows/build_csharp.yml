@@ -1,4 +1,4 @@
-name: Build Validation Workflow
+name: Build Csharp Validation Workflow
 
 on:
   workflow_call:

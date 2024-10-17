@@ -1,0 +1,24 @@
+---
+    name: PR Platform Python Workflow
+
+    on:
+      workflow_call:
+        inputs:
+          exec_environment:
+            type: string
+            description: "The environment to run the workflow in"
+            required: true
+            default: "pr"
+
+      pull_request:
+        branches:
+          - 'main'
+        paths:
+          - '.github/**'
+          - 'python/**'
+          - 'tests/**'
+
+    jobs:
+      build-validation-python:
+        name: Build Validation Python
+        uses: ./.github/workflows/build_python.yml
