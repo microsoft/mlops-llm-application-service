@@ -10,6 +10,7 @@
     <url>https://github.com/microsoft/mlops-llm-application-service</url>
     <name>MLOps LLM Application Service</name>
     <description>MLOps LLM Application Service Project</description>
+
     <build>
         <plugins>
             <plugin>
