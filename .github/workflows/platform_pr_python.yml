@@ -1,0 +1,19 @@
+---
+    name: PR Platform Python Workflow
+
+    on:
+      workflow_call:
+
+      pull_request:
+        branches:
+          - 'main'
+        paths:
+          - '.github/**'
+          - 'python/**'
+          - 'tests/**'
+          - 'evaluators/**'
+
+    jobs:
+      build-validation-python:
+        name: Build Validation Python
+        uses: ./.github/workflows/build_python.yml
