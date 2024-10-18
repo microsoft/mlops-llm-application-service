@@ -3,12 +3,6 @@
 
     on:
       workflow_call:
-        inputs:
-          exec_environment:
-            type: string
-            description: "The environment to run the workflow in"
-            required: true
-            default: "pr"
 
       pull_request:
         branches:
@@ -17,6 +11,7 @@
           - '.github/**'
           - 'python/**'
           - 'tests/**'
+          - 'evaluators/**'
 
     jobs:
       build-validation-python:
