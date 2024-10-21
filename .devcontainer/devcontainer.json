@@ -29,5 +29,5 @@
       ]
     }
   },
-  "postCreateCommand": "pip install -r requirements.txt && git config --global --add safe.directory /workspaces/mlops-llm-application-service"
+  "postCreateCommand": "pip install -r python/requirements.txt && git config --global --add safe.directory /workspaces/mlops-llm-application-service"
 }
