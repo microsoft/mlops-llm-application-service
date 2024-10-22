@@ -1,0 +1,5 @@
+requests
+python-dotenv
+semantic-kernel
+edgartools
+yfinance==0.2.40
