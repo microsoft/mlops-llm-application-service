@@ -1,3 +1,5 @@
+"""This script generates a financial health analysis of a company."""
+
 from dotenv import load_dotenv
 import asyncio
 import os
@@ -7,6 +9,7 @@ from assistants import assistants as assistants
 
 
 async def main(stock_ticker, output_folder):
+    """Generate a financial health analysis of a company."""
     load_dotenv(dotenv_path="./.env", override=True)
 
     if not os.path.exists(output_folder):

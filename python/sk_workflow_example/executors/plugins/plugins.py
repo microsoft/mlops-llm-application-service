@@ -1,3 +1,10 @@
+"""
+This module contains classes for implementing Semantic Kernel plugins.
+
+The plugins allow Semantic Kernel assistants configured with LLMs
+to interact with external services and data sources.
+"""
+
 import os
 import time
 import requests
@@ -10,6 +17,8 @@ from semantic_kernel.functions import kernel_function
 
 
 class NewsPlugin:
+    """A class defining a plugin for fetching news articles."""
+
     @kernel_function(
         name="get_news",
         description="Get the latest news related to a stock ticker",
@@ -19,11 +28,14 @@ class NewsPlugin:
         ticker: Annotated[str, "The stock ticker for getting news"],
         retries: int = 3,
         delay: int = 2
-    ) -> Annotated[
-            str,
-            """News articles related to the stock ticker,
-            showing title, headline, and text"""
-            ]:
+    ) -> Annotated[str,
+                   """News articles related to the stock ticker,
+                   showing title, headline, and text"""]:
+        """
+        Get the latest news articles related to a stock ticker.
+
+        Uses the Bing Search API.
+        """
         # Add your Bing Search V7 subscription key
         # and endpoint to your environment variables.
         subscription_key = os.getenv("BING_SEARCH_API_KEY")
@@ -36,15 +48,15 @@ class NewsPlugin:
         mkt = "en-us"
         freshness = "month"
         count = 50
-        safeSearch = "Strict"
-        sortBy = "Relevance"
+        safesearch = "Strict"
+        sortby = "Relevance"
         params = {
             "q": q,
             "mkt": mkt,
             "freshness": freshness,
             "count": count,
-            "safeSearch": safeSearch,
-            "sortBy": sortBy
+            "safeSearch": safesearch,
+            "sortBy": sortby
         }
         headers = {"Ocp-Apim-Subscription-Key": subscription_key}
 
@@ -84,6 +96,8 @@ class NewsPlugin:
 
 
 class FinancialStatementsPlugin:
+    """A class defining a plugin for fetching financial statements."""
+
     @kernel_function(
         name="get_financial_statements",
         description="""
@@ -101,7 +115,11 @@ class FinancialStatementsPlugin:
             Valid values are 'balance_sheet', 'income', or 'cash_flow'"""
         ],
     ) -> Annotated[str, "Financial statement related to the stock ticker"]:
+        """
+        Get the latest quarterly financial statements for a stock ticker.
 
+        Uses the edgar API to connect to the SEC database.
+        """
         # Need to use nest_asyncio to run asyncio in edgar library,
         # when another event loop is already running
         nest_asyncio.apply()
@@ -128,6 +146,8 @@ class FinancialStatementsPlugin:
 
 
 class StockPricePlugin:
+    """A class defining a plugin for fetching stock prices."""
+
     @kernel_function(
         name="get_stock_price",
         description="Get the latest stock price for a stock ticker",
@@ -136,6 +156,11 @@ class StockPricePlugin:
         self,
         ticker: Annotated[str, "The stock ticker for getting the stock price"]
     ) -> Annotated[str, "The latest stock price for the stock ticker"]:
+        """
+        Get the latest stock price for a stock ticker.
+
+        Uses the Yahoo Finance API.
+        """
         try:
             # Fetch the stock data for the last 1 day
             stock_data = yf.Ticker(ticker)

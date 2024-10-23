@@ -1,3 +1,11 @@
+"""
+This module contains classes for implementing Semantic Kernel assistants.
+
+The assistants are implemented with Semantic Kernel and are used to perforn
+analysis of financial statements from publc companies and generate a
+consolidated report.
+"""
+
 import os
 import logging
 
@@ -16,7 +24,10 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings. \
 
 
 class NewsAnalyst:
+    """A class used to perform financial analysis of news articles."""
+
     async def get_news_report(self, stock_ticker):
+        """Generate the financial analysis of news articles."""
         # Define system and user messages
         system_message = """
         You are a stock market financial analyst.
@@ -79,12 +90,15 @@ class NewsAnalyst:
 
 
 class FinancialAnalyst:
+    """A class used to perform analysis of financial statements."""
+
     async def get_financial_report(
         self,
         stock_ticker,
         report_type,
         report_metrics
     ):
+        """Generate  the analysis of financial statements."""
         # Define system and user messages
         system_message = """
         You are a stock market financial analyst.
@@ -161,6 +175,8 @@ class FinancialAnalyst:
 
 
 class ReportGenerator:
+    """A class used to generate a consolidated financial report."""
+
     async def get_consolidated_report(
         self,
         balance_sheet_report,
@@ -168,6 +184,7 @@ class ReportGenerator:
         cash_flow_report,
         news_report
     ):
+        """Generate the consolidated financial analysis report."""
         # Define system and user messages
         system_message = """
             You are a stock market financial analyst.
