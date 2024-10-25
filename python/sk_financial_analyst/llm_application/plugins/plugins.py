@@ -5,19 +5,25 @@ The plugins allow Semantic Kernel assistants configured with LLMs
 to interact with external services and data sources.
 """
 
-import os
 import time
 import requests
 import nest_asyncio
 from typing import Annotated, Literal
 import edgar as edgar
 import yfinance as yf
+import logging
 
 from semantic_kernel.functions import kernel_function
 
 
 class NewsPlugin:
     """A class defining a plugin for fetching news articles."""
+
+    def __init__(self, bing_search_api_key, bing_search_endpoint, max_news):
+        """Initialize the NewsPlugin class."""
+        self.bing_search_api_key = bing_search_api_key
+        self.bing_search_endpoint = bing_search_endpoint
+        self.max_news = max_news
 
     @kernel_function(
         name="get_news",
@@ -36,10 +42,7 @@ class NewsPlugin:
 
         Uses the Bing Search API.
         """
-        # Add your Bing Search V7 subscription key
-        # and endpoint to your environment variables.
-        subscription_key = os.getenv("BING_SEARCH_API_KEY")
-        endpoint = os.getenv("BING_SEARCH_ENDPOINT")
+        endpoint = self.bing_search_endpoint
 
         # Query term(s) to search for
         q = f"most relevant financial news about {ticker}"
@@ -47,7 +50,7 @@ class NewsPlugin:
         # Construct a request
         mkt = "en-us"
         freshness = "month"
-        count = 50
+        count = self.max_news
         safesearch = "Strict"
         sortby = "Relevance"
         params = {
@@ -58,7 +61,7 @@ class NewsPlugin:
             "safeSearch": safesearch,
             "sortBy": sortby
         }
-        headers = {"Ocp-Apim-Subscription-Key": subscription_key}
+        headers = {"Ocp-Apim-Subscription-Key": self.bing_search_api_key}
 
         search_results = ""
 
@@ -98,6 +101,10 @@ class NewsPlugin:
 class FinancialStatementsPlugin:
     """A class defining a plugin for fetching financial statements."""
 
+    def __init__(self, sec_identity):
+        """Initialize the FinancialStatementsPlugin class."""
+        self.sec_identity = sec_identity
+
     @kernel_function(
         name="get_financial_statements",
         description="""
@@ -124,8 +131,11 @@ class FinancialStatementsPlugin:
         # when another event loop is already running
         nest_asyncio.apply()
 
+        # Suppress INFO logging messages from the edgar package
+        logging.getLogger("rich").setLevel(logging.WARNING)
+
         # Set SEC identity
-        edgar.set_identity(os.getenv("SEC_IDENTITY"))
+        edgar.set_identity(self.sec_identity)
 
         # Get the latest quarterly financial reports for the stock ticker
         filings = edgar.Company(ticker).get_filings(form="10-Q").latest(1)

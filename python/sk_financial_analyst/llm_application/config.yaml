@@ -1,0 +1,14 @@
+assistants:
+  news_analyst:
+    llm_deployment_name: "gpt-4o"
+    bing_search_endpoint: "https://api.bing.microsoft.com/v7.0/news/search"
+    max_news: 50
+  financial_analyst:
+    llm_deployment_name: "gpt-4o"
+  structured_report_generator:
+    llm_deployment_name: "gpt-4o"
+    aoai_api_version: "2024-08-01-preview"
+
+financial_health_analysis:
+  auth_provider_endpoint: "https://cognitiveservices.azure.com"
+  key_vault_url: "https://kv-avilceka429335409224.vault.azure.net/"

@@ -1,12 +1,11 @@
 """
 This module contains classes for implementing Semantic Kernel assistants.
 
-The assistants are implemented with Semantic Kernel and are used to perforn
+The assistants are implemented with Semantic Kernel and are used to perform
 analysis of financial statements from publc companies and generate a
 consolidated report.
 """
 
-import os
 import logging
 
 from plugins import plugins as plugins
@@ -17,14 +16,32 @@ from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from semantic_kernel.connectors.ai.function_choice_behavior \
     import FunctionChoiceBehavior
 from semantic_kernel.contents.chat_history import ChatHistory
-
 from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings. \
     azure_chat_prompt_execution_settings \
     import AzureChatPromptExecutionSettings
 
+from assistants.data_models import ConsolidatedReport
+
 
 class NewsAnalyst:
     """A class used to perform financial analysis of news articles."""
+
+    def __init__(
+        self,
+        aoai_token,
+        aoai_base_endpoint,
+        llm_deployment_name,
+        bing_search_api_key,
+        bing_search_endpoint,
+        max_news
+    ):
+        """Initialize the NewsAnalyst class."""
+        self.aoai_token = aoai_token
+        self.aoai_base_endpoint = aoai_base_endpoint
+        self.llm_deployment_name = llm_deployment_name
+        self.bing_search_api_key = bing_search_api_key
+        self.bing_search_endpoint = bing_search_endpoint
+        self.max_news = max_news
 
     async def get_news_report(self, stock_ticker):
         """Generate the financial analysis of news articles."""
@@ -51,9 +68,9 @@ class NewsAnalyst:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=os.getenv("AOAI_GPT_DEPLOYMENT"),
-            api_key=os.getenv("AOAI_API_KEY"),
-            endpoint=os.getenv("AOAI_BASE_ENDPOINT")
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
 
@@ -63,7 +80,11 @@ class NewsAnalyst:
 
         # Add the NewsPlugin to the kernel
         kernel.add_plugin(
-            plugins.NewsPlugin(),
+            plugins.NewsPlugin(
+                bing_search_api_key=self.bing_search_api_key,
+                bing_search_endpoint=self.bing_search_endpoint,
+                max_news=self.max_news
+            ),
             plugin_name="NewsPlugin")
 
         # Enable planning
@@ -91,6 +112,19 @@ class NewsAnalyst:
 
 class FinancialAnalyst:
     """A class used to perform analysis of financial statements."""
+
+    def __init__(
+        self,
+        aoai_token,
+        aoai_base_endpoint,
+        llm_deployment_name,
+        sec_identity
+    ):
+        """Initialize the FinancialAnalyst class."""
+        self.aoai_token = aoai_token
+        self.aoai_base_endpoint = aoai_base_endpoint
+        self.llm_deployment_name = llm_deployment_name
+        self.sec_identity = sec_identity
 
     async def get_financial_report(
         self,
@@ -132,9 +166,9 @@ class FinancialAnalyst:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=os.getenv("AOAI_GPT_DEPLOYMENT"),
-            api_key=os.getenv("AOAI_API_KEY"),
-            endpoint=os.getenv("AOAI_BASE_ENDPOINT")
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
 
@@ -144,7 +178,7 @@ class FinancialAnalyst:
 
         # Add the FinancialStatementsPlugin to the kernel
         kernel.add_plugin(
-            plugins.FinancialStatementsPlugin(),
+            plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity),
             plugin_name="FinancialStatementsPlugin")
 
         # Add the StockPricePlugin to the kernel
@@ -174,8 +208,21 @@ class FinancialAnalyst:
         return result.content
 
 
-class ReportGenerator:
+class StructuredReportGenerator:
     """A class used to generate a consolidated financial report."""
+
+    def __init__(
+        self,
+        aoai_token,
+        aoai_base_endpoint,
+        llm_deployment_name,
+        aoai_api_version
+    ):
+        """Initialize the ReportGenerator class."""
+        self.aoai_token = aoai_token
+        self.aoai_base_endpoint = aoai_base_endpoint
+        self.llm_deployment_name = llm_deployment_name
+        self.aoai_api_version = aoai_api_version
 
     async def get_consolidated_report(
         self,
@@ -200,9 +247,6 @@ class ReportGenerator:
         user_message = f"""
         Create an overall analysis report for the company,
         given the set of statement analysis, and financial news analysis below.
-
-        You should write the report in a markdown format,
-        with a table of contents.
 
         Make sure to not repeat data from each given analysis
         and not to describe formulas in the report.
@@ -229,9 +273,10 @@ class ReportGenerator:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=os.getenv("AOAI_GPT_DEPLOYMENT"),
-            api_key=os.getenv("AOAI_API_KEY"),
-            endpoint=os.getenv("AOAI_BASE_ENDPOINT")
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token,
+            api_version=self.aoai_api_version
         )
         kernel.add_service(chat_completion)
 
@@ -239,8 +284,10 @@ class ReportGenerator:
         setup_logging()
         logging.getLogger("kernel").setLevel(logging.DEBUG)
 
-        # Enable planning
-        execution_settings = AzureChatPromptExecutionSettings()
+        # Set structured output
+        execution_settings = AzureChatPromptExecutionSettings(
+            response_format=ConsolidatedReport
+        )
 
         # Set the chat history
         history = ChatHistory()
