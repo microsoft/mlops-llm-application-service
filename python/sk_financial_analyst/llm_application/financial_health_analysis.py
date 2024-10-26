@@ -16,7 +16,7 @@ from azure.keyvault.secrets import SecretClient
 async def main(stock_ticker, output_folder):
     """Generate a financial health analysis of a company."""
     # Load the configuration data
-    config_data = config_reader.load_yaml("./config.yaml")
+    config_data = config_reader.load_yaml("./llm_application/config.yaml")
 
     # Get values from the configuration data
     auth_provider_endpoint = config_reader.get_value_by_name(
@@ -218,7 +218,7 @@ if __name__ == "__main__":
         "output_folder",
         type=str,
         nargs="?",
-        default="../data/outputs",
+        default="./data/outputs",
         help="The folder where the output data will be saved."
     )
     args = parser.parse_args()
