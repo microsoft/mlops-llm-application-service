@@ -2,10 +2,12 @@
 
 import yaml
 import os
+from dotenv import load_dotenv
 
 
 def load_yaml(file_path):
     """Load a YAML file."""
+    load_dotenv("../.env")
     with open(file_path, 'r') as stream:
         return yaml.safe_load(os.path.expandvars(stream.read()))
 

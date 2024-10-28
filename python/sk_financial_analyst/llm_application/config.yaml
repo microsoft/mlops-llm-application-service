@@ -7,7 +7,7 @@ assistants:
     llm_deployment_name: ${FINANCIAL_ANALYST_MODEL_NAME}
   structured_report_generator:
     llm_deployment_name: ${REPORT_GENERATOR_MODEL_NAME}
-    aoai_api_version: "2024-08-06"
+    aoai_api_version: "2024-08-01-preview"
 
 financial_health_analysis:
   auth_provider_endpoint: "https://cognitiveservices.azure.com"

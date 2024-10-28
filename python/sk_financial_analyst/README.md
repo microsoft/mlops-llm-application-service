@@ -66,6 +66,8 @@ You need to enter the Azure OpenAI model deployment names, in your Azure OpenAI 
 
 The Report Generator assistant uses the structured outputs functionality from OpenAI. As of this writing, only `gpt-4o` with API version at least `2024-08-01-preview` is supported. [Look here](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs) for the list of models and API versions supporting structured outputs.
 
+There is also specific requirements related to structured outputs in Semantic Kernel. As of this writing, only the API version `2024-08-01-preview` is supported. [Look here](https://github.com/microsoft/semantic-kernel/blob/main/python/samples/concepts/structured_output/README.md) for the list of models and API versions supporting structured outputs in Semantic Kernel.
+
 ### Running the Code
 
 The code uses an Azure Managed Identity Credential to get tokens to access the Azure OpenAI service and Azure Key Vault. It was tested running from `VSCode` authenticating to Azure.
