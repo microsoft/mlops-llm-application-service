@@ -18,7 +18,7 @@ async def main(stock_ticker, output_folder):
     """Generate a financial health analysis of a company."""
     # Load the environment variables from the .env file
     load_dotenv()
-    
+
     # Load the configuration data
     config_data = config_reader.load_yaml("./llm_application/config.yaml")
 
