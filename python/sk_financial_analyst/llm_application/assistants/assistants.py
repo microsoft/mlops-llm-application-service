@@ -148,6 +148,9 @@ class FinancialAnalyst:
 
         {report_metrics}
 
+        **MAKE SURE** to calculate matrics for all date periods provided
+        in the financial statement.
+
         When analyzing a financial statement of type 'cash_flow',
         you should also get the corresponding 'balance_sheet' statement,
         to be able to compute all asked metrics.
@@ -156,9 +159,6 @@ class FinancialAnalyst:
         should also get the corresponding statement of type 'balance_sheet',
         to be able to compute all asked metrics,
         plus the latest stock price for the {stock_ticker} stock ticker.
-
-        When calculating metrics, you should calculate them
-        for all date periods provided in the financial statement.
         """
 
         # Initialize the kernel

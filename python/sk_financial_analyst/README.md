@@ -40,11 +40,13 @@ Here is a diagram showing a high-level architecture:
 
 ### Configuration
 
-#### config.yaml
+#### Azure OpenAI
 
-Before running the code, create the `sk_financial_analyst/llm_application/config.yaml` file, using the provided `sk_financial_analyst/llm_application/config_sample.yaml` as example, and enter the needed values for your resource endpoints and deployment names.
+You need to have access to an Azure OpenAI service and have at least one model deployed. Follow [this instructions](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource) if you need to create one.
 
-You need only to enter the Azure OpenAI model deployment names in your Azure OpenAI service you want to use for each assistant, as well as your Azure Key Vault endpoint.
+#### Bing Search
+
+You need to have access to a Bing Search service API. Follow [this instructions](https://learn.microsoft.com/en-us/bing/search-apis/bing-web-search/create-bing-search-service-resource) if you need to create one.
 
 #### Azure Key Vault
 
@@ -56,13 +58,13 @@ You need to create two secrets:
 
 Follow [this documentation](https://learn.microsoft.com/en-us/azure/key-vault/general/security-features#controlling-access-to-key-vault-data) to learn how to configure access for reading / writing secrets in Azure Key Vault.
 
-#### Azure OpenAI
+#### .env
 
-You need to have access to an Azure OpenAI service and have at least one model deployed. We suggest to use `gpt-4o`. Follow [this instructions](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource) if you need to create one.
+Before running the code, create the `sk_financial_analyst/llm_application/.env` file, using the provided `sk_financial_analyst/llm_application/.env_sample` as example, and enter the needed values for your resource endpoints and deployment names.
 
-#### Bing Search
+You need to enter the Azure OpenAI model deployment names, in your Azure OpenAI service, you want to use for each assistant, as well as your Azure Key Vault endpoint. We recomment to use the `gpt-4o` model, for better and more accurate reports.
 
-You need to have access to a Bing Search service API. Follow [this instructions](https://learn.microsoft.com/en-us/bing/search-apis/bing-web-search/create-bing-search-service-resource) if you need to create one.
+The Report Generator assistant uses the structured outputs functionality from OpenAI. As of this writing, only `gpt-4o` with API version at least `2024-08-01-preview` is supported. [Look here](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs) for the list of models and API versions supporting structured outputs.
 
 ### Running the Code
 

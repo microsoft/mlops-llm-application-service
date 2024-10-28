@@ -1,12 +1,13 @@
 """This module contains utility functions for reading configuration files."""
 
 import yaml
+import os
 
 
 def load_yaml(file_path):
     """Load a YAML file."""
-    with open(file_path, 'r') as file:
-        return yaml.safe_load(file)
+    with open(file_path, 'r') as stream:
+        return yaml.safe_load(os.path.expandvars(stream.read()))
 
 
 def get_value_by_name(config_data, *keys):
