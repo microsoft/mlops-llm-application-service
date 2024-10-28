@@ -1,0 +1,7 @@
+pyyaml
+requests
+semantic-kernel
+edgartools
+yfinance==0.2.40
+azure-identity
+azure-keyvault-secrets

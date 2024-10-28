@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # Virtual Environments
 venv/
+
+# Environment Variables
+.env
