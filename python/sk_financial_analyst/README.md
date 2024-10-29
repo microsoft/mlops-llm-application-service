@@ -27,7 +27,7 @@ Here is a diagram showing a high-level architecture:
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/sk_financial_analyst.git
-   cd sk_financial_analyst
+   cd python/sk_financial_analyst
 
 2. Set up a virtual environment (optional but recommended):
    ```bash
@@ -56,13 +56,15 @@ You need to create two secrets:
 - `AOAI-BASE-ENDPOINT`: this is the base endpoint of your Azure OpenAI deployment.
 - `SEC-IDENTITY`: this is an identity in the form of `<your name> <your email address>` that is needed for the application to make requests to the SEC Edgar database to get financial statements.
 
+- `BING-SEARCH-API-KEY`: you will need to create the bing web search resource from Azure portal and then navigate to your resource's keys & endpoint blade to retrieve the keys.
+
 Follow [this documentation](https://learn.microsoft.com/en-us/azure/key-vault/general/security-features#controlling-access-to-key-vault-data) to learn how to configure access for reading / writing secrets in Azure Key Vault.
 
 #### .env
 
 Before running the code, create the `sk_financial_analyst/llm_application/.env` file, using the provided `sk_financial_analyst/llm_application/.env_sample` as example, and enter the needed values for your resource endpoints and deployment names.
 
-You need to enter the Azure OpenAI model deployment names, in your Azure OpenAI service, you want to use for each assistant, as well as your Azure Key Vault endpoint. We recomment to use the `gpt-4o` model, for better and more accurate reports.
+You need to enter the Azure OpenAI model deployment names, in your Azure OpenAI service, you want to use for each assistant, as well as your Azure Key Vault endpoint. We recommend to use the `gpt-4o` model, for better and more accurate reports.
 
 The Report Generator assistant uses the structured outputs functionality from OpenAI. As of this writing, only `gpt-4o` with API version at least `2024-08-01-preview` is supported. [Look here](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs) for the list of models and API versions supporting structured outputs.
 
@@ -82,4 +84,13 @@ python llm_application/financial_health_analysis.py <STOCK_TICKER> <OUTPUT_FOLDE
 
 `sk_financial_analyst/data/outputs` is already populated with some example reports.
 
+
+### Run the api as a docker container
+```bash
+cd sk_financial_analyst
+docker build -t financial_report:latest .
+docker run --env-file ./llm_application/.env -p 8000:8000 financial_report:latest
+# to test the api locally
+curl --location 'http://localhost:8000/api/generate_financial_report/MSFT'
+```
 

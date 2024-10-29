@@ -3,12 +3,17 @@
 import yaml
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 
-def load_yaml(file_path):
+def load_yaml():
     """Load a YAML file."""
-    load_dotenv("../.env")
-    with open(file_path, 'r') as stream:
+    cwd = os.getcwd()
+
+    CONFIG_PATH=os.path.join(cwd, 'llm_application/config.yaml') 
+    ENV_PATH=os.path.join(cwd, 'llm_application/.env')
+    load_dotenv(f"{ENV_PATH}")
+    with open(f"{CONFIG_PATH}", 'r') as stream:
         return yaml.safe_load(os.path.expandvars(stream.read()))
 
 

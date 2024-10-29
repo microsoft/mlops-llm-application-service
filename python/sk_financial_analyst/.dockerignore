@@ -1,0 +1,43 @@
+*.md
+**/target/
+.env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+Dockerfile*
+.dockerignore
+*.md
+*.png
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+# Docker files
+Dockerfile
+docker-compose.yml
+# Miscellaneous
+*.DS_Store
+*.swp
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

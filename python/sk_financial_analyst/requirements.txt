@@ -5,3 +5,6 @@ edgartools
 yfinance==0.2.40
 azure-identity
 azure-keyvault-secrets
+fastapi==0.115.4
+uvicorn==0.32.0
+python-dotenv==1.0.1

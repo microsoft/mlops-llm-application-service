@@ -9,14 +9,14 @@ from assistants import assistants as assistants
 from utils import report_generator
 from utils import config_reader
 
-from azure.identity import DefaultAzureCredential
+from azure.identity import ChainedTokenCredential, ManagedIdentityCredential, AzureCliCredential, VisualStudioCodeCredential
 from azure.keyvault.secrets import SecretClient
 
 
-async def main(stock_ticker, output_folder):
+async def run(stock_ticker):
     """Generate a financial health analysis of a company."""
     # Load the configuration data
-    config_data = config_reader.load_yaml("./llm_application/config.yaml")
+    config_data = config_reader.load_yaml()
 
     # Get values from the configuration data
     auth_provider_endpoint = config_reader.get_value_by_name(
@@ -65,19 +65,26 @@ async def main(stock_ticker, output_folder):
         "structured_report_generator",
         "aoai_api_version"
     )
+    output_folder= config_reader.get_value_by_name(
+        config_data,
+        "assistants",
+        "structured_report_generator",
+        "output_folder"
+    )
+   
 
     # Get Azure OpenAI authentication token
-    credential = DefaultAzureCredential()
+    credential = ChainedTokenCredential(ManagedIdentityCredential(), AzureCliCredential(), VisualStudioCodeCredential());
     aoai_token = credential.\
         get_token(auth_provider_endpoint).token
 
     # Get Azure OpenAI deployment name from Azure Key Vault
     client = SecretClient(vault_url=key_vault_url, credential=credential)
-    aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
+    aoai_base_endpoint = client.get_secret("AOAI-BASE-ENDPOINT").value
 
     # Get Bing Search key and SEC Identity from Azure Key Vault
-    bing_search_api_key = client.get_secret("bing-search-api-key").value
-    sec_identity = client.get_secret("sec-identity").value
+    bing_search_api_key = client.get_secret("BING-SEARCH-API-KEY").value
+    sec_identity = client.get_secret("SEC-IDENTITY").value
 
     # Create the output folder if it does not exist
     if not os.path.exists(output_folder):
@@ -214,12 +221,6 @@ if __name__ == "__main__":
         default="MSFT",
         help="The stock ticker symbol to generate the analysis for."
     )
-    parser.add_argument(
-        "output_folder",
-        type=str,
-        nargs="?",
-        default="./data/outputs",
-        help="The folder where the output data will be saved."
-    )
+
     args = parser.parse_args()
-    asyncio.run(main(args.stock_ticker, args.output_folder))
+    asyncio.run(run(args.stock_ticker))

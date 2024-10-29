@@ -8,6 +8,7 @@ assistants:
   structured_report_generator:
     llm_deployment_name: ${REPORT_GENERATOR_MODEL_NAME}
     aoai_api_version: "2024-08-01-preview"
+    output_folder: "./data/outputs"
 
 financial_health_analysis:
   auth_provider_endpoint: "https://cognitiveservices.azure.com"
