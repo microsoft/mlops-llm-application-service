@@ -1,4 +1,4 @@
-exclude: '.azureml|.devcontainer|.github|.vscode|junit/*.xml'
+exclude: '.azureml|.devcontainer|.github|.vscode|junit'
 
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
