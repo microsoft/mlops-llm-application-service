@@ -111,3 +111,23 @@ docker build -t financial_report:latest .
 docker tag financial_report:latest financial_analyst:latest <your_registry_name>/sk_financial_analyst:1.0
 docker push <your_registry_name>/sk_financial_analyst:1.0
 ```
+
+### Create container app and deploy your image
+
+```bash
+az containerapp env create \
+--name $CONTAINERAPPS_ENVIRONMENT \
+--resource-group $RESOURCE_GROUP \
+--location "$LOCATION"
+
+
+az containerapp create \
+--name my-container-app \
+--resource-group $RESOURCE_GROUP \
+--environment $CONTAINERAPPS_ENVIRONMENT \
+--image $YOUR_REGISTRY_IMAGE \
+--target-port 80 \
+--ingress external \
+--query properties.configuration.ingress.fqdn
+```
+
