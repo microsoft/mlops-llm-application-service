@@ -402,3 +402,6 @@ venv/
 
 # Environment Variables
 .env
+
+# file 
+.DS_Store

@@ -22,6 +22,12 @@ Here is a diagram showing a high-level architecture:
 
 ![Architecture Diagram](./architecture.png)
 
+### Prerequisites
+- [pip](https://pip.pypa.io/en/stable/cli/pip_install/)
+- [docker](https://docs.docker.com/engine/install/)
+- [az cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+
 ### Installation
 
 1. Clone the repository:
@@ -54,6 +60,7 @@ You need to have access to an Azure Key Vault where you can write and read secre
 
 You need to create two secrets:
 - `AOAI-BASE-ENDPOINT`: this is the base endpoint of your Azure OpenAI deployment.
+
 - `SEC-IDENTITY`: this is an identity in the form of `<your name> <your email address>` that is needed for the application to make requests to the SEC Edgar database to get financial statements.
 
 - `BING-SEARCH-API-KEY`: you will need to create the bing web search resource from Azure portal and then navigate to your resource's keys & endpoint blade to retrieve the keys.
@@ -94,3 +101,13 @@ docker run --env-file ./llm_application/.env -p 8000:8000 financial_report:lates
 curl --location 'http://localhost:8000/api/generate_financial_report/MSFT'
 ```
 
+### Create container registry and deploy the docker image
+```bash
+cd python/sk_financial_analyst
+az login
+az deployment group create --resource-group <your_resource_group> --template-file ./common/common.bicep
+az acr login -n <your_registry_name>
+docker build -t financial_report:latest .
+docker tag financial_report:latest financial_analyst:latest <your_registry_name>/sk_financial_analyst:1.0
+docker push <your_registry_name>/sk_financial_analyst:1.0
+```
