@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-1. [Financial Analysis](#financial-analysis)  
+1. [Financial Analysis](#financial-analysis)
 
-   1.1. [Balance Sheet](#balance-sheet)  
+   1.1. [Balance Sheet](#balance-sheet)
 
-   1.2. [Income Statement](#income-statement)  
+   1.2. [Income Statement](#income-statement)
 
-   1.3. [Cash Flow Statement](#cash-flow-statement)  
+   1.3. [Cash Flow Statement](#cash-flow-statement)
 
 2. [News Analysis](#news-analysis)
 3. [Conclusion](#conclusion)
@@ -21,7 +21,7 @@
 
 **Interpretation:** CVX has more current assets than liabilities, indicating good short-term financial health.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 1.16 | N/A |
 | December 31, 2023 | 1.27 | N/A |
@@ -31,7 +31,7 @@
 
 **Interpretation:** Shows potential challenges in meeting short-term liabilities without selling inventory.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.73 | N/A |
 | December 31, 2023 | 0.87 | N/A |
@@ -41,7 +41,7 @@
 
 **Interpretation:** Positive working capital indicates ability to cover short-term obligations and potential for growth.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 5342000000 | USD |
 | December 31, 2023 | 8870000000 | USD |
@@ -51,7 +51,7 @@
 
 **Interpretation:** Indicates a balanced approach to financing with a stable leverage position.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.63 | N/A |
 | December 31, 2023 | 0.62 | N/A |
@@ -66,7 +66,7 @@
 
 **Interpretation:** Stable production efficiency and cost controls, although with a slight decrease in 2024.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 39.74 | % |
 | June 30, 2023 | 40.74 | % |
@@ -76,7 +76,7 @@
 
 **Interpretation:** Decreased profitability, possibly due to increased costs or decreased revenues.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 8.66 | % |
 | June 30, 2023 | 12.29 | % |
@@ -86,7 +86,7 @@
 
 **Interpretation:** Reflects tighter operational efficiency or increased operational costs.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 13.67 | % |
 | June 30, 2023 | 15.94 | % |
@@ -96,7 +96,7 @@
 
 **Interpretation:** Decrease indicates lower profitability per share.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 2.43 | USD |
 | June 30, 2023 | 3.22 | USD |
@@ -106,7 +106,7 @@
 
 **Interpretation:** High value suggests investor expectations of future growth, but risk of overvaluation.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 61.94 | N/A |
 | June 30, 2023 | 46.73 | N/A |
@@ -116,7 +116,7 @@
 
 **Interpretation:** Shows reduced efficiency in generating returns from shareholders' equity.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 2.77 | % |
 | June 30, 2023 | 3.71 | % |
@@ -131,7 +131,7 @@
 
 **Interpretation:** Potential challenges or increased shares outstanding as shown by the decrease.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 7.18 | USD |
 | June 30, 2023 | 7.24 | USD |
@@ -141,7 +141,7 @@
 
 **Interpretation:** Decrease may suggest higher capital investments.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 5068000000 | USD |
 | June 30, 2023 | 6707000000 | USD |
@@ -151,7 +151,7 @@
 
 **Interpretation:** Lower ratio indicates reduced financial flexibility or increased leverage.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.57 | N/A |
 | June 30, 2023 | 0.65 | N/A |

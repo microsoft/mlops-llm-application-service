@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-1. [Financial Analysis](#financial-analysis)  
+1. [Financial Analysis](#financial-analysis)
 
-   1.1. [Balance Sheet](#balance-sheet)  
+   1.1. [Balance Sheet](#balance-sheet)
 
-   1.2. [Income Statement](#income-statement)  
+   1.2. [Income Statement](#income-statement)
 
-   1.3. [Cash Flow Statement](#cash-flow-statement)  
+   1.3. [Cash Flow Statement](#cash-flow-statement)
 
 2. [News Analysis](#news-analysis)
 3. [Conclusion](#conclusion)
@@ -21,7 +21,7 @@
 
 **Interpretation:** BAC's current ratio above 1 for both periods shows capability to cover its short-term liabilities.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 1.42 | ratio |
 | December 31, 2023 | 1.53 | ratio |
@@ -31,7 +31,7 @@
 
 **Interpretation:** Quick ratio below 1 indicates less liquidity without selling inventory, expected due to liquid nature of assets like loans.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.86 | ratio |
 | December 31, 2023 | 0.93 | ratio |
@@ -41,7 +41,7 @@
 
 **Interpretation:** Positive, but decline indicates less liquidity buffer.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 318697 | million |
 | December 31, 2023 | 349790 | million |
@@ -51,7 +51,7 @@
 
 **Interpretation:** High leverage typical in banks; stability over periods indicates consistent capital structure.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 10.08 | ratio |
 | December 31, 2023 | 9.9 | ratio |
@@ -66,7 +66,7 @@
 
 **Interpretation:** Indicates efficiency in generating income from revenue.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 1.0 | ratio |
 | June 30, 2023 | 1.0 | ratio |
@@ -76,7 +76,7 @@
 
 **Interpretation:** Slightly reduced profitability indicated by decline from 0.28 to 0.26.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.26 | ratio |
 | June 30, 2023 | 0.28 | ratio |
@@ -86,7 +86,7 @@
 
 **Interpretation:** Decrease from 0.32 to 0.30 shows a slight decline in operational efficiency.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.3 | ratio |
 | June 30, 2023 | 0.32 | ratio |
@@ -96,7 +96,7 @@
 
 **Interpretation:** Decrease reflects reduced earnings available to shareholders.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.83 | USD |
 | June 30, 2023 | 0.88 | USD |
@@ -106,7 +106,7 @@
 
 **Interpretation:** Increasing P/E suggests the stock is becoming more expensive relative to its earnings.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 51.39 | ratio |
 | June 30, 2023 | 48.47 | ratio |
@@ -116,7 +116,7 @@
 
 **Interpretation:** Decline from 2.4% to 2.2% indicates a decrease in the ability to generate returns on equity.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.022 | ratio |
 | June 30, 2023 | 0.024 | ratio |
@@ -131,7 +131,7 @@
 
 **Interpretation:** Notable increase indicates improved cash generation per share.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.33 | USD |
 | June 30, 2023 | 0.06 | USD |
@@ -141,7 +141,7 @@
 
 **Interpretation:** Negative FCF indicates substantial reinvestments or capital maintenance expenditures.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | -179000000 | USD |
 | June 30, 2023 | -2104000000 | USD |
@@ -151,7 +151,7 @@
 
 **Interpretation:** Low ratio represents a more leveraged position with lower cash flow coverage.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | June 30, 2024 | 0.00086 | ratio |
 | June 30, 2023 | 0.00017 | ratio |

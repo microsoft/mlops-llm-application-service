@@ -61,10 +61,9 @@ You need to have access to an Azure Key Vault where you can write and read secre
 You need to create three secrets:
 - `AOAI-BASE-ENDPOINT`: this is the base endpoint of your Azure OpenAI deployment.
 
-- `BING-SEARCH-API-KEY`: this is the API key for the Bing Search service.
-- `SEC-IDENTITY`: this is an identity in the form of `<your name> <your email address>` that is needed for the application to make requests to the SEC Edgar database to get financial statements.
+- `BING-SEARCH-API-KEY`: this is the API key for the Bing Search service. you will need to create the bing web search resource from Azure portal and then navigate to your resource's keys & endpoint blade to retrieve the keys.
 
-- `BING-SEARCH-API-KEY`: you will need to create the bing web search resource from Azure portal and then navigate to your resource's keys & endpoint blade to retrieve the keys.
+- `SEC-IDENTITY`: this is an identity in the form of `<your name> <your email address>` that is needed for the application to make requests to the SEC Edgar database to get financial statements.
 
 Follow [this documentation](https://learn.microsoft.com/en-us/azure/key-vault/general/security-features#controlling-access-to-key-vault-data) to learn how to configure access for reading / writing secrets in Azure Key Vault.
 
@@ -131,4 +130,3 @@ az containerapp create \
 --ingress external \
 --query properties.configuration.ingress.fqdn
 ```
-

@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-1. [Financial Analysis](#financial-analysis)  
+1. [Financial Analysis](#financial-analysis)
 
-   1.1. [Balance Sheet Analysis](#balance-sheet-analysis)  
+   1.1. [Balance Sheet Analysis](#balance-sheet-analysis)
 
-   1.2. [Income Statement Analysis](#income-statement-analysis)  
+   1.2. [Income Statement Analysis](#income-statement-analysis)
 
-   1.3. [Cash Flow Statement Analysis](#cash-flow-statement-analysis)  
+   1.3. [Cash Flow Statement Analysis](#cash-flow-statement-analysis)
 
 2. [News Analysis](#news-analysis)
 3. [Conclusion](#conclusion)
@@ -21,7 +21,7 @@
 
 **Interpretation:** A current ratio of 1.59 indicates Intel has $1.59 in current assets for every $1 in current liabilities, signifying solid liquidity.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | 1.59 | N/A |
 | Dec 30, 2023 | 1.54 | N/A |
@@ -31,7 +31,7 @@
 
 **Interpretation:** A quick ratio above 1 indicates stable liquid asset management.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | 1.06 | N/A |
 | Dec 30, 2023 | 1.04 | N/A |
@@ -41,7 +41,7 @@
 
 **Interpretation:** Positive working capital suggests Intel can meet short-term liabilities and invest in operations.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | 18802000000.0 | dollars |
 | Dec 30, 2023 | 15216000000.0 | dollars |
@@ -51,7 +51,7 @@
 
 **Interpretation:** A moderate leverage level, indicating balanced financing.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | 0.42 | N/A |
 | Dec 30, 2023 | 0.44 | N/A |
@@ -66,7 +66,7 @@
 
 **Interpretation:** Stable gross margin indicates cost control relative to revenue.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Q2 2024 | 35.44 | % |
 | Q3 2023 | 35.82 | % |
@@ -76,7 +76,7 @@
 
 **Interpretation:** Negative profit margin in Q2 2024 highlights profitability challenges.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Q2 2024 | -12.89 | % |
 | Q3 2023 | 11.38 | % |
@@ -86,7 +86,7 @@
 
 **Interpretation:** Negative margins suggest inefficiencies or high operational costs.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Q2 2024 | -15.3 | % |
 | Q3 2023 | -7.84 | % |
@@ -96,7 +96,7 @@
 
 **Interpretation:** Negative EPS in Q2 2024 reflects concerning losses.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Q2 2024 | -0.38 | N/A |
 | Q3 2023 | 0.35 | N/A |
@@ -106,7 +106,7 @@
 
 **Interpretation:** High P/E indicates market optimism despite losses.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Q3 2023 | 63.83 | N/A |
 
@@ -115,7 +115,7 @@
 
 **Interpretation:** Negative ROE in Q2 2024 indicates lack of profitability relative to equity.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Q2 2024 | -1.44 | % |
 | Q3 2023 | 1.39 | % |
@@ -130,7 +130,7 @@
 
 **Interpretation:** Low value indicates limited cash generation per share.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | 0.25 | dollars |
 | July 1, 2023 | 0.24 | dollars |
@@ -140,7 +140,7 @@
 
 **Interpretation:** Negative free cash flow indicates high capital expenditures over operating cash.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | -10583.0 | million dollars |
 | July 1, 2023 | -12278.0 | million dollars |
@@ -150,7 +150,7 @@
 
 **Interpretation:** Low ratio suggests potential liquidity constraints if trends continue.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Jun 29, 2024 | 0.021 | N/A |
 | July 1, 2023 | 0.021 | N/A |

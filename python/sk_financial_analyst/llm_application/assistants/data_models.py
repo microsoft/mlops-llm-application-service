@@ -5,9 +5,9 @@ The data models are used to define the structured data used when
 creating the consolidated analysis report with the assistants.
 """
 
-from semantic_kernel.kernel_pydantic import KernelBaseModel
-
 from typing import List
+
+from semantic_kernel.kernel_pydantic import KernelBaseModel
 
 
 class BullishIndicator(KernelBaseModel):

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.414" timestamp="2024-10-30T15:57:04.600103-05:00" hostname="Irenes-MacBook-Pro.local"><testcase classname="tests.test_to_delete" name="test_to_delete" time="0.002" /></testsuite></testsuites>

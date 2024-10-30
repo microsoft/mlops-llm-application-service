@@ -1,19 +1,19 @@
 """This module contains utility functions for reading configuration files."""
 
-import yaml
 import os
+
+import yaml
 from dotenv import load_dotenv
-from pathlib import Path
 
 
 def load_yaml():
     """Load a YAML file."""
     cwd = os.getcwd()
 
-    CONFIG_PATH=os.path.join(cwd, 'llm_application/config.yaml') 
-    ENV_PATH=os.path.join(cwd, 'llm_application/.env')
+    CONFIG_PATH = os.path.join(cwd, "llm_application/config.yaml")
+    ENV_PATH = os.path.join(cwd, "llm_application/.env")
     load_dotenv(f"{ENV_PATH}")
-    with open(f"{CONFIG_PATH}", 'r') as stream:
+    with open(f"{CONFIG_PATH}", "r") as stream:
         return yaml.safe_load(os.path.expandvars(stream.read()))
 
 
