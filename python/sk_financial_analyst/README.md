@@ -58,9 +58,10 @@ You need to have access to a Bing Search service API. Follow [this instructions]
 
 You need to have access to an Azure Key Vault where you can write and read secrets. Follow [this instructions](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal) if you need to create one.
 
-You need to create two secrets:
+You need to create three secrets:
 - `AOAI-BASE-ENDPOINT`: this is the base endpoint of your Azure OpenAI deployment.
 
+- `BING-SEARCH-API-KEY`: this is the API key for the Bing Search service.
 - `SEC-IDENTITY`: this is an identity in the form of `<your name> <your email address>` that is needed for the application to make requests to the SEC Edgar database to get financial statements.
 
 - `BING-SEARCH-API-KEY`: you will need to create the bing web search resource from Azure portal and then navigate to your resource's keys & endpoint blade to retrieve the keys.
