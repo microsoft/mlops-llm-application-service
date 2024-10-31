@@ -4,7 +4,7 @@
     on:
       push:
         branches:
-          - 'main'
+          - 'agromova/features/federated_workflows'
         paths:
           - '.github/**'
           - 'python/**'
