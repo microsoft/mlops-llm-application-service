@@ -88,7 +88,7 @@ class ConsolidatedReport(KernelBaseModel):
     company_name: Annotated[
         str,
         "The name of the company, extracted from the financial statements."
-    ] 
+    ]
     financial_analysis: List[FinancialAnalysis]
     news_analysis: NewsAnalysis
     conclusion: str

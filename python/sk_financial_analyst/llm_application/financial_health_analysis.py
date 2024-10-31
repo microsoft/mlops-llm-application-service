@@ -105,7 +105,7 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
 
     # Get the news report for the stock ticker
     news_report = await news_analyst.get_news_report(stock_ticker=stock_ticker)
-    
+
     # Save the news report to a file
     news_report_file = os.path.join(
         intermediate_data_folder,
@@ -126,7 +126,7 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
     )
 
     # Get the financial reports for the stock ticker
-    
+
     report_type = "balance_sheet"
     balance_sheet_report_metrics = """
         current ratio,
@@ -269,4 +269,10 @@ if __name__ == "__main__":
         help="The folder where the intermediate output data will be saved."
     )
     args = parser.parse_args()
-    asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder))
+    asyncio.run(
+        main(
+            args.stock_ticker,
+            args.output_folder,
+            args.intermediate_data_folder
+        )
+    )
