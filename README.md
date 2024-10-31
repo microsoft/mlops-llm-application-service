@@ -1,5 +1,29 @@
 # MLOps for LLM Application Services
 
+## Introduction
+
+There are many different customer problems that can be solved using Large Language Models (LLMs) with no fine-tuning. GPT-3, GTP-3.5 and GPT-4.0 are prompt-based models, and they require just a text prompt input to generate its responses.
+
+Let’s look at some scenarios where Large Language Models are a useful component, even without fine-tuning. It will help us to understand what we need to develop and, finally, operationalize.
+
+**Scenario 1:** The basic service applies LLMs to input data to produce a summary, extract entities, or format data according to a pattern. For example, a quality assurance engineering assistant could help by taking natural language descriptions of an issue and reformatting to match a specific format. In this case, we need to develop an LLM Application Service to implement a single step flow to invoke an LLM, pass input data to it and return the LLM’s response back. The request to the LLM can be created using the few-shot approach, when it contains a system message, the input, and a few examples to tune LLM’s response.
+
+**Scenario 2:** A chatbot that provides abilities to extract some data using existing APIs. For example, it can be an application to order a pizza. It’s a conversational application, and a pizzeria’s API can provide data about available pizza types, toppings, and sales. The LLM can be used to collect all needed information from users in a human friendly way. In this case, the development process is concentrated around an LLM Application Service as well as a user interface (UI). The service must implement a conversational flow that might include history, API connections management and own logic to invoke different APIs. In this scenario we are using APIs as is, and we are assuming that they are black boxes with known inputs and outputs.
+
+**Scenario 3:** A chatbot that finds and summarizes information spread in several data sources, both structured and unstructured. For example, it can be a chatbot for service agents who use it to find answers for users’ questions in a big set of documents. It’s not enough to return references to documents that contain the needed information, but it’s important to extract the exact answer in a human readable format. In this scenario the development process should be focused around:
+
+- **UI:** that is the chatbot itself.
+- **LLM Application Service:** implements a complex flow gluing LLMs with other services, such as a search service. The application service might support memory, chain several LLM requests, manage connections to external services, load documents.
+- **Data Retrieval Services:** The documents themselves need to be stored in a searchable form, e,g. a vector database and to be stored they may need to be transformed (converted from image to text, or from audio or video to text), chunked, and embedded.The service must be tuned and configured to retrieve results. The tuning process might include components such as various pipelines to do data ingestion, indexes, serverless components to extend functionality of the service.
+
+These three scenarios might not cover all possible usage of LLMs, but they cover the most common projects, and we can use them to understand what kinds of components we need to build: UI, LLM Application Service and Data Retrieval Service.
+
+In this repository we are demonstration an LLM Application Service example that is based on Semantic Kernel, AI Studio, and supports programming languages like Python, C# and Java. At the same time, we would cross-reference the following repositories that can be useful to implement a custom RAG application:
+
+- [Data Retrieval Service based on AI Search](https://github.com/microsoft/mlops-aisearch-pull): the repository demonstrates how to use AI Search skills and indexers to pre-process data, store them in a vector form and provide a way to serve queries through an index.
+- [MLOps for LLM Application Services using Prompt flow](https://github.com/microsoft/mlops-promptflow-prompt): The repository uses Prompt flow as a way to orchestrate LLM Application Services using batch executor, embedded tracing and integration with evaluation framework.
+
+
 ## Overall Architecture
 
 ### LLM Application Service components
