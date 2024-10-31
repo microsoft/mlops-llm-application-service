@@ -96,17 +96,22 @@ The template contains examples of the service in several different programming l
 -	Java: for Java
 
 The language folders are located in the top level of the repository alongside the following folders:
+
 -	.github: to support GitHub workflows that is our primary DevOps system for the repository
 -	.devcontainer: to support the development environment in the container and integrate it with VSCode
 -	evaluators: we are using Azure AI Evaluation SDK that supports Python for now. So, we are implementing all custom evaluators in Python. Later, once we have support for other languages, we will replicate the folder for C# and Java.
+
 Each demonstrated flow should have its folder under the appropriate language folder, and there is the following structure for it:
+
 -	config: This contains a configuration file (YAML for Python) with the parameters needed to execute the flow (like subscription ID and project name). Some parameters in this configuration come from environment variables.
 -	data: dataset examples to test and evaluate the flow.
--	standard: the flow itself. We use this folder name to ensure compatibility with the Prompt flow template.
+-	{flow name}: the flow itself.
 -	evaluate: evaluation scripts for the flow that use custom and embedded evaluators to evaluate the flow and publish results.
 -	executors: scripts to execute the flow locally or in the cloud.
 -	deployment: demonstrates how to deploy the flow using various targets. It can include Azure Function implementation, Fast API Kubernetes and so on.
+
 In addition to the folders above, we will need to host some common code. We assume to have some shared code for configurators, deployment, and executors. So, we can have a common folder under each language folder. The folder will include the following subfolders:
+
 -	deployments
 -	configurator
 -	executors
