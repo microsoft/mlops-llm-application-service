@@ -141,16 +141,19 @@ class FinancialStatementsPlugin:
         filings = edgar.Company(ticker).get_filings(form="10-Q").latest(1)
         ten_q = filings.obj()
         balance_sheet = ten_q.balance_sheet.to_dataframe().to_dict()
+        balance_sheet_periods = ten_q.balance_sheet.periods
         income_stmt = ten_q.income_statement.to_dataframe().to_dict()
+        income_stmt_periods = ten_q.income_statement.periods
         cash_flow_stmt = ten_q.cash_flow_statement.to_dataframe().to_dict()
+        cash_flow_stmt_periods = ten_q.cash_flow_statement.periods
 
         # Return the financial report based on the report type
         if report_type == "balance_sheet":
-            return balance_sheet
+            return "Balance Sheet Periods: " + str(balance_sheet_periods) + "\n" + str(balance_sheet)
         elif report_type == "income":
-            return income_stmt
+            return "Income Statement Periods: " + str(income_stmt_periods) + "\n" + str(income_stmt)
         elif report_type == "cash_flow":
-            return cash_flow_stmt
+            return "Cash Flow Statement Periods: " + str(cash_flow_stmt_periods) + "\n" + str(cash_flow_stmt)
         else:
             return "Invalid report type"
 
@@ -160,11 +163,19 @@ class StockPricePlugin:
 
     @kernel_function(
         name="get_stock_price",
-        description="Get the latest stock price for a stock ticker",
+        description="Get the stock price for a stock ticker",
     )
     def get_stock_price(
         self,
-        ticker: Annotated[str, "The stock ticker for getting the stock price"]
+        ticker: Annotated[str, "The stock ticker for getting the stock price"],
+        statement_date: Annotated[
+            str,
+            """
+            The income statemet date to use for the stock price.
+            This corresponds to the period being analyzed.
+            Format: 'YYYY-MM-DD'
+            """,
+        ],
     ) -> Annotated[str, "The latest stock price for the stock ticker"]:
         """
         Get the latest stock price for a stock ticker.
@@ -175,13 +186,13 @@ class StockPricePlugin:
             # Fetch the stock data for the last 1 day
             stock_data = yf.Ticker(ticker)
             # Get the history for the last 1 day
-            stock_history = stock_data.history(period="1d")
+            stock_history = stock_data.history(start=statement_date)
 
             # Get the latest closing price
-            latest_closing_price = round(
+            closing_price = round(
                 float(stock_history.iloc[0]["Close"]), 2)
 
-            return latest_closing_price
+            return closing_price
 
         except Exception as e:
             print(f"Error retrieving data for {ticker}: {e}")

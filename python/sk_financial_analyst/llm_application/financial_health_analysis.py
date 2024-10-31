@@ -13,10 +13,16 @@ from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 
 
-async def main(stock_ticker, output_folder):
+async def main(stock_ticker, output_folder, intermediate_data_folder):
     """Generate a financial health analysis of a company."""
     # Load the configuration data
-    config_data = config_reader.load_yaml("./llm_application/config.yaml")
+    abs_path = os.path.abspath(__file__)
+    config_file = os.path.join(
+        os.path.abspath(
+            os.path.join(abs_path, os.pardir)
+        ), "config.yaml"
+    )
+    config_data = config_reader.load_yaml(config_file)
 
     # Get values from the configuration data
     auth_provider_endpoint = config_reader.get_value_by_name(
@@ -83,6 +89,10 @@ async def main(stock_ticker, output_folder):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
+    # Create the intermediate data folder if it does not exist
+    if not os.path.exists(intermediate_data_folder):
+        os.makedirs(intermediate_data_folder)
+
     # Create the news analyst assistant
     news_analyst = assistants.NewsAnalyst(
         aoai_token=aoai_token,
@@ -95,6 +105,14 @@ async def main(stock_ticker, output_folder):
 
     # Get the news report for the stock ticker
     news_report = await news_analyst.get_news_report(stock_ticker=stock_ticker)
+    
+    # Save the news report to a file
+    news_report_file = os.path.join(
+        intermediate_data_folder,
+        f"{stock_ticker}_news_report.txt"
+    )
+    with open(news_report_file, "w") as file:
+        file.write(news_report)
     print("NEWS REPORT\n-----------")
     print(news_report)
     print("==================================================================")
@@ -108,6 +126,7 @@ async def main(stock_ticker, output_folder):
     )
 
     # Get the financial reports for the stock ticker
+    
     report_type = "balance_sheet"
     balance_sheet_report_metrics = """
         current ratio,
@@ -120,6 +139,13 @@ async def main(stock_ticker, output_folder):
         report_type=report_type,
         report_metrics=balance_sheet_report_metrics
     )
+    # Save the balance sheet report to a file
+    balance_sheet_report_file = os.path.join(
+        intermediate_data_folder,
+        f"{stock_ticker}_balance_sheet_report.txt"
+    )
+    with open(balance_sheet_report_file, "w") as file:
+        file.write(balance_sheet_report)
     print("BALANCE SHEET REPORT\n--------------------")
     print(balance_sheet_report)
     print("==================================================================")
@@ -129,8 +155,8 @@ async def main(stock_ticker, output_folder):
         gross margin,
         profit margin,
         operating margin,
-        earnings per share,
-        price to earnings ratio,
+        basic earnings per share,
+        basic price to earnings ratio,
         return on equity
     """
     income_report = await financial_analyst.get_financial_report(
@@ -138,6 +164,13 @@ async def main(stock_ticker, output_folder):
         report_type=report_type,
         report_metrics=income_report_metrics
     )
+    # Save the income report to a file
+    income_report_file = os.path.join(
+        intermediate_data_folder,
+        f"{stock_ticker}_income_report.txt"
+    )
+    with open(income_report_file, "w") as file:
+        file.write(income_report)
     print("INCOME REPORT\n-------------")
     print(income_report)
     print("==================================================================")
@@ -153,6 +186,13 @@ async def main(stock_ticker, output_folder):
         report_type=report_type,
         report_metrics=cash_flow_report_metrics
     )
+    # Save the cash flow report to a file
+    cash_flow_report_file = os.path.join(
+        intermediate_data_folder,
+        f"{stock_ticker}_cash_flow_report.txt"
+    )
+    with open(cash_flow_report_file, "w") as file:
+        file.write(cash_flow_report)
     print("CASH FLOW REPORT\n----------------")
     print(cash_flow_report)
     print("==================================================================")
@@ -221,5 +261,12 @@ if __name__ == "__main__":
         default="./data/outputs",
         help="The folder where the output data will be saved."
     )
+    parser.add_argument(
+        "intermediate_data_folder",
+        type=str,
+        nargs="?",
+        default="./data/intermediate",
+        help="The folder where the intermediate output data will be saved."
+    )
     args = parser.parse_args()
-    asyncio.run(main(args.stock_ticker, args.output_folder))
+    asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder))
