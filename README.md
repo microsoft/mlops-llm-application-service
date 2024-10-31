@@ -86,7 +86,62 @@ For example, the proposed set of Builds can be implemented as a set of GitHub ac
 
 ## Implementation Details
 
-TBD
+### Folder Structure
+
+The repository contains elements and examples to simplify the development and operationalization of the LLM Application Service that we described above.
+The template contains examples of the service in several different programming languages, and each language has its folder:
+
+-	CSharp: for C#
+-	Python: for Python
+-	Java: for Java
+
+The language folders are located in the top level of the repository alongside the following folders:
+-	.github: to support GitHub workflows that is our primary DevOps system for the repository
+-	.devcontainer: to support the development environment in the container and integrate it with VSCode
+-	evaluators: we are using Azure AI Evaluation SDK that supports Python for now. So, we are implementing all custom evaluators in Python. Later, once we have support for other languages, we will replicate the folder for C# and Java.
+Each demonstrated flow should have its folder under the appropriate language folder, and there is the following structure for it:
+-	config: This contains a configuration file (YAML for Python) with the parameters needed to execute the flow (like subscription ID and project name). Some parameters in this configuration come from environment variables.
+-	data: dataset examples to test and evaluate the flow.
+-	standard: the flow itself. We use this folder name to ensure compatibility with the Prompt flow template.
+-	evaluate: evaluation scripts for the flow that use custom and embedded evaluators to evaluate the flow and publish results.
+-	executors: scripts to execute the flow locally or in the cloud.
+-	deployment: demonstrates how to deploy the flow using various targets. It can include Azure Function implementation, Fast API Kubernetes and so on.
+In addition to the folders above, we will need to host some common code. We assume to have some shared code for configurators, deployment, and executors. So, we can have a common folder under each language folder. The folder will include the following subfolders:
+-	deployments
+-	configurator
+-	executors
+
+### Financial Analyst as a flow example
+
+As an example of the LLM Application Service we are using a financial health analysis tool that leverages Semantic Kernel, external APIs, and Large Language Models (LLMs) to analyze financial statements, news articles, and stock prices to generate a consolidated financial health report of public companies. The service is complex enough to demonstrate some Semantic Kernel features. At the same time, it doesn't require any custom Data Retrieval Service and data pre-processing workloads. More details about the service can be found in [this document for Python](./python/sk_financial_analyst/README.md).
+
+### Deployment
+
+There are many different ways to deploy the provided example, and we use a few of them to demonstrate end-to-end operationalization process:
+
+- [Durable Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview): as a way to publish complex flows that are supposed to be real-time but have high latency due to their complexity.
+- [Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/what-is-aks): to demonstrate how to use Infrastructure as a Service to deploy LLM Application Services using Fast API.
+- [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/): to demonstrate Platform as a Service approach for deployment.
+- [Azure Machine Learning Batch endpoints](https://learn.microsoft.com/en-us/azure/machine-learning/concept-endpoints-batch?view=azureml-api-2): to demonstrate an ability to publish the LLM Application Service as a component to process batches.
+
+The repository demonstrates how to run all the deployments from above in parallel, but you can keep just needed targets or introduce own.
+
+### Tracing
+
+In order to collect metrics from the LLM Application Service we are using [OpenTelemetry with Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore). In this case we can use Azure Monitor to collect traces as well as performance of the deployment targets and build various dashboards based on that.
+
+### Batch Execution
+
+The repository demonstrate several different Batch Executors:
+
+- **Local Executor:** demonstrates how to invoke the LLM Application Service on a local computer and generates output for the evaluation step.
+- **Azure Machine Learning:** thanks to parallel job in Azure ML we can utilize Azure ML Serverless Compute in order to process any amount of data in parallel.
+
+### Evaluation
+
+We are using [Azure AI Evaluation SDK](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/develop/evaluate-sdk) to run evaluation workloads. The SDK can be used to run evaluation locally or in the cloud using AI Studio serverless compute. In both cases it's possible to store evaluation results and compare experiments in AI Studio.
+
+The SDK supports Python only as for now, but since we are using batch executor output dataset (rather than the flow itself) as an input for evaluation, we are able to utilize the SDK for any programming language.
 
 ## How to start working with the template
 
@@ -95,8 +150,7 @@ TBD
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
