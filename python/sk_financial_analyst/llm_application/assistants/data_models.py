@@ -7,7 +7,7 @@ creating the consolidated analysis report with the assistants.
 
 from semantic_kernel.kernel_pydantic import KernelBaseModel
 
-from typing import List
+from typing import List, Annotated, Literal
 
 
 class BullishIndicator(KernelBaseModel):
@@ -45,13 +45,27 @@ class MetricValue(KernelBaseModel):
 
     date: str
     value: float
-    unit: str
+    unit: Literal["USD", "%", "ratio"]
 
 
 class Metric(KernelBaseModel):
     """A class representing a metric."""
 
-    name: str
+    name: Literal[
+        "current_ratio",
+        "quick_ratio",
+        "working_capital",
+        "debt_to_equity_ratio",
+        "gross_margin",
+        "profit_margin",
+        "operating_margin",
+        "basic_earnings_per_share",
+        "basic_price_to_earnings_ratio",
+        "return_on_equity",
+        "cash_flow_per_share",
+        "free_cash_flow",
+        "cash_flow_to_debt_ratio"
+    ]
     interpretation: str
     values: List[MetricValue]
 
@@ -59,7 +73,11 @@ class Metric(KernelBaseModel):
 class FinancialAnalysis(KernelBaseModel):
     """A class representing a financial analysis."""
 
-    name: str
+    name: Literal[
+        "balance_sheet_statement_analysis",
+        "income_statement_analysis",
+        "cash_flow_statement_analysis"
+    ]
     metrics: List[Metric]
     analysis: str
 
@@ -67,7 +85,10 @@ class FinancialAnalysis(KernelBaseModel):
 class ConsolidatedReport(KernelBaseModel):
     """A class representing a consolidated analysis report."""
 
-    company_name: str
+    company_name: Annotated[
+        str,
+        "The name of the company, extracted from the financial statements."
+    ]
     financial_analysis: List[FinancialAnalysis]
     news_analysis: NewsAnalysis
     conclusion: str
