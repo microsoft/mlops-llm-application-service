@@ -1,7 +1,10 @@
-## How to configure OpenID Connect Federated Credentials with Azure for GitHub Actions Workflows
-OpenID Connect (OIDC) Federated Credentials allow GitHub Actions workflows to securely authenticate with Azure services without needing to store long-lived secrets or credentials. Instead using the AZURE_CLIENT_ID, AZURE_TENANT_ID, and AZURE_SUBSCRIPTION_ID of the Microsoft Entra application.
+## How to connect to Azure from GitHub Actions Workflows with OpenID Connect (OIDC) Federated Credentials
+In the past, we used a Service Principal password as the GitHub secret `AZURE_CREDENTIALS` along with the `azure/login` action to authenticate with Azure resources. The major limitation of this approach was that the Service Principal password was stored directly as a secret, which could change or expire, requiring manual updates with a new value.
 
-This is achieved by leveraging the OIDC protocol to establish trust between GitHub and Azure. GitHub's OIDC provider works with Azure's workload identity federation [Microsoft:Workload-identity-federation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation).
+The OpenID Connect (OIDC) Federated Credentials approach allows GitHub Actions workflows to securely authenticate with Azure services without needing to store long-lived secrets or credentials. While OIDC still requires the Azure AD and Service Principles, there is no longer a need to store the Service Principals password directly in the GitHub secret. Instead storing the AZURE_CLIENT_ID, AZURE_TENANT_ID, and AZURE_SUBSCRIPTION_ID of the Microsoft Entra application. Once the GitHub workflow runs, it requests a token from Azure AD using Federated Identity Credentials.
+
+This is achieved by leveraging the OIDC protocol to establish trust between GitHub and Azure. GitHub's OIDC provider works with Azure's workload identity federation. Below are the links to the official documentation.
+* [Microsoft:Workload-identity-federation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation)
 * [Use GitHub Actions to connect to Azure](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect)
 * [Authenticate to Azure from GitHub](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect) 
 
@@ -37,39 +40,38 @@ This is achieved by leveraging the OIDC protocol to establish trust between GitH
 
 
 * ### Step 4: Use OpenID Connect Azure CLI to authenticate with the Azure login action.
-    Service principe federated identity is ready. Here, we are going to add setup for the `platform_ci_python.yaml` pipeline workflow job build-and-deploy-python with Github Action to generate OIDC token, which azure/loging@v2 will pick up and exchange against AAD. 
+    Service principe federated identity is ready. Here, we are going to add setup for the `platform_ci_python.yaml` pipeline workflow job build-and-deploy-python with Github Action to generate OIDC token, which azure/loging@v2 will pick up and exchange against AAD. Start by adding permissions and `azure/login@v2` action:
 
-    Start by adding permissions, azure/login@v2 action
 
-* ``platform_ci_python.yaml``
-    ```
-    name: CI Platform Python Workflow
+  * ``platform_ci_python.yaml``
+      ```
+      name: CI Platform Python Workflow
 
-    on:
-      push:
-        branches:
-          - 'main'
+      on:
+        push:
+          branches:
+            - 'main'
 
-    permissions:
-      id-token: write
-      contents: read
+      permissions:
+        id-token: write
+        contents: read
 
-    jobs:
-      build-and-deploy-python:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Azure login
-            uses: azure/login@v2
-            with:
-              client-id: ${{ secrets.AZURE_CLIENT_ID }}
-              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-    
-          - name: Azure CLI script
-            uses: azure/cli@v2
-            with:
-              azcliversion: latest
-              inlineScript: |
-                az account show
+      jobs:
+        build-and-deploy-python:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Azure login
+              uses: azure/login@v2
+              with:
+                client-id: ${{ secrets.AZURE_CLIENT_ID }}
+                tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+                subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+            - name: Azure CLI script
+              uses: azure/cli@v2
+              with:
+                azcliversion: latest
+                inlineScript: |
+                  az account show
 
-    ```
+      ```
