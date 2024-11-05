@@ -25,10 +25,12 @@ jobs:
           python -m pip install --upgrade -r python/requirements.txt
 
       - name: Lint Python Code
+        working-directory: ./python
         run: flake8
 
       - name: Run Python Unit Tests
         shell: bash
+        working-directory: ./python
         run: |
           pytest --junitxml=junit/test-results.xml --cov=. --cov-report=xml
 

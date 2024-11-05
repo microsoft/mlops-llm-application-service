@@ -1,5 +1,12 @@
+pyyaml
+requests
+edgartools
+azure-identity
+azure-keyvault-secrets
+python-dotenv
+yfinance==0.2.40
 semantic-kernel==1.11.0
-azure-ai-evaluation==1.0.0b4
+azure-ai-evaluation==1.0.0b5
 flake8-docstrings==1.7.0
 flake8==7.1.1
 pep8-naming==0.14.1

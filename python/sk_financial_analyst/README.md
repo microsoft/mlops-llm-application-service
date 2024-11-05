@@ -13,7 +13,6 @@ SK Financial Analyst is a Python-based financial health analysis tool that lever
 - `assistants/assistants.py`: Defines assistants such as NewsAnalyst, FinancialAnalyst, and StructuredReportGenerator that perform specific analysis tasks.
 - `assistants/data_models.py`: Defines Pydantic data models used for structured data representation.
 - `plugins/plugins.py`: Implements plugins for fetching data from external APIs, such as Bing News Search, Yahoo Finance, and SEC Edgar filings.
-- `utils/config_reader.py`: Reads YAML configuration files.
 - `utils/report_generator.py`: Converts JSON reports to markdown format.
 
 ### Architecture
@@ -26,8 +25,8 @@ Here is a diagram showing a high-level architecture:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/sk_financial_analyst.git
-   cd sk_financial_analyst
+   git clone https://github.com/microsoft/mlops-llm-application-service.git
+   cd python
 
 2. Set up a virtual environment (optional but recommended):
    ```bash
@@ -61,9 +60,9 @@ Follow [this documentation](https://learn.microsoft.com/en-us/azure/key-vault/ge
 
 #### .env
 
-Before running the code, create the `sk_financial_analyst/llm_application/.env` file, using the provided `sk_financial_analyst/llm_application/.env_sample` as example, and enter the needed values for your resource endpoints and deployment names.
+Before running the code, create the `pyton/.env` file, using the provided `python/.env_sample` as example, and enter the needed values for your resource endpoints and deployment names.
 
-You need to enter the Azure OpenAI model deployment names, in your Azure OpenAI service, you want to use for each assistant, as well as your Azure Key Vault endpoint. We recomment to use the `gpt-4o` model, for better and more accurate reports.
+You need to enter the Azure OpenAI model deployment names, in your Azure OpenAI service, you want to use for each assistant, as well as your Azure Key Vault endpoint. We recommend to use the `gpt-4o` model, for better and more accurate reports.
 
 The Report Generator assistant uses the structured outputs functionality from OpenAI. As of this writing, only `gpt-4o` with API version at least `2024-08-01-preview` is supported. [Look here](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs) for the list of models and API versions supporting structured outputs.
 
@@ -76,7 +75,7 @@ The code uses an Azure Managed Identity Credential to get tokens to access the A
 When running the main Python script, you generate two consolidated financial health analysis for a public company: one as a structured JSON output, following a pre-defined schema, and a markdown version generated from it. To run the code, go to the `sk_financial_analyst` folder, and execute:
 
 ```bash
-python llm_application/financial_health_analysis.py <STOCK_TICKER> <OUTPUT_FOLDER>
+python -m sk_financial_analyst.executors.single_item_executor <STOCK_TICKER> <OUTPUT_FOLDER>
 ```
 
 `<STOCK_TICKER>` and `<OUTPUT_FOLDER>` are set by default to `MSFT` and `./data/outputs`, respectively.
