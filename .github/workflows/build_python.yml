@@ -36,7 +36,6 @@ jobs:
 
       - name: Publish Python Test Results
         uses: actions/upload-artifact@v4
-        working-directory: ./python
         with:
           name: python-test-results
           path: "**/test-*.xml"
