@@ -6,7 +6,10 @@ The OpenID Connect (OIDC) Federated Credentials approach allows GitHub Actions w
 This is achieved by leveraging the OIDC protocol to establish trust between GitHub and Azure. GitHub's OIDC provider works with Azure's workload identity federation. Below are the links to the official documentation.
 * [Microsoft:Workload-identity-federation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation)
 * [Use GitHub Actions to connect to Azure](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect)
-* [Authenticate to Azure from GitHub](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect) 
+* [Authenticate to Azure from GitHub](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect)
+
+OpenID Connect (OIDC) with Azure and GitHub
+![OpenID Connect (OIDC) with Azure and GitHub](../docs/images/openid_connect_azure_github_diagram.jpg)
 
 
 * ### Step 1: Register a Microsoft Entra Application & Assign Contributor Role to the application
