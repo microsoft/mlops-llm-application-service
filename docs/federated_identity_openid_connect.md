@@ -45,7 +45,6 @@ OpenID Connect (OIDC) with Azure and GitHub
 * ### Step 4: Use OpenID Connect Azure CLI to authenticate with the Azure login action.
     Service principe federated identity is ready. Here, we are going to add setup for the `platform_ci_python.yaml` pipeline workflow job build-and-deploy-python with Github Action to generate OIDC token, which azure/loging@v2 will pick up and exchange against AAD. Start by adding permissions and `azure/login@v2` action:
 
-
   * ``platform_ci_python.yaml``
       ```
       name: CI Platform Python Workflow
@@ -78,3 +77,4 @@ OpenID Connect (OIDC) with Azure and GitHub
                   az account show
 
       ```
+  * ![platform_ci_python](../docs/images/azure_login_screenshot_oidc.jpg)
