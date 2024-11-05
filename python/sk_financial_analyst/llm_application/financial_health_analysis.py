@@ -1,3 +1,4 @@
+"""This class generates a financial health analysis of a company."""
 import sys
 import pathlib
 
@@ -6,6 +7,7 @@ from assistants import assistants as assistants  # noqa: E402
 
 
 class FinancialHealthAnalysis:
+    """This class encapsulate assistants to generate a final report."""
 
     def __init__(
         self,
@@ -20,6 +22,7 @@ class FinancialHealthAnalysis:
         sec_identity,
         structured_report_generator_model
     ):
+        """Initialize parameters."""
         self.aoai_token = aoai_token
         self.aoai_base_endpoint = aoai_base_endpoint
         self.aoai_api_version = aoai_api_version
@@ -31,11 +34,11 @@ class FinancialHealthAnalysis:
         self.sec_identity = sec_identity
         self.structured_report_generator_model = structured_report_generator_model
 
-
     async def __call__(
             self,
             stock_ticker: str
     ):
+        """Run reports one by one and generate a consolidated report at the end."""
         reports = {}
 
         # Create the news analyst assistant
@@ -111,12 +114,10 @@ class FinancialHealthAnalysis:
         )
 
         # Generate the structured consolidated report
-        reports["consolidated_report"] = \
-            await structured_report_generator.get_consolidated_report(
-                balance_sheet_report=reports["balance_sheet_report"],
-                income_report=reports["income_report"],
-                cash_flow_report=reports["cash_flow_report"],
-                news_report=reports["news_report"]
-            )
-        
+        reports["consolidated_report"] = await structured_report_generator.get_consolidated_report(
+            balance_sheet_report=reports["balance_sheet_report"],
+            income_report=reports["income_report"],
+            cash_flow_report=reports["cash_flow_report"],
+            news_report=reports["news_report"])
+
         return reports
