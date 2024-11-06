@@ -1,5 +1,6 @@
+"""This module implements Open Telemetry configuration for the application."""
+
 import logging
-import os
 
 from azure.monitor.opentelemetry.exporter import (
     AzureMonitorLogExporter,
@@ -25,11 +26,12 @@ class TelemetryConfigurator:
     """Configures the telemetry for the application."""
 
     def __init__(self, app_insights_connection_string):
-        # os.environ["SEMANTICKERNEL_EXPERIMENTAL_GENAI_ENABLE_OTEL_DIAGNOSTICS_SENSITIVE"] = "true"
+        """Initialize the telemetry configurator."""
         self.app_insights_connection_string = app_insights_connection_string
         self.resource = Resource.create({ResourceAttributes.SERVICE_NAME: "sk_financial_analyst"})
 
     def set_up_logging(self):
+        """Set Open Telemetry logging for the application."""
         exporter = AzureMonitorLogExporter(connection_string=self.app_insights_connection_string)
 
         # Create and set a global logger provider for the application.
@@ -51,6 +53,7 @@ class TelemetryConfigurator:
         logger.setLevel(logging.INFO)
 
     def set_up_tracing(self):
+        """Set Open Telemetry tracing for the application."""
         exporter = AzureMonitorTraceExporter(connection_string=self.app_insights_connection_string)
 
         # Initialize a trace provider for the application. This is a factory for creating tracers.
@@ -66,6 +69,7 @@ class TelemetryConfigurator:
         return tracer
 
     def set_up_metrics(self):
+        """Set Open Telemetry metrics for the application."""
         exporter = AzureMonitorMetricExporter(connection_string=self.app_insights_connection_string)
 
         # Initialize a metric provider for the application. This is a factory for creating meters.
