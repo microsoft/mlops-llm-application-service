@@ -8,6 +8,7 @@ from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 
 from sk_financial_analyst.utils import report_generator
+from sk_financial_analyst.utils.telemetry_configurator import TelemetryConfigurator
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 from common.configurator import config_reader
 
@@ -75,9 +76,22 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
     client = SecretClient(vault_url=key_vault_url, credential=credential)
     aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
 
-    # Get Bing Search key and SEC Identity from Azure Key Vault
+    # Get Bing Search key from Azure Key Vault
     bing_search_api_key = client.get_secret("bing-search-api-key").value
+
+    # Get SEC identity from Azure Key Vault
     sec_identity = client.get_secret("sec-identity").value
+
+    # Get Application Insights connection string from Azure Key Vault
+    app_insights_connection_string = client.get_secret(
+        "app-insights-connection-string"
+    ).value
+
+    # Configure telemetry
+    telemetry_configurator = TelemetryConfigurator(app_insights_connection_string)
+    telemetry_configurator.set_up_logging()
+    telemetry_configurator.set_up_metrics()
+    tracer = telemetry_configurator.set_up_tracing()
 
     # Create the output folder if it does not exist
     if not os.path.exists(output_folder):
@@ -103,7 +117,8 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
     )
 
     # invoke __call__ method to run report and return results back
-    report_results = await report(stock_ticker)
+    with tracer.start_as_current_span("financial_health_analysis"):
+        report_results = await report(stock_ticker)
 
     # Save the news report to a file
     news_report_file = os.path.join(
@@ -194,14 +209,14 @@ if __name__ == "__main__":
         "output_folder",
         type=str,
         nargs="?",
-        default="./data/outputs",
+        default="./sk_financial_analyst/data/outputs",
         help="The folder where the output data will be saved."
     )
     parser.add_argument(
         "intermediate_data_folder",
         type=str,
         nargs="?",
-        default="./data/intermediate",
+        default="./sk_financial_analyst/data/intermediate",
         help="The folder where the intermediate output data will be saved."
     )
     args = parser.parse_args()

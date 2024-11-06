@@ -51,10 +51,11 @@ You need to have access to a Bing Search service API. Follow [this instructions]
 
 You need to have access to an Azure Key Vault where you can write and read secrets. Follow [this instructions](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal) if you need to create one.
 
-You need to create three secrets:
+You need to create four secrets:
 - `AOAI-BASE-ENDPOINT`: this is the base endpoint of your Azure OpenAI deployment.
 - `BING-SEARCH-API-KEY`: this is the API key for the Bing Search service.
 - `SEC-IDENTITY`: this is an identity in the form of `<your name> <your email address>` that is needed for the application to make requests to the SEC Edgar database to get financial statements.
+- `APP-INSIGHTS-CONNECTION-STRING`: this is the connection string of your Azure Application Insights deployment.
 
 Follow [this documentation](https://learn.microsoft.com/en-us/azure/key-vault/general/security-features#controlling-access-to-key-vault-data) to learn how to configure access for reading / writing secrets in Azure Key Vault.
 
@@ -72,7 +73,7 @@ There is also specific requirements related to structured outputs in Semantic Ke
 
 The code uses an Azure Managed Identity Credential to get tokens to access the Azure OpenAI service and Azure Key Vault. It was tested running from `VSCode` authenticating to Azure.
 
-When running the main Python script, you generate two consolidated financial health analysis for a public company: one as a structured JSON output, following a pre-defined schema, and a markdown version generated from it. To run the code, go to the `sk_financial_analyst` folder, and execute:
+When running the main Python script, you generate two consolidated financial health analysis for a public company: one as a structured JSON output, following a pre-defined schema, and a markdown version generated from it. To run the code, go to the `python` folder, and execute:
 
 ```bash
 python -m sk_financial_analyst.executors.single_item_executor <STOCK_TICKER> <OUTPUT_FOLDER>
