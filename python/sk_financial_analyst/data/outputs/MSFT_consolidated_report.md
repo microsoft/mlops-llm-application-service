@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-1. [Financial Analysis](#financial-analysis)  
+1. [Financial Analysis](#financial-analysis)
 
-   1.1. [balance_sheet_statement_analysis](#balance_sheet_statement_analysis)  
+   1.1. [balance_sheet_statement_analysis](#balance_sheet_statement_analysis)
 
-   1.2. [income_statement_analysis](#income_statement_analysis)  
+   1.2. [income_statement_analysis](#income_statement_analysis)
 
-   1.3. [cash_flow_statement_analysis](#cash_flow_statement_analysis)  
+   1.3. [cash_flow_statement_analysis](#cash_flow_statement_analysis)
 
 2. [News Analysis](#news-analysis)
 3. [Conclusion](#conclusion)
@@ -21,7 +21,7 @@
 
 **Interpretation:** Microsoft maintains a healthy current ratio above 1, indicating its capability to cover short-term obligations with its current assets.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 1.3 | ratio |
 | 2024-06-30 | 1.27 | ratio |
@@ -31,7 +31,7 @@
 
 **Interpretation:** The quick ratio above 1 reflects strong short-term liquidity, even excluding inventories.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 1.09 | ratio |
 | 2024-06-30 | 1.04 | ratio |
@@ -41,7 +41,7 @@
 
 **Interpretation:** Positive working capital suggests strong operational efficiency and good management of short-term assets and liabilities.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 34726000000 | USD |
 | 2024-06-30 | 34448000000 | USD |
@@ -51,7 +51,7 @@
 
 **Interpretation:** A debt to equity ratio under 1 indicates a conservative capital structure with more reliance on equity financing, reducing financial risk.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 0.82 | ratio |
 | 2024-06-30 | 0.91 | ratio |
@@ -66,7 +66,7 @@
 
 **Interpretation:** Microsoft's gross margins are strong, indicating effective cost management relative to revenue.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 69.35 | % |
 | 2023-09-30 | 71.13 | % |
@@ -76,7 +76,7 @@
 
 **Interpretation:** The company maintains high operating margins, highlighting efficient cost control beyond the cost of goods sold.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 46.59 | % |
 | 2023-09-30 | 47.58 | % |
@@ -86,7 +86,7 @@
 
 **Interpretation:** A slight decline in profit margin suggests impacts from cost increases or strategic reinvestments.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 37.6 | % |
 | 2023-09-30 | 39.45 | % |
@@ -96,7 +96,7 @@
 
 **Interpretation:** An increase in basic EPS signifies enhanced earnings per shareholder, implying strong profitability.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 3.32 | USD |
 | 2023-09-30 | 3 | USD |
@@ -106,7 +106,7 @@
 
 **Interpretation:** A rising P/E ratio indicates investor optimism about future earnings growth.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 129.55 | ratio |
 | 2023-09-30 | 106.47 | ratio |
@@ -116,7 +116,7 @@
 
 **Interpretation:** The given ROE reflects effective utilization of equity to generate profit, demonstrating financial management efficiency.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 8.57 | % |
 
@@ -130,7 +130,7 @@
 
 **Interpretation:** The increase in cash flow per share suggests improved cash generation efficiency per share.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 4.6 | USD |
 | 2023-09-30 | 4.11 | USD |
@@ -140,7 +140,7 @@
 
 **Interpretation:** The free cash flow remains strong, underlining substantial cash availability for strategic purposes despite a decrease.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 19257000000 | USD |
 | 2023-09-30 | 20666000000 | USD |
@@ -150,7 +150,7 @@
 
 **Interpretation:** An improved cash flow to debt ratio indicates better solvency and ability to meet debt obligations with operational cash flow.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-09-30 | 0.76 | ratio |
 | 2023-09-30 | 0.72 | ratio |

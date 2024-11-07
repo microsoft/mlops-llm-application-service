@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-1. [Financial Analysis](#financial-analysis)  
+1. [Financial Analysis](#financial-analysis)
 
-   1.1. [balance_sheet_statement_analysis](#balance_sheet_statement_analysis)  
+   1.1. [balance_sheet_statement_analysis](#balance_sheet_statement_analysis)
 
-   1.2. [income_statement_analysis](#income_statement_analysis)  
+   1.2. [income_statement_analysis](#income_statement_analysis)
 
-   1.3. [cash_flow_statement_analysis](#cash_flow_statement_analysis)  
+   1.3. [cash_flow_statement_analysis](#cash_flow_statement_analysis)
 
 2. [News Analysis](#news-analysis)
 3. [Conclusion](#conclusion)
@@ -21,7 +21,7 @@
 
 **Interpretation:** Indicates strong short-term liquidity, with a ratio significantly greater than 1 for both periods.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 5.48 | ratio |
 | Dec 31, 2023 | 5.49 | ratio |
@@ -31,7 +31,7 @@
 
 **Interpretation:** High positive working capital suggests that BAC can comfortably cover its short-term liabilities.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 807175000000 | USD |
 | Dec 31, 2023 | 767671000000 | USD |
@@ -41,7 +41,7 @@
 
 **Interpretation:** Consistent with the banking industry's typical leveraging, though an increase indicates higher leverage in 2024.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 10.21 | ratio |
 | Dec 31, 2023 | 9.9 | ratio |
@@ -56,7 +56,7 @@
 
 **Interpretation:** The decline in profit margin indicates rising expenses or reduced efficiency in 2024 compared to 2023.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 27.21 | % |
 
@@ -65,7 +65,7 @@
 
 **Interpretation:** There is a decline in EPS from 2023 to 2024, indicating decreased profitability per share.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 0.82 | USD |
 | Sep 30, 2023 | 0.91 | USD |
@@ -75,7 +75,7 @@
 
 **Interpretation:** An increased P/E ratio in 2024 suggests market optimism about future growth despite current declines in profitability metrics.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 48.39 | ratio |
 | Sep 30, 2023 | 28.54 | ratio |
@@ -85,7 +85,7 @@
 
 **Interpretation:** ROE is relatively low, suggesting modest returns on equity investments for both years.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | 2.33 | % |
 | Sep 30, 2023 | 2.68 | % |
@@ -100,7 +100,7 @@
 
 **Interpretation:** A negative CFPS in 2024 indicates significant cash outflows, contrasting with positive and healthier figures in 2023.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | -4.52 | USD |
 | Sep 30, 2023 | 1.55 | USD |
@@ -110,7 +110,7 @@
 
 **Interpretation:** The negative ratio in 2024 points to difficulties in covering debt obligations with operational cash flows.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | Sep 30, 2024 | -0.103 | ratio |
 | Sep 30, 2023 | 0.037 | ratio |

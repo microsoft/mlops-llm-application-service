@@ -13,11 +13,11 @@ This is achieved by leveraging the OIDC protocol to establish trust between GitH
 ![Exchange Token Diagram](../docs/images/diagram_workflow_exchanging_oidc_token_for_azure_access_token.jpg)
 
 * ### Step 1: Register a Microsoft Entra Application & Assign Contributor Role to the application
-    1. Create a Microsoft Entra application with a service principal by [Azure portal] (https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal#register-an-application-with-microsoft-entra-id-and-create-a-service-principal). 
-    Copy values:  Client ID, Subscription ID, and Directory (tenant) ID. 
+    1. Create a Microsoft Entra application with a service principal by [Azure portal] (https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal#register-an-application-with-microsoft-entra-id-and-create-a-service-principal).
+    Copy values:  Client ID, Subscription ID, and Directory (tenant) ID.
 
     2. Add a Role Assignment `Contributor` (select "Add User, group or service principal"), and search for your Application.
-    Assign a role to the application. 
+    Assign a role to the application.
     ![Role Assignment](../docs/images/add_role_assignment.png)
 
 
@@ -25,7 +25,7 @@ This is achieved by leveraging the OIDC protocol to establish trust between GitH
     1. Once the managed identity is provisioned, go to App registrations and select `Certificates & secrets` under Manage section.
       ![Certificates and Secrets](../docs/images/certificates_and_secrets.png)
 
-    2. Add federated credential to trust tokens issued by GItHub Actions. 
+    2. Add federated credential to trust tokens issued by GItHub Actions.
       The `Entity Type` is used to define the scope of the OIDC requests from GitHub Workflows. Valid options are `Environment`, `Branch`, `Pull request`, `Tag`. To set up Federated Credential, click "Add Credential", Set Scenario to ``GitHub Actions deploying Azure resources``. Begin by filling in necessary fields (Organization, Repository, set Entity Type: `Pull request`).
         ![Pull Request](../docs/images/add_credential_GitHub_actions.png)
 
@@ -72,4 +72,3 @@ The `platform_ci_python.yaml` pipeline workflow contains a single job, `build-an
     ![platform_ci_python](../docs/images/azure_login_screenshot_oidc.jpg)
 
 https://github.com/user-attachments/assets/3c5f7677-cf1f-4458-ba08-79e1bb0a5e19
-  

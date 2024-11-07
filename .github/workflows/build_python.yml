@@ -26,7 +26,11 @@ jobs:
 
       - name: Lint Python Code
         working-directory: ./python
-        run: flake8
+        run: |
+          pip install pre-commit   
+          pre-commit install
+          pre-commit run --all-files
+
 
       - name: Run Python Unit Tests
         shell: bash

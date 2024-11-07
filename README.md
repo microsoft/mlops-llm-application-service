@@ -52,11 +52,11 @@ Since our service is non-deterministic, we need to understand the quality of the
 Once we have ground truth and output from the LLM Application Service, we can use the data in the evaluation pipeline utilizing pre-defined or custom evaluators. Azure AI Evaluation SDK can run evaluators locally or publish custom evaluators into AI Studio and run them remotely. Evaluation results can be published in AI Studio or uploaded to a desired system. The diagram below illustrates the evaluation component:
 
 ![Evaluation](./docs/images/EvaluationComponents.jpeg)
- 
+
 Now, if we stick all the components together, we will get the following high-level architecture:
 
 ![Overall Architecture](./docs/images/OverallArchitecture.jpeg)
- 
+
 
 ### DevOps Components
 
@@ -167,8 +167,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
+trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.

@@ -27,16 +27,16 @@ Here is a diagram showing a high-level architecture:
    ```bash
    git clone https://github.com/microsoft/mlops-llm-application-service.git
    cd python
-
+   ```
 2. Set up a virtual environment (optional but recommended):
    ```bash
    python3 -m venv venv
    source venv/bin/activate
-
+   ```
 3. Install the required dependencies:
    ```bash
    pip install -r requirements.txt
-
+   ```
 ### Configuration
 
 #### Azure OpenAI
@@ -82,5 +82,3 @@ python -m sk_financial_analyst.executors.single_item_executor <STOCK_TICKER> <OU
 `<STOCK_TICKER>` and `<OUTPUT_FOLDER>` are set by default to `MSFT` and `./data/outputs`, respectively.
 
 `sk_financial_analyst/data/outputs` is already populated with some example reports.
-
-

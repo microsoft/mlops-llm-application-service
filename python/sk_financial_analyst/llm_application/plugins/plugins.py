@@ -5,14 +5,14 @@ The plugins allow Semantic Kernel assistants configured with LLMs
 to interact with external services and data sources.
 """
 
-import time
-import requests
-import nest_asyncio
-from typing import Annotated, Literal
-import edgar as edgar
-import yfinance as yf
 import logging
+import time
+from typing import Annotated, Literal
 
+import edgar as edgar
+import nest_asyncio
+import requests
+import yfinance as yf
 from semantic_kernel.functions import kernel_function
 
 
@@ -30,13 +30,12 @@ class NewsPlugin:
         description="Get the latest news related to a stock ticker",
     )
     def get_news(
-        self,
-        ticker: Annotated[str, "The stock ticker for getting news"],
-        retries: int = 3,
-        delay: int = 2
-    ) -> Annotated[str,
-                   """News articles related to the stock ticker,
-                   showing title, headline, and text"""]:
+        self, ticker: Annotated[str, "The stock ticker for getting news"], retries: int = 3, delay: int = 2
+    ) -> Annotated[
+        str,
+        """News articles related to the stock ticker,
+                   showing title, headline, and text""",
+    ]:
         """
         Get the latest news articles related to a stock ticker.
 
@@ -59,7 +58,7 @@ class NewsPlugin:
             "freshness": freshness,
             "count": count,
             "safeSearch": safesearch,
-            "sortBy": sortby
+            "sortBy": sortby,
         }
         headers = {"Ocp-Apim-Subscription-Key": self.bing_search_api_key}
 
@@ -69,9 +68,7 @@ class NewsPlugin:
         for attempt in range(retries):
             # Call the API
             try:
-                response = requests.get(
-                    endpoint, headers=headers, params=params
-                )
+                response = requests.get(endpoint, headers=headers, params=params)
                 response.raise_for_status()
                 results = response.json()
                 num_results = len(results["value"])
@@ -113,13 +110,11 @@ class FinancialStatementsPlugin:
     )
     def get_financial_statements(
         self,
-        ticker: Annotated[
-            str, "The stock ticker for getting financial statements"
-        ],
+        ticker: Annotated[str, "The stock ticker for getting financial statements"],
         report_type: Annotated[
             Literal["balance_sheet", "income", "cash_flow"],
             """The type of financial statement to get.
-            Valid values are 'balance_sheet', 'income', or 'cash_flow'"""
+            Valid values are 'balance_sheet', 'income', or 'cash_flow'""",
         ],
     ) -> Annotated[str, "Financial statement related to the stock ticker"]:
         """
@@ -149,17 +144,11 @@ class FinancialStatementsPlugin:
 
         # Return the financial report based on the report type
         if report_type == "balance_sheet":
-            return "Balance Sheet Periods: " + \
-                str(balance_sheet_periods) + "\n" + \
-                str(balance_sheet)
+            return "Balance Sheet Periods: " + str(balance_sheet_periods) + "\n" + str(balance_sheet)
         elif report_type == "income":
-            return "Income Statement Periods: " + \
-                str(income_stmt_periods) + "\n" + \
-                str(income_stmt)
+            return "Income Statement Periods: " + str(income_stmt_periods) + "\n" + str(income_stmt)
         elif report_type == "cash_flow":
-            return "Cash Flow Statement Periods: " + \
-                str(cash_flow_stmt_periods) + "\n" + \
-                str(cash_flow_stmt)
+            return "Cash Flow Statement Periods: " + str(cash_flow_stmt_periods) + "\n" + str(cash_flow_stmt)
         else:
             return "Invalid report type"
 
@@ -195,8 +184,7 @@ class StockPricePlugin:
             stock_history = stock_data.history(start=statement_date)
 
             # Get the latest closing price
-            closing_price = round(
-                float(stock_history.iloc[0]["Close"]), 2)
+            closing_price = round(float(stock_history.iloc[0]["Close"]), 2)
 
             return closing_price
 
