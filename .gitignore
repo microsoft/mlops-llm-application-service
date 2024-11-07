@@ -402,3 +402,9 @@ venv/
 
 # Environment Variables
 .env
+
+# Mac related
+.DS_Store
+
+#output folders
+*/*/data/intermediate/
