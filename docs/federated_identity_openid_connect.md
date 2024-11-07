@@ -69,5 +69,7 @@ The `platform_ci_python.yaml` pipeline workflow contains a single job, `build-an
                 subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       ```
-  * ![platform_ci_python](../docs/images/azure_login_screenshot_oidc.jpg)
+    ![platform_ci_python](../docs/images/azure_login_screenshot_oidc.jpg)
+
+https://github.com/user-attachments/assets/3c5f7677-cf1f-4458-ba08-79e1bb0a5e19
   
