@@ -35,15 +35,17 @@ OpenID Connect (OIDC) with Azure and GitHub
         ![Pull Request](../docs/images/add_credential_GitHub_actions.png)
 
 
-* ### Step 3: Create GitHub Secrets/Variables
-    Create GitHub secrets/variables to store sensitive information. Copy these values from your Microsoft Entra application or user-assigned managed identity for your GitHub secrets:
-    * AZURE_CLIENT_ID
-    * AZURE_TENANT_ID
-    * AZURE_SUBSCRIPTION_ID 
+* ### Step 3: Set GitHub Permissions and Secrets/Variables
+    1. Set GitHub workflows permissions so that the token can work with Azure subscription. The workflow requires `id-token: write` and `contents: read` permissions. The `id-token: write` permission allows the workflow to request an OIDC token from GitHub's OIDC provider.
+    2. Create GitHub secrets/variables to store Microsoft Entra application details or user-assigned managed identity for your GitHub secrets:
+      * AZURE_CLIENT_ID
+      * AZURE_TENANT_ID
+      * AZURE_SUBSCRIPTION_ID
+    3. Configure `azure/login@`action within GitHub workflows to exchange GitHub tokens issued to the workflow for an access token from Microsoft identity platform. The `azure/login@`action picks up the OIDC token and exchanges it with Azure Active Directory (Azure AD) to obtain an access token. Azure AD verifies the OIDC token and issues an access token if the token is valid and the federated identity credential configuration matches.
 
 
-* ### Step 4: Use OpenID Connect Azure CLI to authenticate with the Azure login action.
-    Service principe federated identity is ready. Here, we are going to add setup for the `platform_ci_python.yaml` pipeline workflow job build-and-deploy-python with Github Action to generate OIDC token, which azure/loging@v2 will pick up and exchange against AAD. Start by adding permissions and `azure/login@v2` action:
+* ### Step 4: CI Workflow example with OpenID Connect and the Azure login action.
+     The `platform_ci_python.yaml` pipeline workflow contains a single job, `build-and-deploy-python`, which Github Actions to generate OIDC token. The `azure/loging@v2` will pick up and exchange against AAD. Start by adding permissions and `azure/login@v2` action:
 
   * ``platform_ci_python.yaml``
       ```
@@ -68,13 +70,7 @@ OpenID Connect (OIDC) with Azure and GitHub
                 client-id: ${{ secrets.AZURE_CLIENT_ID }}
                 tenant-id: ${{ secrets.AZURE_TENANT_ID }}
                 subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      
-            - name: Azure CLI script
-              uses: azure/cli@v2
-              with:
-                azcliversion: latest
-                inlineScript: |
-                  az account show
 
       ```
   * ![platform_ci_python](../docs/images/azure_login_screenshot_oidc.jpg)
+  
