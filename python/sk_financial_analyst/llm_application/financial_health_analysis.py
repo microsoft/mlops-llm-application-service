@@ -1,6 +1,7 @@
 """This class generates a financial health analysis of a company."""
-import sys
+
 import pathlib
+import sys
 
 sys.path.append(str(pathlib.Path(__file__).parent))
 from assistants import assistants as assistants  # noqa: E402
@@ -20,7 +21,7 @@ class FinancialHealthAnalysis:
         max_news,
         financial_analyst_model,
         sec_identity,
-        structured_report_generator_model
+        structured_report_generator_model,
     ):
         """Initialize parameters."""
         self.aoai_token = aoai_token
@@ -34,10 +35,7 @@ class FinancialHealthAnalysis:
         self.sec_identity = sec_identity
         self.structured_report_generator_model = structured_report_generator_model
 
-    async def __call__(
-            self,
-            stock_ticker: str
-    ):
+    async def __call__(self, stock_ticker: str):
         """Run reports one by one and generate a consolidated report at the end."""
         reports = {}
 
@@ -48,7 +46,7 @@ class FinancialHealthAnalysis:
             llm_deployment_name=self.news_analyst_model,
             bing_search_api_key=self.bing_search_api_key,
             bing_search_endpoint=self.bing_search_endpoint,
-            max_news=self.max_news
+            max_news=self.max_news,
         )
 
         # Get the news report for the stock ticker
@@ -59,7 +57,7 @@ class FinancialHealthAnalysis:
             aoai_token=self.aoai_token,
             aoai_base_endpoint=self.aoai_base_endpoint,
             llm_deployment_name=self.financial_analyst_model,
-            sec_identity=self.sec_identity
+            sec_identity=self.sec_identity,
         )
 
         # Get the financial reports for the stock ticker
@@ -73,9 +71,7 @@ class FinancialHealthAnalysis:
         """
 
         reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker,
-            report_type=report_type,
-            report_metrics=balance_sheet_report_metrics
+            stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
         )
 
         report_type = "income"
@@ -88,9 +84,7 @@ class FinancialHealthAnalysis:
             return on equity
         """
         reports["income_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker,
-            report_type=report_type,
-            report_metrics=income_report_metrics
+            stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
         )
 
         report_type = "cash_flow"
@@ -100,9 +94,7 @@ class FinancialHealthAnalysis:
             cash flow to debt ratio
         """
         reports["cash_flow_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker,
-            report_type=report_type,
-            report_metrics=cash_flow_report_metrics
+            stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
         )
 
         # Create the report generator assistant
@@ -110,7 +102,7 @@ class FinancialHealthAnalysis:
             aoai_token=self.aoai_token,
             aoai_base_endpoint=self.aoai_base_endpoint,
             llm_deployment_name=self.structured_report_generator_model,
-            aoai_api_version=self.aoai_api_version
+            aoai_api_version=self.aoai_api_version,
         )
 
         # Generate the structured consolidated report
@@ -118,6 +110,7 @@ class FinancialHealthAnalysis:
             balance_sheet_report=reports["balance_sheet_report"],
             income_report=reports["income_report"],
             cash_flow_report=reports["cash_flow_report"],
-            news_report=reports["news_report"])
+            news_report=reports["news_report"],
+        )
 
         return reports

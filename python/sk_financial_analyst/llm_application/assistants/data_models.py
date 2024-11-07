@@ -5,9 +5,9 @@ The data models are used to define the structured data used when
 creating the consolidated analysis report with the assistants.
 """
 
-from semantic_kernel.kernel_pydantic import KernelBaseModel
+from typing import Annotated, List, Literal
 
-from typing import List, Annotated, Literal
+from semantic_kernel.kernel_pydantic import KernelBaseModel
 
 
 class BullishIndicator(KernelBaseModel):
@@ -64,7 +64,7 @@ class Metric(KernelBaseModel):
         "return_on_equity",
         "cash_flow_per_share",
         "free_cash_flow",
-        "cash_flow_to_debt_ratio"
+        "cash_flow_to_debt_ratio",
     ]
     interpretation: str
     values: List[MetricValue]
@@ -73,11 +73,7 @@ class Metric(KernelBaseModel):
 class FinancialAnalysis(KernelBaseModel):
     """A class representing a financial analysis."""
 
-    name: Literal[
-        "balance_sheet_statement_analysis",
-        "income_statement_analysis",
-        "cash_flow_statement_analysis"
-    ]
+    name: Literal["balance_sheet_statement_analysis", "income_statement_analysis", "cash_flow_statement_analysis"]
     metrics: List[Metric]
     analysis: str
 
@@ -85,10 +81,7 @@ class FinancialAnalysis(KernelBaseModel):
 class ConsolidatedReport(KernelBaseModel):
     """A class representing a consolidated analysis report."""
 
-    company_name: Annotated[
-        str,
-        "The name of the company, extracted from the financial statements."
-    ]
+    company_name: Annotated[str, "The name of the company, extracted from the financial statements."]
     financial_analysis: List[FinancialAnalysis]
     news_analysis: NewsAnalysis
     conclusion: str
