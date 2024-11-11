@@ -7,6 +7,7 @@ from azure.monitor.opentelemetry.exporter import (
     AzureMonitorMetricExporter,
     AzureMonitorTraceExporter,
 )
+
 from opentelemetry._logs import set_logger_provider
 from opentelemetry.metrics import set_meter_provider
 from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
@@ -27,25 +28,34 @@ class TelemetryConfigurator:
     def __init__(self, app_insights_connection_string):
         """Initialize the telemetry configurator."""
         self.app_insights_connection_string = app_insights_connection_string
-        self.resource = Resource.create({ResourceAttributes.SERVICE_NAME: "sk_financial_analyst"})
+        self.resource = Resource.create(
+            {ResourceAttributes.SERVICE_NAME: "sk_financial_analyst"}
+        )
 
     def set_up_logging(self):
         """Set Open Telemetry logging for the application."""
-        exporter = AzureMonitorLogExporter(connection_string=self.app_insights_connection_string)
+        exporter = AzureMonitorLogExporter(
+            connection_string=self.app_insights_connection_string
+        )
 
         # Create and set a global logger provider for the application.
         logger_provider = LoggerProvider(resource=self.resource)
         # Log processors are initialized with an exporter which is responsible
         # for sending the telemetry data to a particular backend.
-        logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
+        logger_provider.add_log_record_processor(
+            BatchLogRecordProcessor(exporter)
+        )
         # Sets the global default logger provider
         set_logger_provider(logger_provider)
 
-        # Create a logging handler to write logging records, in OTLP format, to the exporter.
+        # Create a logging handler to write logging records,
+        # in OTLP format, to the exporter.
         handler = LoggingHandler()
-        # Add filters to the handler to only process records from semantic_kernel.
+        # Add filters to the handler to only process
+        # records from semantic_kernel.
         handler.addFilter(logging.Filter("semantic_kernel"))
-        # Attach the handler to the root logger. `getLogger()` with no arguments returns the root logger.
+        # Attach the handler to the root logger. `getLogger()`
+        # with no arguments returns the root logger.
         # Events from all child loggers will be processed by this handler.
         logger = logging.getLogger()
         logger.addHandler(handler)
@@ -53,9 +63,12 @@ class TelemetryConfigurator:
 
     def set_up_tracing(self):
         """Set Open Telemetry tracing for the application."""
-        exporter = AzureMonitorTraceExporter(connection_string=self.app_insights_connection_string)
+        exporter = AzureMonitorTraceExporter(
+            connection_string=self.app_insights_connection_string
+        )
 
-        # Initialize a trace provider for the application. This is a factory for creating tracers.
+        # Initialize a trace provider for the application.
+        # This is a factory for creating tracers.
         tracer_provider = TracerProvider(resource=self.resource)
         # Span processors are initialized with an exporter which is responsible
         # for sending the telemetry data to a particular backend.
@@ -69,14 +82,20 @@ class TelemetryConfigurator:
 
     def set_up_metrics(self):
         """Set Open Telemetry metrics for the application."""
-        exporter = AzureMonitorMetricExporter(connection_string=self.app_insights_connection_string)
+        exporter = AzureMonitorMetricExporter(
+            connection_string=self.app_insights_connection_string
+        )
 
-        # Initialize a metric provider for the application. This is a factory for creating meters.
+        # Initialize a metric provider for the application.
+        # This is a factory for creating meters.
         meter_provider = MeterProvider(
-            metric_readers=[PeriodicExportingMetricReader(exporter, export_interval_millis=5000)],
+            metric_readers=[PeriodicExportingMetricReader(
+                exporter, export_interval_millis=5000
+            )],
             resource=self.resource,
             views=[
-                # Dropping all instrument names except for those starting with "semantic_kernel"
+                # Dropping all instrument names except for
+                # those starting with "semantic_kernel"
                 View(instrument_name="*", aggregation=DropAggregation()),
                 View(instrument_name="semantic_kernel*"),
             ],
