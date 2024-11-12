@@ -1,5 +1,29 @@
 # MLOps for LLM Application Services
 
+## Introduction
+
+There are many different customer problems that can be solved using Large Language Models (LLMs) with no fine-tuning. GPT-3, GTP-3.5 and GPT-4.0 are prompt-based models, and they require just a text prompt input to generate its responses.
+
+Let’s look at some scenarios where Large Language Models are a useful component, even without fine-tuning. It will help us to understand what we need to develop and, finally, operationalize.
+
+**Scenario 1:** The basic service applies LLMs to input data to produce a summary, extract entities, or format data according to a pattern. For example, a quality assurance engineering assistant could help by taking natural language descriptions of an issue and reformatting to match a specific format. In this case, we need to develop an LLM Application Service to implement a single step flow to invoke an LLM, pass input data to it and return the LLM’s response back. The request to the LLM can be created using the few-shot approach, when it contains a system message, the input, and a few examples to tune LLM’s response.
+
+**Scenario 2:** A chatbot that provides abilities to extract some data using existing APIs. For example, it can be an application to order a pizza. It’s a conversational application, and a pizzeria’s API can provide data about available pizza types, toppings, and sales. The LLM can be used to collect all needed information from users in a human friendly way. In this case, the development process is concentrated around an LLM Application Service as well as a user interface (UI). The service must implement a conversational flow that might include history, API connections management and own logic to invoke different APIs. In this scenario we are using APIs as is, and we are assuming that they are black boxes with known inputs and outputs.
+
+**Scenario 3:** A chatbot that finds and summarizes information spread in several data sources, both structured and unstructured. For example, it can be a chatbot for service agents who use it to find answers for users’ questions in a big set of documents. It’s not enough to return references to documents that contain the needed information, but it’s important to extract the exact answer in a human readable format. In this scenario the development process should be focused around:
+
+- **UI:** that is the chatbot itself.
+- **LLM Application Service:** implements a complex flow gluing LLMs with other services, such as a search service. The application service might support memory, chain several LLM requests, manage connections to external services, load documents.
+- **Data Retrieval Services:** The documents themselves need to be stored in a searchable form, e,g. a vector database and to be stored they may need to be transformed (converted from image to text, or from audio or video to text), chunked, and embedded.The service must be tuned and configured to retrieve results. The tuning process might include components such as various pipelines to do data ingestion, indexes, serverless components to extend functionality of the service.
+
+These three scenarios might not cover all possible usage of LLMs, but they cover the most common projects, and we can use them to understand what kinds of components we need to build: UI, LLM Application Service and Data Retrieval Service.
+
+In this repository we are demonstration an LLM Application Service example that is based on Semantic Kernel, AI Studio, and supports programming languages like Python, C# and Java. At the same time, we would cross-reference the following repositories that can be useful to implement a custom RAG application:
+
+- [Data Retrieval Service based on AI Search](https://github.com/microsoft/mlops-aisearch-pull): the repository demonstrates how to use AI Search skills and indexers to pre-process data, store them in a vector form and provide a way to serve queries through an index.
+- [MLOps for LLM Application Services using Prompt flow](https://github.com/microsoft/mlops-promptflow-prompt): The repository uses Prompt flow as a way to orchestrate LLM Application Services using batch executor, embedded tracing and integration with evaluation framework.
+
+
 ## Overall Architecture
 
 ### LLM Application Service components
@@ -28,11 +52,11 @@ Since our service is non-deterministic, we need to understand the quality of the
 Once we have ground truth and output from the LLM Application Service, we can use the data in the evaluation pipeline utilizing pre-defined or custom evaluators. Azure AI Evaluation SDK can run evaluators locally or publish custom evaluators into AI Studio and run them remotely. Evaluation results can be published in AI Studio or uploaded to a desired system. The diagram below illustrates the evaluation component:
 
 ![Evaluation](./docs/images/EvaluationComponents.jpeg)
- 
+
 Now, if we stick all the components together, we will get the following high-level architecture:
 
 ![Overall Architecture](./docs/images/OverallArchitecture.jpeg)
- 
+
 
 ### DevOps Components
 
@@ -62,7 +86,67 @@ For example, the proposed set of Builds can be implemented as a set of GitHub ac
 
 ## Implementation Details
 
-TBD
+### Folder Structure
+
+The repository contains elements and examples to simplify the development and operationalization of the LLM Application Service that we described above.
+The template contains examples of the service in several different programming languages, and each language has its folder:
+
+-	CSharp: for C#
+-	Python: for Python
+-	Java: for Java
+
+The language folders are located in the top level of the repository alongside the following folders:
+
+-	.github: to support GitHub workflows that is our primary DevOps system for the repository
+-	.devcontainer: to support the development environment in the container and integrate it with VSCode
+-	evaluators: we are using Azure AI Evaluation SDK that supports Python for now. So, we are implementing all custom evaluators in Python. Later, once we have support for other languages, we will replicate the folder for C# and Java.
+
+Each demonstrated flow should have its folder under the appropriate language folder, and there is the following structure for it:
+
+-	config: This contains a configuration file (YAML for Python) with the parameters needed to execute the flow (like subscription ID and project name). Some parameters in this configuration come from environment variables.
+-	data: dataset examples to test and evaluate the flow.
+-	{flow name}: the flow itself.
+-	evaluate: evaluation scripts for the flow that use custom and embedded evaluators to evaluate the flow and publish results.
+-	executors: scripts to execute the flow locally or in the cloud.
+-	deployment: demonstrates how to deploy the flow using various targets. It can include Azure Function implementation, Fast API Kubernetes and so on.
+
+In addition to the folders above, we will need to host some common code. We assume to have some shared code for configurators, deployment, and executors. So, we can have a common folder under each language folder. The folder will include the following subfolders:
+
+-	deployments
+-	configurator
+-	executors
+
+### Financial Analyst as a flow example
+
+As an example of the LLM Application Service we are using a financial health analysis tool that leverages Semantic Kernel, external APIs, and Large Language Models (LLMs) to analyze financial statements, news articles, and stock prices to generate a consolidated financial health report of public companies. The service is complex enough to demonstrate some Semantic Kernel features. At the same time, it doesn't require any custom Data Retrieval Service and data pre-processing workloads. More details about the service can be found in [this document for Python](./python/sk_financial_analyst/README.md).
+
+### Deployment
+
+There are many different ways to deploy the provided example, and we use a few of them to demonstrate end-to-end operationalization process:
+
+- [Durable Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview): as a way to publish complex flows that are supposed to be real-time but have high latency due to their complexity.
+- [Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/what-is-aks): to demonstrate how to use Infrastructure as a Service to deploy LLM Application Services using Fast API.
+- [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/): to demonstrate Platform as a Service approach for deployment.
+- [Azure Machine Learning Batch endpoints](https://learn.microsoft.com/en-us/azure/machine-learning/concept-endpoints-batch?view=azureml-api-2): to demonstrate an ability to publish the LLM Application Service as a component to process batches.
+
+The repository demonstrates how to run all the deployments from above in parallel, but you can keep just needed targets or introduce own.
+
+### Tracing
+
+In order to collect metrics from the LLM Application Service we are using [OpenTelemetry with Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore). In this case we can use Azure Monitor to collect traces as well as performance of the deployment targets and build various dashboards based on that.
+
+### Batch Execution
+
+The repository demonstrate several different Batch Executors:
+
+- **Local Executor:** demonstrates how to invoke the LLM Application Service on a local computer and generates output for the evaluation step.
+- **Azure Machine Learning:** thanks to parallel job in Azure ML we can utilize Azure ML Serverless Compute in order to process any amount of data in parallel.
+
+### Evaluation
+
+We are using [Azure AI Evaluation SDK](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/develop/evaluate-sdk) to run evaluation workloads. The SDK can be used to run evaluation locally or in the cloud using AI Studio serverless compute. In both cases it's possible to store evaluation results and compare experiments in AI Studio.
+
+The SDK supports Python only as for now, but since we are using batch executor output dataset (rather than the flow itself) as an input for evaluation, we are able to utilize the SDK for any programming language.
 
 ## How to start working with the template
 
@@ -71,8 +155,7 @@ TBD
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
@@ -84,8 +167,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
+trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.

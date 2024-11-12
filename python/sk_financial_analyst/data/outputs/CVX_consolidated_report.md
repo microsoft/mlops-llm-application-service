@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-1. [Financial Analysis](#financial-analysis)  
+1. [Financial Analysis](#financial-analysis)
 
-   1.1. [balance_sheet_statement_analysis](#balance_sheet_statement_analysis)  
+   1.1. [balance_sheet_statement_analysis](#balance_sheet_statement_analysis)
 
-   1.2. [income_statement_analysis](#income_statement_analysis)  
+   1.2. [income_statement_analysis](#income_statement_analysis)
 
-   1.3. [cash_flow_statement_analysis](#cash_flow_statement_analysis)  
+   1.3. [cash_flow_statement_analysis](#cash_flow_statement_analysis)
 
 2. [News Analysis](#news-analysis)
 3. [Conclusion](#conclusion)
@@ -21,7 +21,7 @@
 
 **Interpretation:** A decrease from December 2023 to June 2024 indicates slightly decreased liquidity, though still above 1, suggesting reasonable short-term asset coverage over liabilities.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 1.16 | ratio |
 | 2023-12-31 | 1.28 | ratio |
@@ -31,7 +31,7 @@
 
 **Interpretation:** The ratio below 1 indicates reliance on inventory for meeting obligations, with a downward trend indicating worsening liquidity without inventory.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 0.74 | ratio |
 | 2023-12-31 | 0.88 | ratio |
@@ -41,7 +41,7 @@
 
 **Interpretation:** A decrease in working capital from December 2023 to June 2024 indicates less ability to cover short-term liabilities after obligations.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 5342000000.0 | USD |
 | 2023-12-31 | 8870000000.0 | USD |
@@ -51,7 +51,7 @@
 
 **Interpretation:** Maintaining a low range suggests low reliance on debt, portraying a strong equity position relative to liabilities over the periods.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 0.14 | ratio |
 | 2023-12-31 | 0.13 | ratio |
@@ -66,7 +66,7 @@
 
 **Interpretation:** The slight decrease from 2023 to 2024 indicates potentially higher costs or tightened margins affecting profitability.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 39.7 | % |
 | 2023-06-30 | 40.7 | % |
@@ -76,7 +76,7 @@
 
 **Interpretation:** A downward trend is evident, affecting income generation efficiency per sales unit.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 13.7 | % |
 | 2023-06-30 | 16.0 | % |
@@ -86,7 +86,7 @@
 
 **Interpretation:** A significant decline indicates external financial pressures or increased operational costs affecting net earnings.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 8.7 | % |
 | 2023-06-30 | 12.3 | % |
@@ -96,7 +96,7 @@
 
 **Interpretation:** Reflecting reduced earnings capability, the decline affects investor perception and stock value continuity.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 2.43 | USD |
 | 2023-06-30 | 3.22 | USD |
@@ -106,7 +106,7 @@
 
 **Interpretation:** Rising despite falling earnings, suggesting possible overvaluation or market confidence beyond current profitability.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 63.7 | ratio |
 | 2023-06-30 | 46.4 | ratio |
@@ -116,7 +116,7 @@
 
 **Interpretation:** A decline points to reduced efficiency in generating returns from equity, potentially impacting investor returns.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 2.8 | % |
 | 2023-06-30 | 3.7 | % |
@@ -131,7 +131,7 @@
 
 **Interpretation:** Slightly decreasing indicates a potential decrease in cash generative capacities or operational cost inflation in 2024.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 7.18 | USD |
 | 2023-06-30 | 7.24 | USD |
@@ -141,7 +141,7 @@
 
 **Interpretation:** Reduced free cash flow indicates higher investment commitments in 2024 impacting available cash after capital expenditures.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 5068000000.0 | USD |
 | 2023-06-30 | 6707000000.0 | USD |
@@ -151,7 +151,7 @@
 
 **Interpretation:** Decrease indicates lowering capacity to cover debts through operational cash flow alone in 2024.
 
-| Date       | Value  | Unit  
+| Date       | Value  | Unit
 |------------|--------|-------
 | 2024-06-30 | 0.57 | ratio |
 | 2023-06-30 | 0.65 | ratio |
