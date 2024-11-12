@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import logging
 import os
+import sys
 from logging import getLogger
 from pprint import pprint
 
@@ -153,32 +154,45 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
                 file.write(markdown_report)
 
 
-if __name__ == "__main__":
+def parse_args():
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="""
             Script to generate a financial health analysis of a company.
         """
     )
     parser.add_argument(
-        "stock_ticker",
+        "--stock_ticker",
         type=str,
         nargs="?",
         default="MSFT",
         help="The stock ticker symbol to generate the analysis for.",
     )
     parser.add_argument(
-        "output_folder",
+        "--output_folder",
         type=str,
         nargs="?",
         default="./sk_financial_analyst/data/outputs",
         help="The folder where the output data will be saved.",
     )
     parser.add_argument(
-        "intermediate_data_folder",
+        "--intermediate_data_folder",
         type=str,
         nargs="?",
         default="./sk_financial_analyst/data/intermediate",
         help="The folder where the intermediate output data will be saved.",
     )
-    args = parser.parse_args()
-    asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder))
+    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    try:
+        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
+    except KeyboardInterrupt:
+        print("\nProcess interrupted by user. Exiting...")
+        sys.exit(0)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        sys.exit(1)

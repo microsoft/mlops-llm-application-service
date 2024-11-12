@@ -27,16 +27,16 @@ Here is a diagram showing a high-level architecture:
    ```bash
    git clone https://github.com/microsoft/mlops-llm-application-service.git
    cd python
-   ```
+
 2. Set up a virtual environment (optional but recommended):
    ```bash
    python3 -m venv venv
    source venv/bin/activate
-   ```
+
 3. Install the required dependencies:
    ```bash
    pip install -r requirements.txt
-   ```
+
 ### Configuration
 
 #### Azure OpenAI
@@ -76,17 +76,29 @@ The code uses an Azure Managed Identity Credential to get tokens to access the A
 When running the main Python script, you generate two consolidated financial health analysis for a public company: one as a structured JSON output, following a pre-defined schema, and a markdown version generated from it. To run the code, go to the `python` folder, and execute:
 
 ```bash
-python -m sk_financial_analyst.executors.single_item_executor <STOCK_TICKER> <OUTPUT_FOLDER>
+python -m sk_financial_analyst.executors.single_item_executor --stock_ticker <STOCK_TICKER>
 ```
 
-`<STOCK_TICKER>` and `<OUTPUT_FOLDER>` are set by default to `MSFT` and `./data/outputs`, respectively.
+`<STOCK_TICKER>` is set by default to `MSFT`. You can run:
+
+```bash
+python -m sk_financial_analyst.executors.single_item_executor --help
+```
+
+to see all available command line options.
 
 `sk_financial_analyst/data/outputs` is already populated with some example reports.
 
-
-### Running as a docker container
+You can also generate reports in a batch, for a list of companies. There is already a pre-defined list under `python/sk_financial_analyst/data/inputs/tickers.jsonl`. To run a batch of reports using that list, go to the `python` folder and execute:
 
 ```bash
-cd python
-docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev up --build --remove-orphans --detach
+python -m sk_financial_analyst.executors.batch_executor
 ```
+
+You can run:
+
+```bash
+python -m sk_financial_analyst.executors.batch_executor --help
+```
+
+to see all available command line options.
