@@ -47,3 +47,11 @@
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+
+          - name: Build and deploy Container App
+            uses: azure/container-apps-deploy-action@v1
+            with:
+              acrName: llmappcontainerregistry
+              containerAppName: mlops-llm-containerapp
+              resourceGroup: mlops-llm-application
+              imageToDeploy: llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
