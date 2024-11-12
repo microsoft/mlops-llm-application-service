@@ -1,6 +1,8 @@
 # Use an official Python runtime as a parent image
 FROM python:3.12.7-slim-bullseye AS builder
 
+CMD ["python", "-c", "import os; print(os.environ.get('OTEL_EXPORTER_OTLP_ENDPOINT'))"]
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -58,10 +60,6 @@ COPY sk_financial_analyst/llm_application/assistants/ /app/sk_financial_analyst/
 COPY sk_financial_analyst/llm_application/plugins/ /app/sk_financial_analyst/llm_application/plugins/
 COPY sk_financial_analyst/llm_application/utils/ /app/sk_financial_analyst/llm_application/utils/
 COPY sk_financial_analyst/utils/ /app/sk_financial_analyst/utils/
-COPY sk_financial_analyst/deployment/run.sh /app/run.sh
-
-# Ensure `run.sh` has executable permissions before switching users
-RUN chmod +x /app/run.sh
 
 # Change ownership of the /app directory to the non-root user
 RUN chown -R appuser:appuser /app
@@ -77,11 +75,4 @@ ENV PORT=8000
 
 ENV PYTHONPATH="/app"
 
-RUN python -c "import sk_financial_analyst.executors.single_item_executor"
-
-RUN opentelemetry-instrument \
-    --traces_exporter otlp \
-    --metrics_exporter otlp \
-    --service_name sk_financial_analyst_local  \
-    --exporter_otlp_endpoint "${OTEL_EXPORTER_OTLP_ENDPOINT}" \
-    python -m sk_financial_analyst.executors.single_item_executor MSFT .data/outputs
+CMD python -m sk_financial_analyst.executors.single_item_executor MSFT .data/outputs

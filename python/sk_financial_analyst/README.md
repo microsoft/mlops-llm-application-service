@@ -82,3 +82,11 @@ python -m sk_financial_analyst.executors.single_item_executor <STOCK_TICKER> <OU
 `<STOCK_TICKER>` and `<OUTPUT_FOLDER>` are set by default to `MSFT` and `./data/outputs`, respectively.
 
 `sk_financial_analyst/data/outputs` is already populated with some example reports.
+
+
+### Running as a docker container
+
+```bash
+cd python
+docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev up --build --remove-orphans --detach
+```

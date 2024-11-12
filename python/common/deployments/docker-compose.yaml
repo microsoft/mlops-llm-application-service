@@ -1,0 +1,53 @@
+networks:
+  default:
+    driver: bridge
+
+services:
+  # OpenTelemetry Collector
+  otelcol:
+    image: "otel/opentelemetry-collector-contrib:latest"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    restart: always
+    command: [ "--config=/etc/otelcol-config.yml" ]
+    volumes:
+      - ./otel-config-azuremonitor.yaml:/etc/otelcol-config.yml
+    ports:
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318"
+    environment:
+      - APPLICATIONINSIGHTS_CONNECTION_STRING
+    networks:
+      - default
+
+  sk-financial-analyst-app:
+    build:
+      context: ../..
+      dockerfile: ./common/deployments/Dockerfile
+    container_name: sk-financial-analyst-app
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    restart: unless-stopped
+    environment:
+      - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=${OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED}
+      - OTEL_EXPORTER_OTLP_ENDPOINT="${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT_GRPC}"
+      - NEWS_ANALYST_MODEL_NAME=${NEWS_ANALYST_MODEL_NAME}
+      - FINANCIAL_ANALYST_MODEL_NAME=${FINANCIAL_ANALYST_MODEL_NAME}
+      - REPORT_GENERATOR_MODEL_NAME=${REPORT_GENERATOR_MODEL_NAME}
+      - KEY_VAULT_URL=${KEY_VAULT_URL}
+      - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME}
+      - OTEL_LOGS_EXPORTER=${OTEL_LOGS_EXPORTER}
+      - OTEL_TRACES_EXPORTER=${OTEL_TRACES_EXPORTER}
+      - OTEL_EXPORTER_OTLP_PROTOCOL=${OTEL_EXPORTER_OTLP_PROTOCOL}
+      - OTEL_EXPORTER_OTLP_INSECURE="${OTEL_EXPORTER_OTLP_INSECURE}
+      - OTEL_LOG_LEVEL=${OTEL_LOG_LEVEL}
+      - OTEL_RESOURCE_ATTRIBUTES=${OTEL_RESOURCE_ATTRIBUTES}
+    networks:
+      - default
+    depends_on:
+      otelcol:
+        condition: service_started

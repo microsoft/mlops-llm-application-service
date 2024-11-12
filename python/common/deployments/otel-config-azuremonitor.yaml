@@ -28,7 +28,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [azuremonitor]
+      exporters: [debug]
     logs:
       receivers: [otlp]
       processors: [batch]

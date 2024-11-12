@@ -68,9 +68,6 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
             # Get SEC identity from Azure Key Vault
             sec_identity = client.get_secret("sec-identity").value
 
-            # Get Application Insights connection string from Azure Key Vault
-            app_insights_connection_string = client.get_secret("app-insights-connection-string").value
-
         with tracer.start_as_current_span("Generate Financial Health Analysis report"):
             # Create the output folder if it does not exist
             if not os.path.exists(output_folder):
