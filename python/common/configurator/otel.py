@@ -19,4 +19,4 @@ def config_otel():
     environ["PYTHONPATH"] = pathsep.join(python_path)
 
     # Import to auto initialize
-    import opentelemetry.instrumentation.auto_instrumentation.sitecustomize
+    import opentelemetry.instrumentation.auto_instrumentation.sitecustomize  # noqa
