@@ -1,110 +1,104 @@
 {
-    "ticker": "AAPL",
-    "filing_information": {
-        "form_type": "10-Q",
-        "filing_date": "2024-06-29",
-        "statement_dates": {
-            "balance_sheet_dates": [
-                "2024-06-29",
-                "2023-09-30"
-            ],
-            "income_statement_dates": [
-                "2024-06-29",
-                "2023-07-01"
-            ],
-            "cash_flow_statement_dates": [],
-            "filing_date": "2024-06-29"
-        }
-    },
-    "stock_prices": {
-        "2024-06-29": 216.5,
-        "2023-09-30": 172.87,
-        "2023-07-01": 191.22
-    },
-    "raw_financial_values": {
-        "total_current_assets": {
-            "2024-06-29": 125435000000.0,
-            "2023-09-30": 143566000000.0
-        },
-        "total_current_liabilities": {
-            "2024-06-29": 131624000000.0,
-            "2023-09-30": 145308000000.0
-        },
-        "cash_and_cash_equivalents": {
-            "2024-06-29": 25565000000.0,
-            "2023-09-30": 29965000000.0
-        },
-        "marketable_securities": {},
-        "accounts_receivable_net": {
-            "2024-06-29": 22795000000.0,
-            "2023-09-30": 29508000000.0
-        },
-        "total_liabilities": {
-            "2024-06-29": 264904000000.0,
-            "2023-09-30": 290437000000.0
-        },
-        "total_stockholders_equity": {
-            "2024-06-29": 66708000000.0,
-            "2023-09-30": 62146000000.0
-        },
-        "long_term_debt": {
-            "2024-06-29": 86196000000.0,
-            "2023-09-30": 95281000000.0
-        },
-        "revenue": {
-            "2024-06-29": 85777000000.0,
-            "2023-07-01": 81797000000.0
-        },
-        "cost_of_revenue": {
-            "2024-06-29": -46099000000.0,
-            "2023-07-01": -45384000000.0
-        },
-        "net_income": {
-            "2024-06-29": 21448000000.0,
-            "2023-07-01": 19881000000.0
-        },
-        "operating_income": {
-            "2024-06-29": 25352000000.0,
-            "2023-07-01": 22998000000.0
-        },
-        "basic_earnings_per_share": {
-            "2024-06-29": 1.4,
-            "2023-07-01": 1.27
-        },
-        "net_cash_from_operating_activities": {},
-        "capital_expenditures": {}
-    },
-    "financial_metrics": {
-        "2024-06-29": {
-            "balance_sheet_analysis": {
-                "current_ratio": 0.95,
-                "quick_ratio": 0.37,
-                "working_capital": "-6,189,000,000",
-                "debt_to_equity_ratio": 3.97
-            },
-            "income_statement_analysis": {
-                "gross_margin": 153.74,
-                "profit_margin": 25.0,
-                "operating_margin": 29.56,
-                "return_on_equity": 32.15
-            },
-            "cash_flow_analysis": {
-                "cash_flow_to_debt_ratio": 0.0,
-                "free_cash_flow": "0"
-            }
-        },
-        "2023-09-30": {
-            "balance_sheet_analysis": {
-                "current_ratio": 0.99,
-                "quick_ratio": 0.41,
-                "working_capital": "-1,742,000,000",
-                "debt_to_equity_ratio": 4.67
-            },
-            "income_statement_analysis": {},
-            "cash_flow_analysis": {
-                "cash_flow_to_debt_ratio": 0.0,
-                "free_cash_flow": "0"
-            }
-        }
+  "ticker": "AAPL",
+  "filing_information": {
+    "form_type": "10-Q",
+    "filing_date": "2024-06-29",
+    "statement_dates": {
+      "balance_sheet_dates": ["2024-06-29", "2023-09-30"],
+      "income_statement_dates": ["2024-06-29", "2023-07-01"],
+      "cash_flow_statement_dates": [],
+      "filing_date": "2024-06-29"
     }
+  },
+  "stock_prices": {
+    "2024-06-29": 216.5,
+    "2023-09-30": 172.87,
+    "2023-07-01": 191.22
+  },
+  "raw_financial_values": {
+    "total_current_assets": {
+      "2024-06-29": 125435000000.0,
+      "2023-09-30": 143566000000.0
+    },
+    "total_current_liabilities": {
+      "2024-06-29": 131624000000.0,
+      "2023-09-30": 145308000000.0
+    },
+    "cash_and_cash_equivalents": {
+      "2024-06-29": 25565000000.0,
+      "2023-09-30": 29965000000.0
+    },
+    "marketable_securities": {},
+    "accounts_receivable_net": {
+      "2024-06-29": 22795000000.0,
+      "2023-09-30": 29508000000.0
+    },
+    "total_liabilities": {
+      "2024-06-29": 264904000000.0,
+      "2023-09-30": 290437000000.0
+    },
+    "total_stockholders_equity": {
+      "2024-06-29": 66708000000.0,
+      "2023-09-30": 62146000000.0
+    },
+    "long_term_debt": {
+      "2024-06-29": 86196000000.0,
+      "2023-09-30": 95281000000.0
+    },
+    "revenue": {
+      "2024-06-29": 85777000000.0,
+      "2023-07-01": 81797000000.0
+    },
+    "cost_of_revenue": {
+      "2024-06-29": -46099000000.0,
+      "2023-07-01": -45384000000.0
+    },
+    "net_income": {
+      "2024-06-29": 21448000000.0,
+      "2023-07-01": 19881000000.0
+    },
+    "operating_income": {
+      "2024-06-29": 25352000000.0,
+      "2023-07-01": 22998000000.0
+    },
+    "basic_earnings_per_share": {
+      "2024-06-29": 1.4,
+      "2023-07-01": 1.27
+    },
+    "net_cash_from_operating_activities": {},
+    "capital_expenditures": {}
+  },
+  "financial_metrics": {
+    "2024-06-29": {
+      "balance_sheet_analysis": {
+        "current_ratio": 0.95,
+        "quick_ratio": 0.37,
+        "working_capital": "-6,189,000,000",
+        "debt_to_equity_ratio": 3.97
+      },
+      "income_statement_analysis": {
+        "gross_margin": 153.74,
+        "profit_margin": 25.0,
+        "operating_margin": 29.56,
+        "return_on_equity": 32.15
+      },
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    },
+    "2023-09-30": {
+      "balance_sheet_analysis": {
+        "current_ratio": 0.99,
+        "quick_ratio": 0.41,
+        "working_capital": "-1,742,000,000",
+        "debt_to_equity_ratio": 4.67
+      },
+      "income_statement_analysis": {},
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    }
+  }
 }

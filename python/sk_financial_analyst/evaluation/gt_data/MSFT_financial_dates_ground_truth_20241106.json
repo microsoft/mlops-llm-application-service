@@ -1,122 +1,113 @@
 {
-    "ticker": "MSFT",
-    "filing_information": {
-        "form_type": "10-Q",
-        "filing_date": "2024-09-30",
-        "statement_dates": {
-            "balance_sheet_dates": [
-                "2024-09-30",
-                "2024-06-30"
-            ],
-            "income_statement_dates": [
-                "2024-09-30",
-                "2023-09-30"
-            ],
-            "cash_flow_statement_dates": [
-                "2024-09-30",
-                "2023-09-30"
-            ],
-            "filing_date": "2024-09-30"
-        }
-    },
-    "stock_prices": {
-        "2024-09-30": 430.3,
-        "2023-09-30": 319.4,
-        "2024-06-30": 455.91
-    },
-    "raw_financial_values": {
-        "total_current_assets": {
-            "2024-09-30": 149926000000.0,
-            "2024-06-30": 159734000000.0
-        },
-        "total_current_liabilities": {
-            "2024-09-30": 115200000000.0,
-            "2024-06-30": 125286000000.0
-        },
-        "cash_and_cash_equivalents": {
-            "2024-09-30": 20840000000.0,
-            "2024-06-30": 18315000000.0
-        },
-        "marketable_securities": {
-            "2024-09-30": 57588000000.0,
-            "2024-06-30": 57228000000.0
-        },
-        "accounts_receivable_net": {
-            "2024-09-30": 44148000000.0,
-            "2024-06-30": 56924000000.0
-        },
-        "total_liabilities": {
-            "2024-09-30": 235290000000.0,
-            "2024-06-30": 243686000000.0
-        },
-        "total_stockholders_equity": {
-            "2024-09-30": 287723000000.0,
-            "2024-06-30": 268477000000.0
-        },
-        "long_term_debt": {
-            "2024-09-30": 42868000000.0,
-            "2024-06-30": 42688000000.0
-        },
-        "revenue": {
-            "2024-09-30": 65585000000.0,
-            "2023-09-30": 56517000000.0
-        },
-        "cost_of_revenue": {
-            "2024-09-30": -20099000000.0,
-            "2023-09-30": -16302000000.0
-        },
-        "net_income": {
-            "2024-09-30": 24667000000.0,
-            "2023-09-30": 22291000000.0
-        },
-        "operating_income": {
-            "2024-09-30": 30552000000.0,
-            "2023-09-30": 26895000000.0
-        },
-        "basic_earnings_per_share": {
-            "2024-09-30": 3.32,
-            "2023-09-30": 3.0
-        },
-        "net_cash_from_operating_activities": {
-            "2024-09-30": 34180000000.0,
-            "2023-09-30": 30583000000.0
-        },
-        "capital_expenditures": {
-            "2024-09-30": -14923000000.0,
-            "2023-09-30": -9917000000.0
-        }
-    },
-    "financial_metrics": {
-        "2024-09-30": {
-            "balance_sheet_analysis": {
-                "current_ratio": 1.3,
-                "quick_ratio": 1.06,
-                "working_capital": "34,726,000,000",
-                "debt_to_equity_ratio": 0.82
-            },
-            "income_statement_analysis": {
-                "gross_margin": 130.65,
-                "profit_margin": 37.61,
-                "operating_margin": 46.58,
-                "return_on_equity": 8.57
-            },
-            "cash_flow_analysis": {
-                "cash_flow_to_debt_ratio": 0.22,
-                "free_cash_flow": "19,257,000,000"
-            }
-        },
-        "2024-06-30": {
-            "balance_sheet_analysis": {
-                "current_ratio": 1.27,
-                "quick_ratio": 1.06,
-                "working_capital": "34,448,000,000",
-                "debt_to_equity_ratio": 0.91
-            },
-            "income_statement_analysis": {},
-            "cash_flow_analysis": {
-                "cash_flow_to_debt_ratio": 0.0,
-                "free_cash_flow": "0"
-            }
-        }
+  "ticker": "MSFT",
+  "filing_information": {
+    "form_type": "10-Q",
+    "filing_date": "2024-09-30",
+    "statement_dates": {
+      "balance_sheet_dates": ["2024-09-30", "2024-06-30"],
+      "income_statement_dates": ["2024-09-30", "2023-09-30"],
+      "cash_flow_statement_dates": ["2024-09-30", "2023-09-30"],
+      "filing_date": "2024-09-30"
     }
+  },
+  "stock_prices": {
+    "2024-09-30": 430.3,
+    "2023-09-30": 319.4,
+    "2024-06-30": 455.91
+  },
+  "raw_financial_values": {
+    "total_current_assets": {
+      "2024-09-30": 149926000000.0,
+      "2024-06-30": 159734000000.0
+    },
+    "total_current_liabilities": {
+      "2024-09-30": 115200000000.0,
+      "2024-06-30": 125286000000.0
+    },
+    "cash_and_cash_equivalents": {
+      "2024-09-30": 20840000000.0,
+      "2024-06-30": 18315000000.0
+    },
+    "marketable_securities": {
+      "2024-09-30": 57588000000.0,
+      "2024-06-30": 57228000000.0
+    },
+    "accounts_receivable_net": {
+      "2024-09-30": 44148000000.0,
+      "2024-06-30": 56924000000.0
+    },
+    "total_liabilities": {
+      "2024-09-30": 235290000000.0,
+      "2024-06-30": 243686000000.0
+    },
+    "total_stockholders_equity": {
+      "2024-09-30": 287723000000.0,
+      "2024-06-30": 268477000000.0
+    },
+    "long_term_debt": {
+      "2024-09-30": 42868000000.0,
+      "2024-06-30": 42688000000.0
+    },
+    "revenue": {
+      "2024-09-30": 65585000000.0,
+      "2023-09-30": 56517000000.0
+    },
+    "cost_of_revenue": {
+      "2024-09-30": -20099000000.0,
+      "2023-09-30": -16302000000.0
+    },
+    "net_income": {
+      "2024-09-30": 24667000000.0,
+      "2023-09-30": 22291000000.0
+    },
+    "operating_income": {
+      "2024-09-30": 30552000000.0,
+      "2023-09-30": 26895000000.0
+    },
+    "basic_earnings_per_share": {
+      "2024-09-30": 3.32,
+      "2023-09-30": 3.0
+    },
+    "net_cash_from_operating_activities": {
+      "2024-09-30": 34180000000.0,
+      "2023-09-30": 30583000000.0
+    },
+    "capital_expenditures": {
+      "2024-09-30": -14923000000.0,
+      "2023-09-30": -9917000000.0
+    }
+  },
+  "financial_metrics": {
+    "2024-09-30": {
+      "balance_sheet_analysis": {
+        "current_ratio": 1.3,
+        "quick_ratio": 1.06,
+        "working_capital": "34,726,000,000",
+        "debt_to_equity_ratio": 0.82
+      },
+      "income_statement_analysis": {
+        "gross_margin": 130.65,
+        "profit_margin": 37.61,
+        "operating_margin": 46.58,
+        "return_on_equity": 8.57
+      },
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.22,
+        "free_cash_flow": "19,257,000,000"
+      }
+    },
+    "2024-06-30": {
+      "balance_sheet_analysis": {
+        "current_ratio": 1.27,
+        "quick_ratio": 1.06,
+        "working_capital": "34,448,000,000",
+        "debt_to_equity_ratio": 0.91
+      },
+      "income_statement_analysis": {},
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    }
+  }
 }
