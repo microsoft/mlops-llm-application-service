@@ -4,7 +4,7 @@
     on:
       push:
         branches:
-          - 'feature/otel'
+          - 'main'
         paths:
           - '.github/**'
           - 'python/**'
@@ -19,7 +19,7 @@
       build-and-deploy-python:
         runs-on: ubuntu-latest
         steps:
-          - name: Azure login
+          - name: Azure login with OICD
             uses: azure/login@v2
             with:
               client-id: ${{ secrets.AZURE_CLIENT_ID }}
