@@ -8,7 +8,13 @@ import sys
 from logging import getLogger
 from pprint import pprint
 
-from azure.identity import DefaultAzureCredential
+from azure.identity import (
+    AzureCliCredential,
+    ChainedTokenCredential,
+    ManagedIdentityCredential,
+    VisualStudioCodeCredential,
+    WorkloadIdentityCredential,
+)
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader, otel
 from opentelemetry import trace
@@ -55,8 +61,13 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
         span.set_attribute("aoai_api_version", aoai_api_version)
 
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
-            # Get Azure OpenAI authentication token
-            credential = DefaultAzureCredential()
+            # Get Azure OpenAI authentication token, ManagedIdentityCredential requires AZURE_CLIENT_ID to be set
+            credential = ChainedTokenCredential(
+                AzureCliCredential(),
+                VisualStudioCodeCredential(),
+                ManagedIdentityCredential(),
+                WorkloadIdentityCredential(),
+            )
             aoai_token = credential.get_token(auth_provider_endpoint).token
 
             # Get Azure OpenAI deployment name from Azure Key Vault

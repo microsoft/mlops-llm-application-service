@@ -4,7 +4,7 @@
     on:
       push:
         branches:
-          - 'main'
+          - 'feature/otel'
         paths:
           - '.github/**'
           - 'python/**'
@@ -37,13 +37,15 @@
             uses: Azure/docker-login@v1
             with:
               login-server: llmappcontainerregistry.azurecr.io/
-              username: ${{ secrets.DOCKER_USERNAME }}
-              password: ${{ secrets.DOCKER_PASSWORD }}
+              username: ${{ secrets.ACR_USERNAME }}
+              password: ${{ secrets.ACR_PASSWORD }}
 
           - name: Build and push Docker image
             working-directory: ./python
             run: |
-              docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev -e APPLICATIONINSIGHTS_CONNECTION_STRING= ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} \
+              docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev \
+              -e APPLICATIONINSIGHTS_CONNECTION_STRING = ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} \
+              -e AZURE_CLIENT_ID = ${{secrets.AZURE_CLIENT_ID}} \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
