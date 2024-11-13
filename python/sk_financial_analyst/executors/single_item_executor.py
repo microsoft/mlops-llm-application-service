@@ -178,12 +178,14 @@ def parse_args():
         nargs="?",
         default="MSFT",
         help="The stock ticker symbol to generate the analysis for.",
+        help="The stock ticker symbol to generate the analysis for.",
     )
     parser.add_argument(
         "--output_folder",
         type=str,
         nargs="?",
         default="./sk_financial_analyst/data/outputs",
+        help="The folder where the output data will be saved.",
         help="The folder where the output data will be saved.",
     )
     parser.add_argument(
@@ -194,12 +196,14 @@ def parse_args():
         help="The folder where the intermediate output data will be saved.",
     )
     parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
+    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
     try:
+        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
         asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
