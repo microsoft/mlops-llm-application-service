@@ -1,0 +1,93 @@
+{
+  "ticker": "NVDA",
+  "filing_information": {
+    "form_type": "10-Q",
+    "filing_date": "2024-07-28",
+    "statement_dates": {
+      "balance_sheet_dates": ["2024-07-28", "2024-01-28"],
+      "income_statement_dates": ["2024-07-28", "2023-07-30"],
+      "cash_flow_statement_dates": [],
+      "filing_date": "2024-07-28"
+    }
+  },
+  "stock_prices": {
+    "2023-07-30": 46.71,
+    "2024-07-28": 111.58,
+    "2024-01-28": 62.45
+  },
+  "raw_financial_values": {
+    "total_current_assets": {
+      "2024-07-28": 59633000000.0,
+      "2024-01-28": 44345000000.0
+    },
+    "total_current_liabilities": {
+      "2024-07-28": 13969000000.0,
+      "2024-01-28": 10631000000.0
+    },
+    "cash_and_cash_equivalents": {
+      "2024-07-28": 8563000000.0,
+      "2024-01-28": 7280000000.0
+    },
+    "marketable_securities": {},
+    "accounts_receivable_net": {
+      "2024-07-28": 14132000000.0,
+      "2024-01-28": 9999000000.0
+    },
+    "total_liabilities": {
+      "2024-07-28": 27070000000.0,
+      "2024-01-28": 22750000000.0
+    },
+    "total_stockholders_equity": {
+      "2024-07-28": 58157000000.0,
+      "2024-01-28": 42978000000.0
+    },
+    "long_term_debt": {
+      "2024-07-28": 8461000000.0,
+      "2024-01-28": 8459000000.0
+    },
+    "revenue": {},
+    "cost_of_revenue": {},
+    "net_income": {
+      "2024-07-28": 16599000000.0,
+      "2023-07-30": 6188000000.0
+    },
+    "operating_income": {
+      "2024-07-28": 18642000000.0,
+      "2023-07-30": 6800000000.0
+    },
+    "basic_earnings_per_share": {
+      "2024-07-28": 0.68,
+      "2023-07-30": 0.25
+    },
+    "net_cash_from_operating_activities": {},
+    "capital_expenditures": {}
+  },
+  "financial_metrics": {
+    "2024-07-28": {
+      "balance_sheet_analysis": {
+        "current_ratio": 4.27,
+        "quick_ratio": 1.62,
+        "working_capital": "45,664,000,000",
+        "debt_to_equity_ratio": 0.47
+      },
+      "income_statement_analysis": {},
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    },
+    "2024-01-28": {
+      "balance_sheet_analysis": {
+        "current_ratio": 4.17,
+        "quick_ratio": 1.63,
+        "working_capital": "33,714,000,000",
+        "debt_to_equity_ratio": 0.53
+      },
+      "income_statement_analysis": {},
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    }
+  }
+}

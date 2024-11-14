@@ -1,0 +1,101 @@
+{
+  "ticker": "TSLA",
+  "filing_information": {
+    "form_type": "10-Q",
+    "filing_date": "2024-09-30",
+    "statement_dates": {
+      "balance_sheet_dates": ["2024-09-30", "2023-12-31"],
+      "income_statement_dates": ["2024-09-30", "2023-09-30"],
+      "cash_flow_statement_dates": [],
+      "filing_date": "2024-09-30"
+    }
+  },
+  "stock_prices": {
+    "2024-09-30": 261.63,
+    "2023-12-31": 248.42,
+    "2023-09-30": 251.6
+  },
+  "raw_financial_values": {
+    "total_current_assets": {
+      "2024-09-30": 56379000000.0,
+      "2023-12-31": 49616000000.0
+    },
+    "total_current_liabilities": {
+      "2024-09-30": 30577000000.0,
+      "2023-12-31": 28748000000.0
+    },
+    "cash_and_cash_equivalents": {
+      "2024-09-30": 18111000000.0,
+      "2023-12-31": 16398000000.0
+    },
+    "marketable_securities": {
+      "2024-09-30": 15537000000.0,
+      "2023-12-31": 12696000000.0
+    },
+    "accounts_receivable_net": {
+      "2024-09-30": 3313000000.0,
+      "2023-12-31": 3508000000.0
+    },
+    "total_liabilities": {
+      "2024-09-30": 49142000000.0,
+      "2023-12-31": 43009000000.0
+    },
+    "total_stockholders_equity": {
+      "2024-09-30": 69931000000.0,
+      "2023-12-31": 62634000000.0
+    },
+    "long_term_debt": {},
+    "revenue": {
+      "2024-09-30": 25182000000.0,
+      "2023-09-30": 23350000000.0
+    },
+    "cost_of_revenue": {},
+    "net_income": {
+      "2024-09-30": 2167000000.0,
+      "2023-09-30": 1853000000.0
+    },
+    "operating_income": {
+      "2024-09-30": 2717000000.0,
+      "2023-09-30": 1764000000.0
+    },
+    "basic_earnings_per_share": {
+      "2024-09-30": 0.68,
+      "2023-09-30": 0.58
+    },
+    "net_cash_from_operating_activities": {},
+    "capital_expenditures": {}
+  },
+  "financial_metrics": {
+    "2024-09-30": {
+      "balance_sheet_analysis": {
+        "current_ratio": 1.84,
+        "quick_ratio": 1.21,
+        "working_capital": "25,802,000,000",
+        "debt_to_equity_ratio": 0.7
+      },
+      "income_statement_analysis": {
+        "gross_margin": 100.0,
+        "profit_margin": 8.61,
+        "operating_margin": 10.79,
+        "return_on_equity": 3.1
+      },
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    },
+    "2023-12-31": {
+      "balance_sheet_analysis": {
+        "current_ratio": 1.73,
+        "quick_ratio": 1.13,
+        "working_capital": "20,868,000,000",
+        "debt_to_equity_ratio": 0.69
+      },
+      "income_statement_analysis": {},
+      "cash_flow_analysis": {
+        "cash_flow_to_debt_ratio": 0.0,
+        "free_cash_flow": "0"
+      }
+    }
+  }
+}
