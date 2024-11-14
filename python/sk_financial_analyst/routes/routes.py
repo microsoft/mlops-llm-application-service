@@ -20,7 +20,7 @@ async def run_financial_health_analysis(stock_ticker: str):
         )  # 20m as timeout
         return {"message": f"Financial report successfully generated for {stock_ticker}"}
     except TimeoutError:
-        return {"message:": f"Operation timeout during report generation of{stock_ticker}"}
+        return {"message:": f"Operation timeout during report generation of {stock_ticker}"}
 
 
 app.include_router(router, prefix="/api", tags=["Financial Reports"])
