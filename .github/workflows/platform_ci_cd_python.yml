@@ -50,8 +50,8 @@
           - name: Build and push Docker image
             working-directory: python
             run: |
-              APPLICATIONINSIGHTS_CONNECTION_STRING = ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} \
-              AZURE_CLIENT_ID = ${{secrets.AZURE_CLIENT_ID}} \
+              export APPLICATIONINSIGHTS_CONNECTION_STRING = ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} 
+              export AZURE_CLIENT_ID = ${{secrets.AZURE_CLIENT_ID}} 
               docker compose -f common/deployments/docker-compose.yaml --env-file common/deployments/.env-dev \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
