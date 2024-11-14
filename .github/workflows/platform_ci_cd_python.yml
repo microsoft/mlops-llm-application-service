@@ -19,41 +19,58 @@
       build-and-deploy-python:
         runs-on: ubuntu-latest
         steps:
-          - name: Azure login with federated credentials
+          - name: Azure login
             uses: azure/login@v2
             with:
               client-id: ${{ secrets.AZURE_CLIENT_ID }}
               tenant-id: ${{ secrets.AZURE_TENANT_ID }}
               subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-    
+
           - name: Azure CLI script
             uses: azure/cli@v2
             with:
               azcliversion: latest
               inlineScript: |
                 az account show
+    # jobs:
+    #   build-and-deploy-python:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #       - name: Azure login with federated credentials
+    #         uses: azure/login@v2
+    #         with:
+    #           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+    #           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+    #           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+    #       - name: Azure CLI script
+    #         uses: azure/cli@v2
+    #         with:
+    #           azcliversion: latest
+    #           inlineScript: |
+    #             az account show
 
-          - name: Docker login ACR
-            uses: Azure/docker-login@v1
-            with:
-              login-server: llmappcontainerregistry.azurecr.io/
-              username: ${{ secrets.ACR_USERNAME }}
-              password: ${{ secrets.ACR_PASSWORD }}
+    #       - name: Docker login ACR
+    #         uses: Azure/docker-login@v1
+    #         with:
+    #           login-server: llmappcontainerregistry.azurecr.io/
+    #           username: ${{ secrets.ACR_USERNAME }}
+    #           password: ${{ secrets.ACR_PASSWORD }}
 
-          - name: Build and push Docker image
-            working-directory: ./python
-            run: |
-              docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev \
-              -e APPLICATIONINSIGHTS_CONNECTION_STRING = ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} \
-              -e AZURE_CLIENT_ID = ${{secrets.AZURE_CLIENT_ID}} \
-              up --build --remove-orphans --detach
-              docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
-              docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+    #       - name: Build and push Docker image
+    #         working-directory: ./python
+    #         run: |
+    #           docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev \
+    #           -e APPLICATIONINSIGHTS_CONNECTION_STRING = ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} \
+    #           -e AZURE_CLIENT_ID = ${{secrets.AZURE_CLIENT_ID}} \
+    #           up --build --remove-orphans --detach
+    #           docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+    #           docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
 
-          - name: Build and deploy Container App
-            uses: azure/container-apps-deploy-action@v1
-            with:
-              acrName: llmappcontainerregistry
-              containerAppName: mlops-llm-containerapp
-              resourceGroup: mlops-llm-application
-              imageToDeploy: llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+    #       - name: Build and deploy Container App
+    #         uses: azure/container-apps-deploy-action@v1
+    #         with:
+    #           acrName: llmappcontainerregistry
+    #           containerAppName: mlops-llm-containerapp
+    #           resourceGroup: mlops-llm-application
+    #           imageToDeploy: llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
