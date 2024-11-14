@@ -102,3 +102,12 @@ python -m sk_financial_analyst.executors.batch_executor --help
 ```
 
 to see all available command line options.
+
+To get results using fast api rest endpoint:
+
+```bash
+cd python
+uvicorn sk_financial_analyst.routes.routes:app --port 5000
+# once the app is up, the /get endpoint can be accessed using
+curl -v http://localhost:5000/api/generate_financial_report/MSFT
+```
