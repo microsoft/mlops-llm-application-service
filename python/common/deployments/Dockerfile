@@ -58,7 +58,6 @@ COPY sk_financial_analyst/executors/ /app/sk_financial_analyst/executors/
 COPY sk_financial_analyst/llm_application/ /app/sk_financial_analyst/llm_application/
 COPY sk_financial_analyst/llm_application/assistants/ /app/sk_financial_analyst/llm_application/assistants/
 COPY sk_financial_analyst/llm_application/plugins/ /app/sk_financial_analyst/llm_application/plugins/
-COPY sk_financial_analyst/llm_application/utils/ /app/sk_financial_analyst/llm_application/utils/
 COPY sk_financial_analyst/utils/ /app/sk_financial_analyst/utils/
 
 # Change ownership of the /app directory to the non-root user
