@@ -19,6 +19,13 @@
       build-and-deploy-python:
         runs-on: ubuntu-latest
         steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - uses: actions/setup-python@v4
+            with:
+              python-version: ${{ env.PYTHON_VERSION }}
+
           - name: Azure login with federated credentials
             uses: azure/login@v2
             with:
