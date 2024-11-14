@@ -6,7 +6,7 @@ import edgar
 import yfinance as yf
 
 
-class FinancialDatesGroundTruth:
+class FinancialAnalysisGroundTruth:
     def __init__(self, ticker, email_identity, form="10-Q"):
         self.ticker = ticker
         self.form = form
@@ -203,5 +203,5 @@ class FinancialDatesGroundTruth:
 
 
 if __name__ == "__main__":
-    generator = FinancialDatesGroundTruth(ticker="MSFT", email_identity="your.email@example.com")
+    generator = FinancialAnalysisGroundTruth(ticker="MSFT", email_identity="your.email@example.com")
     json_path = generator.generate_ground_truth_json()
