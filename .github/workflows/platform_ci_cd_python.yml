@@ -55,12 +55,16 @@
               docker compose -f common/deployments/docker-compose.yaml --env-file common/deployments/.env-dev \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+              docker tag otel/opentelemetry-collector-contrib:latest llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+              docker push llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
 
           - name: Build and deploy Container App
             uses: azure/container-apps-deploy-action@v1
             with:
               acrName: llmappcontainerregistry
+              acrUsername: ${{ secrets.ACR_USERNAME }}
+              acrPassword: ${{ secrets.ACR_PASSWORD }}
               containerAppName: mlops-llm-containerapp
               resourceGroup: mlops-llm-application
               imageToDeploy: llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
