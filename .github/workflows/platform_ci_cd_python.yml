@@ -41,9 +41,9 @@
               password: ${{ secrets.ACR_PASSWORD }}
 
           - name: Build and push Docker image
-            working-directory: ./python
+            working-directory: python
             run: |
-              docker compose -f common/deployments/docker-compose.yaml --env-file ./common/deployments/.env-dev \
+              docker compose -f common/deployments/docker-compose.yaml --env-file common/deployments/.env-dev \
               -e APPLICATIONINSIGHTS_CONNECTION_STRING = ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} \
               -e AZURE_CLIENT_ID = ${{secrets.AZURE_CLIENT_ID}} \
               up --build --remove-orphans --detach
