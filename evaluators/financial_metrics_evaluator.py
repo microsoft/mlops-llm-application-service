@@ -1,18 +1,18 @@
 import json
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Set, TypedDict
 
 
 class FinancialMetricsEvaluator:
     """Evaluator for comparing financial metrics between ground truth and predictions."""
 
-    def __init__(self, metrics_to_compare: List[str] = None):
+    def __init__(self, ground_truth_json: str):
         """
-        Initialize the evaluator with optional specific metrics to compare.
+        Initialize the evaluator with ground truth data and specific metrics to compare.
 
         Args:
-            metrics_to_compare: List of metric names to compare. If None, compares all metrics.
+            ground_truth_json: Path to ground truth JSON file
         """
-        self.metrics_to_compare = metrics_to_compare or [
+        self.metrics_to_compare = [
             "current_ratio",
             "quick_ratio",
             "working_capital",
@@ -24,10 +24,17 @@ class FinancialMetricsEvaluator:
             "cash_flow_to_debt_ratio",
             "free_cash_flow",
         ]
+        try:
+            with open(ground_truth_json, "r") as f:
+                self.ground_truth = json.load(f)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid ground truth JSON file: {e}")
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Ground truth file not found: {ground_truth_json}")
 
-    def load_json(self, json_schema_path: str) -> Dict[str, Any]:
+    def parse_json_string(self, json_string: str) -> Dict[str, Any]:
         """
-        Load a JSON string into a dictionary.
+        Parse a JSON string into a dictionary.
 
         Args:
             json_string: JSON string to parse
@@ -39,22 +46,18 @@ class FinancialMetricsEvaluator:
             ValueError: If JSON string is invalid
         """
         try:
-            with open(json_schema_path, "r") as json_string:
-                return json.load(json_string)
+            return json.loads(json_string)
         except json.JSONDecodeError as e:
             raise ValueError(f"Invalid JSON string: {e}")
 
-    def get_evaluation_dates(self, ground_truth: Dict[str, Any]) -> Set[str]:
+    def get_evaluation_dates(self) -> Set[str]:
         """
         Extract all evaluation dates from ground truth data.
-
-        Args:
-            ground_truth: Ground truth JSON dictionary
 
         Returns:
             Set of dates available for evaluation
         """
-        return set(ground_truth.get("financial_metrics", {}).keys())
+        return set(self.ground_truth.get("financial_metrics", {}).keys())
 
     def extract_predicted_metrics(self, predictions: Dict[str, Any], date: str) -> Dict[str, float]:
         """
@@ -70,7 +73,7 @@ class FinancialMetricsEvaluator:
         metrics = {}
 
         # Navigate through the financial analysis structure
-        for analysis in predictions.get("financial_analysis", []):
+        for analysis in predictions:
             for metric in analysis.get("metrics", []):
                 metric_name = metric["name"]
                 if metric_name in self.metrics_to_compare:
@@ -87,12 +90,11 @@ class FinancialMetricsEvaluator:
 
         return metrics
 
-    def extract_ground_truth_metrics(self, ground_truth: Dict[str, Any], date: str) -> Dict[str, float]:
+    def extract_ground_truth_metrics(self, date: str) -> Dict[str, float]:
         """
         Extract metrics from the ground truth JSON structure.
 
         Args:
-            ground_truth: Ground truth JSON dictionary
             date: Date to extract metrics for
 
         Returns:
@@ -100,8 +102,8 @@ class FinancialMetricsEvaluator:
         """
         metrics = {}
 
-        if date in ground_truth.get("financial_metrics", {}):
-            date_metrics = ground_truth["financial_metrics"][date]
+        if date in self.ground_truth.get("financial_metrics", {}):
+            date_metrics = self.ground_truth["financial_metrics"][date]
 
             # Navigate through different analysis types
             for analysis_type in ["balance_sheet_analysis", "income_statement_analysis", "cash_flow_analysis"]:
@@ -169,28 +171,24 @@ class FinancialMetricsEvaluator:
             "details": accuracy_details,
         }
 
-    def evaluate_all_dates(self, ground_truth: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def evaluate_predictions(self, predictions: Dict[str, Any]) -> Dict:
         """
         Evaluate predictions for all available dates in ground truth.
 
         Args:
-            ground_truth: Ground truth JSON dictionary
             predictions: Predictions JSON dictionary
 
         Returns:
             Dictionary containing evaluation results for all dates
         """
-        evaluation_dates = self.get_evaluation_dates(ground_truth)
+        evaluation_dates = self.get_evaluation_dates()
         results = {}
         overall_correct = 0
         overall_total = 0
 
         for date in evaluation_dates:
-            ground_truth_metrics = self.extract_ground_truth_metrics(ground_truth, date)
+            ground_truth_metrics = self.extract_ground_truth_metrics(date)
             predicted_metrics = self.extract_predicted_metrics(predictions, date)
-
-            print(ground_truth_metrics)
-            print(predicted_metrics)
 
             date_results = self.calculate_accuracy(ground_truth_metrics, predicted_metrics)
             results[date] = date_results
@@ -207,22 +205,17 @@ class FinancialMetricsEvaluator:
             "results_by_date": results,
         }
 
-    def __call__(self, *, ground_truth_json: str, predictions_json: str, **kwargs) -> Dict[str, Any]:
+    def __call__(self, predictions_json_dict: str, **kwargs):
         """
         Evaluate financial metrics predictions against ground truth for all available dates.
 
         Args:
-            ground_truth_json: Ground truth JSON string
-            predictions_json: Predictions JSON string
+            predictions_json_dict: Predictions json dict
 
         Returns:
             Dictionary containing evaluation results for all dates
         """
         try:
-            ground_truth = self.load_json(ground_truth_json)
-            predictions = self.load_json(predictions_json)
-
-            return self.evaluate_all_dates(ground_truth, predictions)
-
+            return self.evaluate_predictions(predictions_json_dict)
         except ValueError as e:
             raise e
