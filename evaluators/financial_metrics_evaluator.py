@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, List, Set, TypedDict
+from typing import Any, Dict, Set
 
 
 class FinancialMetricsEvaluator:
