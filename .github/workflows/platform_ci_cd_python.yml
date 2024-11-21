@@ -59,7 +59,17 @@
               docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
 
-          - name: Build and deploy Container App
+          - name: Build and deploy Container App - Open telemetry collector
+            uses: azure/container-apps-deploy-action@v1
+            with:
+              acrName: llmappcontainerregistry
+              acrUsername: ${{ secrets.ACR_USERNAME }}
+              acrPassword: ${{ secrets.ACR_PASSWORD }}
+              containerAppName: mlops-llm-containerapp
+              resourceGroup: mlops-llm-application
+              imageToDeploy: llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
+          
+          - name: Build and deploy Container App - LLM app
             uses: azure/container-apps-deploy-action@v1
             with:
               acrName: llmappcontainerregistry

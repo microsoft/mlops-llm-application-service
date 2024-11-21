@@ -74,4 +74,4 @@ ENV PORT=8000
 
 ENV PYTHONPATH="/app"
 
-CMD python -m sk_financial_analyst.executors.single_item_executor MSFT .data/outputs
+CMD ["uvicorn", "sk_financial_analyst.routes.routes:app", "--port", "8000", "--host", "0.0.0.0"]
