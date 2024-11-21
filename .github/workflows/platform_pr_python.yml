@@ -1,23 +1,51 @@
 ---
-    name: PR Platform Python Workflow
+name: PR Platform Python Workflow
 
-    on:
-      workflow_call:
+on:
+  workflow_call:
+    inputs:
+      stock_ticker:
+        type: string
+        description: 'Stock ticker to generate report for'
+        required: true
+        default: 'MSFT'
 
-      pull_request:
-        branches:
-          - 'main'
-        paths:
-          - '.github/**'
-          - 'python/**'
-          - 'tests/**'
-          - 'evaluators/**'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - '.github/**'
+      - 'python/**'
+      - 'tests/**'
+      - 'evaluators/**'
 
-    permissions:
-      id-token: write
-      contents: read
+permissions:
+  id-token: write
+  contents: read
 
-    jobs:
-      build-validation-python:
-        name: Build Validation Python
-        uses: ./.github/workflows/build_python.yml
+jobs:
+  build-validation-python:
+    name: Build Validation Python
+    uses: ./.github/workflows/build_python.yml
+
+  run-generate-report:
+    name: Run generate_report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run generate_report
+        working-directory: python/sk_financial_analyst/executors
+        run: |
+          python single_item_executor.py --stock_ticker ${{ inputs.stock_ticker }}
