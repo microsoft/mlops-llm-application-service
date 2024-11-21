@@ -47,6 +47,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run generate_report
-        working-directory: python/sk_financial_analyst/executors
+        working-directory: python
         run: |
-          python single_item_executor.py --stock_ticker ${{ inputs.stock_ticker }}
+          python sk_financial_analyst.executors.single_item_executor.py --stock_ticker ${{ inputs.stock_ticker }}
