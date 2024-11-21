@@ -49,4 +49,4 @@ jobs:
       - name: Run generate_report
         working-directory: python
         run: |
-          python -m sk_financial_analyst.executors.single_item_executor.py --stock_ticker ${{ inputs.stock_ticker }}
+          python -m sk_financial_analyst.executors.single_item_executor --stock_ticker ${{ inputs.stock_ticker }}
