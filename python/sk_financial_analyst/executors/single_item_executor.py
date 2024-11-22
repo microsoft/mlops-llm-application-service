@@ -178,14 +178,12 @@ def parse_args():
         nargs="?",
         default="MSFT",
         help="The stock ticker symbol to generate the analysis for.",
-        help="The stock ticker symbol to generate the analysis for.",
     )
     parser.add_argument(
         "--output_folder",
         type=str,
         nargs="?",
         default="./sk_financial_analyst/data/outputs",
-        help="The folder where the output data will be saved.",
         help="The folder where the output data will be saved.",
     )
     parser.add_argument(

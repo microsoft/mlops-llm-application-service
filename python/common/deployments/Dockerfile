@@ -59,6 +59,7 @@ COPY sk_financial_analyst/llm_application/ /app/sk_financial_analyst/llm_applica
 COPY sk_financial_analyst/llm_application/assistants/ /app/sk_financial_analyst/llm_application/assistants/
 COPY sk_financial_analyst/llm_application/plugins/ /app/sk_financial_analyst/llm_application/plugins/
 COPY sk_financial_analyst/utils/ /app/sk_financial_analyst/utils/
+COPY sk_financial_analyst/routes/ /app/sk_financial_analyst/routes/
 
 # Change ownership of the /app directory to the non-root user
 RUN chown -R appuser:appuser /app
