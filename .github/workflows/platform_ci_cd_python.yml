@@ -14,6 +14,9 @@
     permissions:
       id-token: write
       contents: read
+    
+    env:
+      GITHUB_SHA: ${{ github.sha }}
 
     jobs:
       build-and-deploy-python:
@@ -50,6 +53,8 @@
           - name: Build and push Docker image
             working-directory: python
             run: |
+              echo ".......TEST....."
+              echo "${{ env.GITHUB_SHA }}"
               export APPLICATIONINSIGHTS_CONNECTION_STRING=${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} 
               export AZURE_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}} 
               export AZURE_TENANT_ID=${{secrets.AZURE_TENANT_ID}}
