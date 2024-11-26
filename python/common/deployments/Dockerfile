@@ -10,6 +10,7 @@ ENV PYTHONUNBUFFERED=1
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
@@ -31,16 +32,18 @@ RUN ls /usr/local/lib/python3.12/site-packages
 FROM python:3.12.7-slim-bullseye
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000 \
+    PYTHONPATH="/app"
 
 # Install runtime dependencies (if any)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
-RUN useradd -m appuser
+RUN useradd --create-home appuser
 
 # Set work directory
 WORKDIR /app
@@ -69,10 +72,5 @@ USER appuser
 
 # Expose port 8000 for the FastAPI application
 EXPOSE 8000
-
-# Define environment variables for Uvicorn (optional)
-ENV PORT=8000
-
-ENV PYTHONPATH="/app"
 
 CMD ["uvicorn", "sk_financial_analyst.routes.routes:app", "--port", "8000", "--host", "0.0.0.0"]
