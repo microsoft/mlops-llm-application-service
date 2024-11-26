@@ -63,7 +63,7 @@
           - name: Build and deploy Container App - Open telemetry collector
             uses: azure/container-apps-deploy-action@v1
             with:
-              yamlConfigPath: .github/workflows/simple-image-container-app.yaml
+              yamlConfigPath: .github/simple-image-container-app.yaml
               acrName: llmappcontainerregistry
               acrUsername: ${{ secrets.ACR_USERNAME }}
               acrPassword: ${{ secrets.ACR_PASSWORD }}
