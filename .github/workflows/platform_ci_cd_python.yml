@@ -79,7 +79,7 @@
             run: |
               envsubst < .github/simple-image-container-app.yaml > .github/simple-image-container-app.processed.yaml
 
-          - name: Build and deploy Container App - Open telemetry collector
+          - name: Build and deploy Container App and Open telemetry collector
             uses: azure/container-apps-deploy-action@v1
             with:
               yamlConfigPath: .github/simple-image-container-app.processed.yaml
