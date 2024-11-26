@@ -4,9 +4,6 @@ resourceGroup: $RESOURCE_GROUP
 environment: default
 
 properties:
-  managedEnvironmentId: "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.App/managedEnvironments/$ENVIRONMENT_NAME"
-  configuration:
-    activeRevisionsMode: Multiple
   template:
     containers:
       - image: $ACR_NAME.azurecr.io/$IMAGE_OTELCOL_NAME:$IMAGE_TAG
