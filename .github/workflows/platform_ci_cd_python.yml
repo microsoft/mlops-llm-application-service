@@ -64,12 +64,13 @@
             uses: azure/container-apps-deploy-action@v1
             with:
               yamlConfigPath: ../simple-image-container-app.yaml
+              acrName: llmappcontainerregistry
+              acrUsername: ${{ secrets.ACR_USERNAME }}
+              acrPassword: ${{ secrets.ACR_PASSWORD }}
+              containerAppName: mlops-llm-containerapp
+              resourceGroup: mlops-llm-application
           #   with:
-          #     acrName: llmappcontainerregistry
-          #     acrUsername: ${{ secrets.ACR_USERNAME }}
-          #     acrPassword: ${{ secrets.ACR_PASSWORD }}
-          #     containerAppName: mlops-llm-containerapp
-          #     resourceGroup: mlops-llm-application
+          #     
           #     imageToDeploy: llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
           
           # - name: Build and deploy Container App - LLM app
