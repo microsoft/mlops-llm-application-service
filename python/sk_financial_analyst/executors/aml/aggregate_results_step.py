@@ -5,8 +5,8 @@ It aggregates multiple JSONL files into a single JSONL file.
 """
 
 import argparse
-import os
 import json
+import os
 
 
 def parse_args():
@@ -16,21 +16,9 @@ def parse_args():
     Returns:
         argparse.Namespace: Parsed command-line arguments.
     """
-    parser = argparse.ArgumentParser(
-        description="Aggregate JSONL files into a single file."
-    )
-    parser.add_argument(
-        "--input_folder",
-        type=str,
-        required=True,
-        help="Input folder containing JSONL files."
-    )
-    parser.add_argument(
-        "--output_file",
-        type=str,
-        required=True,
-        help="Output JSONL file path."
-    )
+    parser = argparse.ArgumentParser(description="Aggregate JSONL files into a single file.")
+    parser.add_argument("--input_folder", type=str, required=True, help="Input folder containing JSONL files.")
+    parser.add_argument("--output_file", type=str, required=True, help="Output JSONL file path.")
     return parser.parse_args()
 
 
@@ -52,9 +40,7 @@ def aggregate_jsonl_files(input_folder, output_file):
                         try:
                             aggregated_results.append(json.loads(line))
                         except json.JSONDecodeError as e:
-                            print(
-                                f"Skipping invalid line in {file_path}: {e}"
-                            )
+                            print(f"Skipping invalid line in {file_path}: {e}")
 
     with open(output_file, "w") as out_file:
         for item in aggregated_results:

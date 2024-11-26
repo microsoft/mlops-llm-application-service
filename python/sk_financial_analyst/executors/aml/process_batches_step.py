@@ -32,42 +32,16 @@ def parse_args():
         description="Batch financial health analysis with\
               AML parallel run and asyncio."
     )
+    parser.add_argument("--batch_output_file", type=str, required=True, help="File name for the output JSONL file.")
+    parser.add_argument("--output_folder", type=str, required=True, help="Folder for output files.")
+    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
     parser.add_argument(
-        "--batch_output_file",
-        type=str,
-        required=True,
-        help="File name for the output JSONL file."
+        "--in_batch_concurrency", type=int, required=True, help="Maximum number of concurrent tasks within each batch."
     )
     parser.add_argument(
-        "--output_folder",
-        type=str,
-        required=True,
-        help="Folder for output files."
+        "--input_key", type=str, required=True, help="The key in the JSONL file that contains the stock ticker symbol."
     )
-    parser.add_argument(
-        "--logging_enabled",
-        action="store_true",
-        default=False,
-        help="Enable logging."
-    )
-    parser.add_argument(
-        "--in_batch_concurrency",
-        type=int,
-        required=True,
-        help="Maximum number of concurrent tasks within each batch."
-    )
-    parser.add_argument(
-        "--input_key",
-        type=str,
-        required=True,
-        help="The key in the JSONL file that contains the stock ticker symbol."
-    )
-    parser.add_argument(
-        "--retries",
-        type=int,
-        required=True,
-        help="Number of retry attempts for failed processes."
-    )
+    parser.add_argument("--retries", type=int, required=True, help="Number of retry attempts for failed processes.")
 
     args, _ = parser.parse_known_args()
     return args
@@ -83,9 +57,7 @@ def run(mini_batch):
     Returns:
         list: List of processed results.
     """
-    print(
-        f"Started run() in parallel_step.py: {datetime.datetime.now().isoformat()}"
-    )
+    print(f"Started run() in parallel_step.py: {datetime.datetime.now().isoformat()}")
     for input_file in mini_batch:
         # Load tickers from JSONL input file
         try:
@@ -98,14 +70,11 @@ def run(mini_batch):
             print(f"Error decoding JSON from input file: {e}")
             sys.exit(1)
 
-        tickers = [line[args.input_key] for line in lines
-                   if args.input_key in line]
+        tickers = [line[args.input_key] for line in lines if args.input_key in line]
         print(f"Tickers: {tickers}")
 
         if not tickers:
-            print(
-                f"No tickers found with key '{args.input_key}' in the input file."
-            )
+            print(f"No tickers found with key '{args.input_key}' in the input file.")
             sys.exit(1)
 
         # Get batch_number from the input_file name
@@ -115,18 +84,10 @@ def run(mini_batch):
         config_file = os.path.join(script_dir, "../../config/config.yaml")
         try:
             batch_results = process_batch_sync(
-                config_file,
-                batch_number,
-                tickers,
-                args.retries,
-                args.in_batch_concurrency,
-                args.logging_enabled
+                config_file, batch_number, tickers, args.retries, args.in_batch_concurrency, args.logging_enabled
             )
             if batch_results:
-                batch_output_path = os.path.join(
-                    args.output_folder,
-                    str(batch_number) + "_" + args.batch_output_file
-                )
+                batch_output_path = os.path.join(args.output_folder, str(batch_number) + "_" + args.batch_output_file)
                 # Remove contents from the output file if exists
                 # to prevent appending to old data
                 try:
@@ -153,7 +114,5 @@ def run(mini_batch):
             print(f"An error occurred while processing a batch: {e}")
             # Optionally, handle or log the error as needed
         print(f"Batch results: {batch_results}")
-    print(
-        f"Finished run() in parallel_step.py: {datetime.datetime.now().isoformat()}"
-    )
+    print(f"Finished run() in parallel_step.py: {datetime.datetime.now().isoformat()}")
     return batch_results
