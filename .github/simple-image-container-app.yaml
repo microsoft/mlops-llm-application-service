@@ -1,0 +1,7 @@
+properties:
+  template:
+    containers:
+      - image: llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
+        name: otelcol
+      - image: llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
+        name: sk-financial-analyst-app
