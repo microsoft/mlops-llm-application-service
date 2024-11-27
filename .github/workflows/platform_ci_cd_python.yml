@@ -55,7 +55,7 @@
             run: |
               export APPLICATIONINSIGHTS_CONNECTION_STRING=${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} 
               export AZURE_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}} 
-              export AZURE_TENANT_ID=${{secrets.AZURE_TENANT_ID}}
+              export AZURE_TENANT_ID=16b3c013-d300-468d-ac64-7eda0820b6d3
               docker compose -f common/deployments/docker-compose.yaml --env-file common/deployments/.env-dev \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
