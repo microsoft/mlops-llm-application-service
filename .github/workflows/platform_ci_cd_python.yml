@@ -88,3 +88,4 @@
               acrPassword: ${{ secrets.ACR_PASSWORD }}
               containerAppName: ${{ env.CONTAINER_APP_NAME }}
               resourceGroup: ${{ env.RESOURCE_GROUP }}
+              environmentVariables: AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} AZURE_TENANT_ID=16b3c013-d300-468d-ac64-7eda0820b6d3
