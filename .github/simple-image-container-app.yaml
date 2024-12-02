@@ -21,6 +21,11 @@ properties:
         initContainers:
         - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:$IMAGE_TAG
           name: sk-financial-analyst-app
+          env: 
+            - name: AZURE_CLIENT_ID
+              value: ${AZURE_CLIENT_ID}
+            - name: AZURE_TENANT_ID
+              value: ${AZURE_TENANT_ID}
           resources:
             cpu: 500m
             memory: 512Mi
