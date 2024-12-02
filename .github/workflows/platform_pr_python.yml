@@ -3,12 +3,6 @@ name: PR Platform Python Workflow
 
 on:
   workflow_call:
-    inputs:
-      stock_ticker:
-        type: string
-        description: 'Stock ticker to generate report for'
-        required: true
-        default: 'MSFT'
 
   pull_request:
     branches:
@@ -31,6 +25,7 @@ jobs:
   run-generate-report:
     name: Run generate_report
     runs-on: ubuntu-latest
+    needs: build-validation-python
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -61,6 +56,5 @@ jobs:
         working-directory: python
         env:
           KEY_VAULT_URL: "https://llm-app-keyvault.vault.azure.net/"
-          STOCK_TICKER: ${{ inputs.stock_ticker }}
         run: |
-          python -m sk_financial_analyst.executors.single_item_executor --stock_ticker $STOCK_TICKER
+          python -m sk_financial_analyst.executors.single_item_executor
