@@ -57,9 +57,9 @@ jobs:
         run: |
           az keyvault secret show --name "AOAI-BASE-ENDPOINT" --vault-name "llm-app-keyvault" --query "value"
 
-      # - name: Run generate_report
-      #   working-directory: python
-      #   env:
-      #     KEY_VAULT_URL: "https://llm-app-keyvault.vault.azure.net/"
-      #   run: |
-      #     python -m sk_financial_analyst.executors.single_item_executor --stock_ticker ${{ inputs.stock_ticker }}
+      - name: Run generate_report
+        working-directory: python
+        env:
+          KEY_VAULT_URL: "https://llm-app-keyvault.vault.azure.net/"
+        run: |
+          python -m sk_financial_analyst.executors.single_item_executor --stock_ticker ${{ inputs.stock_ticker }}
