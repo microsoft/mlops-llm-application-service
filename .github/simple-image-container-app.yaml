@@ -3,6 +3,10 @@ location: eastus
 resourceGroup: $RESOURCE_GROUP
 environment: default
 
+identity:
+  userAssignedIdentities:
+    "/subscriptions/f032cc8b-09ae-4d12-b362-cc4ec307fd97/resourceGroups/MC_mlops-semantic-kernel_mlops-sk-aks_eastus2/providers/Microsoft.ManagedIdentity/userAssignedIdentities/azurekeyvaultsecretsprovider-mlops-sk-aks": {}
+  type: UserAssigned
 properties:
   template:
     containers:
