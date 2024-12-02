@@ -53,7 +53,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Run generate_report
-        working-directory: python
-        run: |
-          python -m sk_financial_analyst.executors.single_item_executor --stock_ticker ${{ inputs.stock_ticker }}
+      # - name: Run generate_report
+      #   working-directory: python
+      #   run: |
+      #     python -m sk_financial_analyst.executors.single_item_executor --stock_ticker ${{ inputs.stock_ticker }}
