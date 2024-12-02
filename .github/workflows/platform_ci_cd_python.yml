@@ -55,7 +55,7 @@
             run: |
               export APPLICATIONINSIGHTS_CONNECTION_STRING=${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} 
               export AZURE_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}} 
-              export AZURE_TENANT_ID=16b3c013-d300-468d-ac64-7eda0820b6d3
+              export AZURE_TENANT_ID=${{secrets.AZURE_TENANT_ID}}
               docker compose -f common/deployments/docker-compose.yaml \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
@@ -74,7 +74,7 @@
               echo "IMAGE_LLMAPP_NAME=deployments-sk-financial-analyst-app" >> $GITHUB_ENV
               echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
               echo AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} >> $GITHUB_ENV
-              echo AZURE_TENANT_ID="16b3c013-d300-468d-ac64-7eda0820b6d3" >> $GITHUB_ENV
+              echo AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }} >> $GITHUB_ENV
 
           - name: Substitute Variables in YAML
             run: |
