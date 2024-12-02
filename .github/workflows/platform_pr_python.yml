@@ -61,5 +61,6 @@ jobs:
         working-directory: python
         env:
           KEY_VAULT_URL: "https://llm-app-keyvault.vault.azure.net/"
+          STOCK_TICKER: ${{ inputs.stock_ticker }}
         run: |
-          python -m sk_financial_analyst.executors.single_item_executor --stock_ticker ${{ inputs.stock_ticker }}
+          python -m sk_financial_analyst.executors.single_item_executor --stock_ticker $STOCK_TICKER
