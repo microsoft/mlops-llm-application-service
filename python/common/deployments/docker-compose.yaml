@@ -41,6 +41,7 @@ services:
         OTEL_RESOURCE_ATTRIBUTES: "service.name=sk-financial-analyst-dev"
         AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
         AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+        OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4317
 
     container_name: sk-financial-analyst-app
     deploy:
