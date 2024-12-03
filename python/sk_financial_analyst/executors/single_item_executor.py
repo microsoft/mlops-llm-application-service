@@ -62,11 +62,13 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
         span.set_attribute("aoai_api_version", aoai_api_version)
 
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
+            client_id = os.environ.get("AZURE_CLIENT_ID")
+            print("client id >>>>>" + client_id)
             # Get Azure OpenAI authentication token, ManagedIdentityCredential requires AZURE_CLIENT_ID to be set
             credential = ChainedTokenCredential(
                 # AzureCliCredential(),
                 # VisualStudioCodeCredential(),
-                ManagedIdentityCredential()
+                ManagedIdentityCredential(client_id=client_id)
                 # WorkloadIdentityCredential(),
             )
             aoai_token = credential.get_token(auth_provider_endpoint).token
