@@ -3,10 +3,7 @@ location: eastus
 resourceGroup: $RESOURCE_GROUP
 environment: default
 
-# identity:
-#   userAssignedIdentities:
-#      "/subscriptions/57bf8a3b-fc44-4f58-ba59-ade9c460238c/resourceGroups/mlops-llm-application/providers/Microsoft.ManagedIdentity/userAssignedIdentities/llm-app-user": {}
-#   type: UserAssigned
+
 properties:
   environmentId: "/subscriptions/57bf8a3b-fc44-4f58-ba59-ade9c460238c/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/managedEnvironment-mlopsllmapplica-b485"
   template:
