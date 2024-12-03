@@ -73,7 +73,8 @@
               echo "IMAGE_OTELCOL_NAME=opentelemetry-collector-contrib" >> $GITHUB_ENV 
               echo "IMAGE_LLMAPP_NAME=deployments-sk-financial-analyst-app" >> $GITHUB_ENV
               echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-              echo AZURE_CLIENT_ID="077e01b1-31dc-4c39-923f-dd7988033567" >> $GITHUB_ENV
+              echo MI_CLIENT_ID="077e01b1-31dc-4c39-923f-dd7988033567" >> $GITHUB_ENV
+              export MI_CLIENT_ID="077e01b1-31dc-4c39-923f-dd7988033567"
               echo AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }} >> $GITHUB_ENV
 
           - name: Substitute Variables in YAML
