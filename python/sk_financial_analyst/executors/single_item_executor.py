@@ -22,8 +22,6 @@ from opentelemetry.trace import SpanKind
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 from sk_financial_analyst.utils import report_generator
 
-# from sk_financial_analyst.utils.telemetry_configurator import TelemetryConfigurator
-
 
 async def main(stock_ticker, output_folder, intermediate_data_folder):
     """Generate a financial health analysis of a company."""
