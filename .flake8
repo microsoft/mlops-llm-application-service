@@ -7,4 +7,5 @@ exclude =
     build,
     dist,
     java,
-    csharp
+    csharp,
+    .venv
