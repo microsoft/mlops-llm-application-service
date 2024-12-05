@@ -1,0 +1,22 @@
+name: sk-financial-analyst-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.10
+  - pip
+  - pip:
+    - azureml-core==1.58.0
+    - azure-ai-ml==1.22.2
+    - azure-identity==1.19.0
+    - azure-keyvault-secrets==4.9.0
+    - azure-ai-evaluation==1.0.0b5
+    - azure-monitor-opentelemetry-exporter==1.0.0b31
+    - pyyaml==6.0.2
+    - requests==2.32.3
+    - edgartools==2.34.2
+    - python-dotenv==1.0.1
+    - yfinance==0.2.40
+    - semantic-kernel==1.11.0
+    - opentelemetry-api==1.27.0
+    - opentelemetry-sdk==1.27.0
+    - opentelemetry-semantic-conventions==0.48b0

@@ -14,18 +14,18 @@ from sk_financial_analyst.utils import report_generator
 from sk_financial_analyst.utils.telemetry_configurator import TelemetryConfigurator
 
 
-async def generate_report(stock_ticker):
+async def generate_report(config_file, stock_ticker):
     """
     Generate a financial health analysis of a company.
 
     Args:
+        config_file (str): The path to the configuration file.
         stock_ticker (str): The stock ticker symbol of the company.
 
     Returns:
         dict: The financial health analysis report.
     """
     # Load the configuration data
-    config_file = "sk_financial_analyst/config/config.yaml"
     config_data = config_reader.load_yaml(config_file)
 
     # Get values from the configuration data
@@ -119,7 +119,7 @@ async def main(stock_ticker, output_folder, intermediate_data_folder, logging_en
 
     # Generate the report
     print(f"Generating financial health analysis for {stock_ticker}...")
-    report_results = await generate_report(stock_ticker)
+    report_results = await generate_report("sk_financial_analyst/config/config.yaml", stock_ticker)
     print(f"Financial health analysis for {stock_ticker} generated.")
 
     # Save the news report to a file
