@@ -100,9 +100,6 @@ COPY sk_financial_analyst/routes/ /app/sk_financial_analyst/routes/
 # Change ownership of the /app directory to the non-root user
 RUN chown -R appuser:appuser /app
 
-RUN echo $OTEL_EXPORTER_OTLP_ENDPOINT
-RUN echo $AZURE_CLIENT_ID
-
 # Switch to the non-root user
 USER appuser
 
