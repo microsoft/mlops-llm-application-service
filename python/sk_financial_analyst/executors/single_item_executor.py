@@ -86,7 +86,6 @@ async def generate_report(stock_ticker):
     print("sec_identity:", sec_identity)
     print("app_insights_connection_string:", app_insights_connection_string)
 
-
     # Generate a report
     # Initialize report object first
     report = FinancialHealthAnalysis(
