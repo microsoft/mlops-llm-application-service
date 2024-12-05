@@ -57,4 +57,4 @@ jobs:
         env:
           KEY_VAULT_URL: "https://llm-app-keyvault.vault.azure.net/"
         run: |
-          python -m sk_financial_analyst.executors.single_item_executor
+          python -u -m sk_financial_analyst.executors.single_item_executor

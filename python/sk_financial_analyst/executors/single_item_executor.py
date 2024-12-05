@@ -73,6 +73,20 @@ async def generate_report(stock_ticker):
     telemetry_configurator.set_up_metrics()
     tracer = telemetry_configurator.set_up_tracing()
 
+    print("auth_provider_endpoint:", auth_provider_endpoint)
+    print("key_vault_url:", key_vault_url)
+    print("news_analyst_model:", news_analyst_model)
+    print("bing_search_endpoint:", bing_search_endpoint)
+    print("financial_analyst_model:", financial_analyst_model)
+    print("structured_report_generator_model:", structured_report_generator_model)
+    print("aoai_api_version:", aoai_api_version)
+    print("aoai_token:", aoai_token)
+    print("aoai_base_endpoint:", aoai_base_endpoint)
+    print("bing_search_api_key:", bing_search_api_key)
+    print("sec_identity:", sec_identity)
+    print("app_insights_connection_string:", app_insights_connection_string)
+
+
     # Generate a report
     # Initialize report object first
     report = FinancialHealthAnalysis(
