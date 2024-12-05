@@ -1,3 +1,5 @@
+"""Durable Azure Function Implementation."""
+
 import logging
 import os
 
@@ -21,6 +23,7 @@ def health_check(req: func.HttpRequest) -> func.HttpResponse:
 @app.route(route="GetReportAsync", auth_level=func.AuthLevel.FUNCTION)
 @app.durable_client_input(client_name="client")
 async def http_start(req: func.HttpRequest, client):
+    """Trigger the orchestrator and pass a parameter from the client."""
     try:
         req_body = req.get_json()
         if not isinstance(req_body, dict):
@@ -43,6 +46,7 @@ async def http_start(req: func.HttpRequest, client):
 
 @app.orchestration_trigger(context_name="context")
 def report_orchestrator(context: df.DurableOrchestrationContext):
+    """Orchestrate the execution of the report."""
     logging.info("Start orchestrator")
     stock_ticker = context.get_input()["stock_ticker"]
     result = yield context.call_activity("generate_report", stock_ticker)
@@ -52,7 +56,7 @@ def report_orchestrator(context: df.DurableOrchestrationContext):
 
 @app.activity_trigger(input_name="stock")
 async def generate_report(stock):
-
+    """Implement activity to invoke LLM App with needed parameters."""
     managed_identity_client_id = os.environ.get("AzureWebJobsStorage__clientId")
     key_vault_url = os.environ.get("KEY_VAULT_URL")
 
