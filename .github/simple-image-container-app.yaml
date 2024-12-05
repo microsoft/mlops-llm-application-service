@@ -18,10 +18,10 @@ properties:
    }
    template:
     containers:
-      - image: $ACR_NAME.azurecr.io/$IMAGE_OTELCOL_NAME:$IMAGE_TAG
+      - image: $ACR_NAME.azurecr.io/$IMAGE_OTELCOL_NAME:ac9664714c87e153fce0c92f61a8271e99425c9a
         name: otelcol
         
-      - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:$IMAGE_TAG
+      - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:ac9664714c87e153fce0c92f61a8271e99425c9a
         name: sk-financial-analyst
         probes:
         - type: Liveness
@@ -31,7 +31,7 @@ properties:
           initialDelaySeconds: 3
           periodSeconds: 3
         initContainers:
-        - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:$IMAGE_TAG
+        - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:ac9664714c87e153fce0c92f61a8271e99425c9a
           name: sk-financial-analyst
           resources:
             cpu: 500m
