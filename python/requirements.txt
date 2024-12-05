@@ -1,9 +1,10 @@
-pyyaml
-requests
-edgartools
-azure-identity
-azure-keyvault-secrets
-python-dotenv
+pyyaml==6.0.2
+requests==2.32.3
+edgartools==2.34.2
+azure-identity==1.19.0
+azure-keyvault-secrets==4.9.0
+azure-ai-ml==1.22.2
+python-dotenv==1.0.1
 yfinance==0.2.40
 semantic-kernel==1.11.0
 azure-ai-evaluation==1.0.0b5
@@ -14,3 +15,7 @@ pytest==8.3.3
 pytest-cov==5.0.0
 fastapi==0.115.4
 uvicorn==0.32.0
+azure-monitor-opentelemetry-exporter==1.0.0b31
+opentelemetry-api==1.27.0
+opentelemetry-sdk==1.27.0
+opentelemetry-semantic-conventions==0.48b0
