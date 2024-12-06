@@ -8,12 +8,7 @@ import sys
 from logging import getLogger
 from pprint import pprint
 
-from azure.identity import (
-    AzureCliCredential,
-    ChainedTokenCredential,
-    ManagedIdentityCredential,
-    VisualStudioCodeCredential,
-)
+from azure.identity import ManagedIdentityCredential
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader, otel
 from opentelemetry import trace
@@ -23,6 +18,12 @@ from sk_financial_analyst.utils import report_generator
 
 logger = getLogger(__name__)
 logger.setLevel(logging.INFO)
+logger = logging.getLogger("azure")
+logger.setLevel(logging.DEBUG)
+
+# Set the logging level for the azure.storage.blob library
+logger = logging.getLogger("azure.storage.blob")
+logger.setLevel(logging.DEBUG)
 
 
 async def main(stock_ticker, output_folder, intermediate_data_folder):
@@ -62,13 +63,12 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
             client_id = os.environ.get("AZURE_CLIENT_ID")
             # Get Azure OpenAI authentication token, ManagedIdentityCredential requires AZURE_CLIENT_ID to be set
-            credential = ChainedTokenCredential(
-                AzureCliCredential(), VisualStudioCodeCredential(), ManagedIdentityCredential(client_id=client_id)
-            )
+            credential = ManagedIdentityCredential(client_id=client_id, logging_enable=True)
+
             aoai_token = credential.get_token(auth_provider_endpoint).token
 
             # Get Azure OpenAI deployment name from Azure Key Vault
-            client = SecretClient(vault_url=key_vault_url, credential=credential)
+            client = SecretClient(vault_url=key_vault_url, credential=credential, logging_enable=True)
             aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
 
             # Get Bing Search key from Azure Key Vault
