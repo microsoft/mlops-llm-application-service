@@ -10,19 +10,13 @@ identity:
 properties:
   configuration: 
     ingress:
-        external: true
-        targetPort: 8000  # Main application port
-        transport: auto
-        allowInsecure: false
-        traffic:
-          - latestRevision: true
-            weight: 100
+        external: false # Internal access only
     identitySettings: 
       - identity: "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/llm-app-user",
         lifecycle: Main
   template:
     containers:
-      - image: $ACR_NAME.azurecr.io/$IMAGE_OTELCOL_NAME:ac9664714c87e153fce0c92f61a8271e99425c9a
+      - image: $ACR_NAME.azurecr.io/$IMAGE_OTELCOL_NAME:$IMAGE_TAG
         name: otelcol
         ports:
           - containerPort: 4317  # Default OTLP gRPC port
