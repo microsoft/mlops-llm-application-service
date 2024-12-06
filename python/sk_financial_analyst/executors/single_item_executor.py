@@ -13,7 +13,6 @@ from azure.identity import (
     ChainedTokenCredential,
     ManagedIdentityCredential,
     VisualStudioCodeCredential,
-    WorkloadIdentityCredential,
 )
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader, otel
@@ -64,10 +63,7 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
             client_id = os.environ.get("AZURE_CLIENT_ID")
             # Get Azure OpenAI authentication token, ManagedIdentityCredential requires AZURE_CLIENT_ID to be set
             credential = ChainedTokenCredential(
-                AzureCliCredential(),
-                VisualStudioCodeCredential(),
-                ManagedIdentityCredential(client_id=client_id),
-                WorkloadIdentityCredential(),
+                AzureCliCredential(), VisualStudioCodeCredential(), ManagedIdentityCredential(client_id=client_id)
             )
             aoai_token = credential.get_token(auth_provider_endpoint).token
 
