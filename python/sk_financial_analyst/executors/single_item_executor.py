@@ -22,13 +22,15 @@ from opentelemetry.trace import SpanKind
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 from sk_financial_analyst.utils import report_generator
 
+logger = getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 
 async def main(stock_ticker, output_folder, intermediate_data_folder):
     """Generate a financial health analysis of a company."""
     config_file = "sk_financial_analyst/config/config.yaml"
     config_data = config_reader.load_yaml(config_file)
-    logger = getLogger(__name__)
-    logger.setLevel(logging.INFO)
+
     otel.config_otel()
     tracer = trace.get_tracer(__name__)
     # Load the configuration data
@@ -201,8 +203,8 @@ if __name__ == "__main__":
     try:
         asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
     except KeyboardInterrupt:
-        print("\nProcess interrupted by user. Exiting...")
+        logger.error("\nProcess interrupted by user. Exiting...")
         sys.exit(0)
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}")
         sys.exit(1)
