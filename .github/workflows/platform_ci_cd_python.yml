@@ -81,6 +81,7 @@
             run: |
               envsubst < .github/simple-image-container-app.yaml > .github/simple-image-container-app.processed.yaml
 
+          # the below action doesn't throw an error or fail when the image fails to build in the container.
           - name: Build and deploy Container App and Open telemetry collector
             uses: azure/container-apps-deploy-action@v1
             with:
