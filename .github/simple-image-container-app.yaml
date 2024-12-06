@@ -4,13 +4,20 @@ resourceGroup: $RESOURCE_GROUP
 environment: default
 
 identity:
+  type: UserAssigned
   userAssignedIdentities:
      "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/llm-app-user": {}
-  type: UserAssigned
+  
 properties:
   configuration: 
     ingress:
         external: false # Internal access only
+        targetPort: 8000  # Port exposed for the main application
+        transport: auto
+        allowInsecure: false
+        traffic:
+          - latestRevision: true
+            weight: 100  # 100% traffic to the latest revision of the main app  
     identitySettings: 
       - identity: "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/llm-app-user",
         lifecycle: Main
@@ -29,20 +36,16 @@ properties:
         ports:
           - containerPort: 8000
         probes:
-        - type: Liveness
-          httpGet:
-            path: "/"
-            port: 8000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        initContainers:
-        - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:$IMAGE_TAG
-          name: sk-financial-analyst
-          resources:
-            cpu: 500m
-            memory: 512Mi
-          command:
-          - "/bin/sh"
+          - type: Liveness
+            httpGet:
+              path: "/"
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+        resources:
+          cpu: "1.0"            # Allocate 1 CPU
+          memory: "1Gi"  
+
     scale:
       minReplicas: 1
       maxReplicas: 2
