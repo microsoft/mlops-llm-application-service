@@ -5,16 +5,12 @@ receivers:
         endpoint: 0.0.0.0:4317
       http:
         endpoint: 0.0.0.0:4318
-        cors:
-          allowed_origins:
-            - http://*
-            - https://*
 
 exporters:
   debug:
     verbosity: detailed
   azuremonitor:
-    connection_string: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
+    connection_string: ${env:APPLICATIONINSIGHTS_CONNECTION_STRING}
 
 processors:
   batch:
