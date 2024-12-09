@@ -72,7 +72,7 @@ async def generate_report(config_file, stock_ticker):
     telemetry_configurator.set_up_logging()
     telemetry_configurator.set_up_metrics()
     tracer = telemetry_configurator.set_up_tracing()
-    
+
     print("auth_provider_endpoint:", auth_provider_endpoint, flush=True)
     print("key_vault_url:", key_vault_url, flush=True)
     print("news_analyst_model:", news_analyst_model, flush=True)
