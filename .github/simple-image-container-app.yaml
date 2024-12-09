@@ -29,7 +29,7 @@ properties:
           - containerPort: 4317  # Default OTLP gRPC port
         resources:
           cpu: "0.5"
-          memory: "0.5Gi"
+          memory: "1.0Gi"
         
       - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:$IMAGE_TAG
         name: sk-financial-analyst
@@ -44,7 +44,7 @@ properties:
             periodSeconds: 5
         resources:
           cpu: "1.0"            # Allocate 1 CPU
-          memory: "1Gi"  
+          memory: "2.0Gi"  
 
     scale:
       minReplicas: 1
