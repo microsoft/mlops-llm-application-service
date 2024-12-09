@@ -62,6 +62,10 @@ class NewsAnalyst:
             deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
+        print("Chat Completion News Client Details:", flush=True)
+        print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
+        print(f"Endpoint: {chat_completion.endpoint}", flush=True)
+        print(f"API Key: {chat_completion.api_key}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
@@ -93,7 +97,7 @@ class NewsAnalyst:
                 settings=execution_settings,
                 kernel=kernel,
             )
-
+        print(f"News API call successful: {result.content}", flush=True)
         return result.content
 
 
@@ -145,6 +149,10 @@ class FinancialAnalyst:
             deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
+        print("Chat Completion FinancialAnalyst Client Details:", flush=True)
+        print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
+        print(f"Endpoint: {chat_completion.endpoint}", flush=True)
+        print(f"API Key: {chat_completion.api_key}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
@@ -173,7 +181,7 @@ class FinancialAnalyst:
             settings=execution_settings,
             kernel=kernel,
         )
-
+        print(f"Financial report API call successful: {result.content}", flush=True)
         return result.content
 
 
@@ -236,6 +244,10 @@ class StructuredReportGenerator:
             api_version=self.aoai_api_version,
         )
         kernel.add_service(chat_completion)
+        print("Chat Completion StructuredReportClient Details:", flush=True)
+        print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
+        print(f"Endpoint: {chat_completion.endpoint}", flush=True)
+        print(f"API Key: {chat_completion.api_key}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
@@ -255,5 +267,5 @@ class StructuredReportGenerator:
             settings=execution_settings,
             kernel=kernel,
         )
-
+        print(f"Consolidated report API call successful: {result.content}", flush=True)
         return result.content
