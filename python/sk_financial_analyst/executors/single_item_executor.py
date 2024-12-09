@@ -57,15 +57,19 @@ async def generate_report(config_file, stock_ticker):
     # Get Azure OpenAI deployment name from Azure Key Vault
     client = SecretClient(vault_url=key_vault_url, credential=credential)
     aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
+    print("aoai_base_endpoint:", aoai_base_endpoint, flush=True)
 
     # Get Bing Search key from Azure Key Vault
     bing_search_api_key = client.get_secret("bing-search-api-key").value
+    print("bing_search_api_key:", bing_search_api_key, flush=True)
 
     # Get SEC identity from Azure Key Vault
     sec_identity = client.get_secret("sec-identity").value
+    print("sec_identity:", sec_identity, flush=True)
 
     # Get Application Insights connection string from Azure Key Vault
     app_insights_connection_string = client.get_secret("app-insights-connection-string").value
+    print("app_insights_connection_string:", app_insights_connection_string, flush=True)
 
     # Configure telemetry
     telemetry_configurator = TelemetryConfigurator(app_insights_connection_string)

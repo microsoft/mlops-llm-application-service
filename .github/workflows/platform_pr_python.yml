@@ -47,10 +47,6 @@
               tenant-id: ${{ secrets.AZURE_TENANT_ID }}
               subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-          - name: Get secret from Key Vault
-            run: |
-              az keyvault secret show --name "AOAI-BASE-ENDPOINT" --vault-name "llm-app-keyvault" --query "value"
-
           - name: Run generate_report
             working-directory: python
             env:
