@@ -54,8 +54,12 @@ class FinancialHealthAnalysis:
         )
 
         # Get the news report for the stock ticker
-        reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
-        print("News report generated successfully.", flush=True)
+        try:
+            reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
+            print("News report generated successfully.", flush=True)
+        except Exception as e:
+            print(f"Error while generating news report: {e}", flush=True)
+            reports["news_report"] = None
 
         # Create the financial analyst assistant
         financial_analyst = assistants.FinancialAnalyst(
@@ -75,7 +79,9 @@ class FinancialHealthAnalysis:
                 debt to equity ratio
             """
             reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
-                stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
+                stock_ticker=stock_ticker,
+                report_type=report_type,
+                report_metrics=balance_sheet_report_metrics,
             )
             print("Balance sheet report generated successfully.", flush=True)
         except Exception as e:
@@ -93,7 +99,9 @@ class FinancialHealthAnalysis:
                 return on equity
             """
             reports["income_report"] = await financial_analyst.get_financial_report(
-                stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
+                stock_ticker=stock_ticker,
+                report_type=report_type,
+                report_metrics=income_report_metrics,
             )
             print("Income report generated successfully.", flush=True)
         except Exception as e:
@@ -108,7 +116,9 @@ class FinancialHealthAnalysis:
                 cash flow to debt ratio
             """
             reports["cash_flow_report"] = await financial_analyst.get_financial_report(
-                stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
+                stock_ticker=stock_ticker,
+                report_type=report_type,
+                report_metrics=cash_flow_report_metrics,
             )
             print("Cash flow report generated successfully.", flush=True)
         except Exception as e:
@@ -116,12 +126,21 @@ class FinancialHealthAnalysis:
             reports["cash_flow_report"] = None
 
         # Create the report generator assistant
-        structured_report_generator = assistants.StructuredReportGenerator(
-            aoai_token=self.aoai_token,
-            aoai_base_endpoint=self.aoai_base_endpoint,
-            llm_deployment_name=self.structured_report_generator_model,
-            aoai_api_version=self.aoai_api_version,
-        )
+        if all(
+            reports[key] is not None
+            for key in [
+                "balance_sheet_report",
+                "income_report",
+                "cash_flow_report",
+                "news_report",
+            ]
+        ):
+            structured_report_generator = assistants.StructuredReportGenerator(
+                aoai_token=self.aoai_token,
+                aoai_base_endpoint=self.aoai_base_endpoint,
+                llm_deployment_name=self.structured_report_generator_model,
+                aoai_api_version=self.aoai_api_version,
+            )
 
         # Generate the structured consolidated report
         try:

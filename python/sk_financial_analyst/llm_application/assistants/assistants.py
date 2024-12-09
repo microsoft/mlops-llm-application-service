@@ -24,7 +24,13 @@ class NewsAnalyst:
     """A class used to perform financial analysis of news articles."""
 
     def __init__(
-        self, aoai_token, aoai_base_endpoint, llm_deployment_name, bing_search_api_key, bing_search_endpoint, max_news
+        self,
+        aoai_token,
+        aoai_base_endpoint,
+        llm_deployment_name,
+        bing_search_api_key,
+        bing_search_endpoint,
+        max_news,
     ):
         """Initialize the NewsAnalyst class."""
         self.aoai_token = aoai_token
@@ -59,7 +65,9 @@ class NewsAnalyst:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token,
         )
         kernel.add_service(chat_completion)
 
@@ -142,7 +150,9 @@ class FinancialAnalyst:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token,
         )
         kernel.add_service(chat_completion)
 
@@ -152,7 +162,8 @@ class FinancialAnalyst:
 
         # Add the FinancialStatementsPlugin to the kernel
         kernel.add_plugin(
-            plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity), plugin_name="FinancialStatementsPlugin"
+            plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity),
+            plugin_name="FinancialStatementsPlugin",
         )
 
         # Add the StockPricePlugin to the kernel
@@ -168,13 +179,17 @@ class FinancialAnalyst:
         history.add_user_message(user_message)
 
         # Get the response from the model
-        result = await chat_completion.get_chat_message_content(
-            chat_history=history,
-            settings=execution_settings,
-            kernel=kernel,
-        )
-
-        return result.content
+        try:
+            result = await chat_completion.get_chat_message_content(
+                chat_history=history,
+                settings=execution_settings,
+                kernel=kernel,
+            )
+            print((f"API call successful: {result.content}"))
+            return result.content
+        except Exception as e:
+            print(f"Error while generating financial report: {e}", flush=True)
+            return None
 
 
 class StructuredReportGenerator:
@@ -250,10 +265,13 @@ class StructuredReportGenerator:
         history.add_user_message(user_message)
 
         # Get the response from the model
-        result = await chat_completion.get_chat_message_content(
-            chat_history=history,
-            settings=execution_settings,
-            kernel=kernel,
-        )
-
-        return result.content
+        try:
+            result = await chat_completion.get_chat_message_content(
+                chat_history=history,
+                settings=execution_settings,
+                kernel=kernel,
+            )
+            print((f"Consolidated report API call successful: {result.content}"))
+        except Exception as e:
+            print(f"Error while generating consolidated report: {e}", flush=True)
+            return None

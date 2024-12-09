@@ -83,7 +83,11 @@ async def generate_report(config_file, stock_ticker):
     print("bing_search_endpoint:", bing_search_endpoint, flush=True)
     print("max_news:", max_news, flush=True)
     print("financial_analyst_model:", financial_analyst_model, flush=True)
-    print("structured_report_generator_model:", structured_report_generator_model, flush=True)
+    print(
+        "structured_report_generator_model:",
+        structured_report_generator_model,
+        flush=True,
+    )
     print("aoai_api_version:", aoai_api_version, flush=True)
 
     # Generate a report
@@ -204,7 +208,14 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     try:
-        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
+        asyncio.run(
+            main(
+                args.stock_ticker,
+                args.output_folder,
+                args.intermediate_data_folder,
+                args.logging_enabled,
+            )
+        )
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
         sys.exit(0)
