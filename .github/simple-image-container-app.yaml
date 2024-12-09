@@ -30,6 +30,9 @@ properties:
         resources:
           cpu: "0.5"
           memory: "1.0Gi"
+        env:
+          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+            value: $APPLICATIONINSIGHTS_CONNECTION_STRING
         
       - image: $ACR_NAME.azurecr.io/$IMAGE_LLMAPP_NAME:$IMAGE_TAG
         name: sk-financial-analyst

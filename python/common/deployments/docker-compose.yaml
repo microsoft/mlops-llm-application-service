@@ -5,6 +5,9 @@ networks:
 services:
   # OpenTelemetry Collector
   otelcol:
+    build:
+      args:
+        APPLICATIONINSIGHTS_CONNECTION_STRING: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
     image: "otel/opentelemetry-collector-contrib:latest"
     deploy:
       resources:
