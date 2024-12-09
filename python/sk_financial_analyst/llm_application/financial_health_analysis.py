@@ -55,7 +55,9 @@ class FinancialHealthAnalysis:
 
         # Get the news report for the stock ticker
         try:
-            reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
+            reports["news_report"] = await news_analyst.get_news_report(
+                stock_ticker=stock_ticker
+            )
             print("News report generated successfully.", flush=True)
         except Exception as e:
             print(f"Error while generating news report: {e}", flush=True)
@@ -78,10 +80,12 @@ class FinancialHealthAnalysis:
                 working capital,
                 debt to equity ratio
             """
-            reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
-                stock_ticker=stock_ticker,
-                report_type=report_type,
-                report_metrics=balance_sheet_report_metrics,
+            reports["balance_sheet_report"] = (
+                await financial_analyst.get_financial_report(
+                    stock_ticker=stock_ticker,
+                    report_type=report_type,
+                    report_metrics=balance_sheet_report_metrics,
+                )
             )
             print("Balance sheet report generated successfully.", flush=True)
         except Exception as e:
@@ -144,11 +148,13 @@ class FinancialHealthAnalysis:
 
         # Generate the structured consolidated report
         try:
-            reports["consolidated_report"] = await structured_report_generator.get_consolidated_report(
-                balance_sheet_report=reports["balance_sheet_report"],
-                income_report=reports["income_report"],
-                cash_flow_report=reports["cash_flow_report"],
-                news_report=reports["news_report"],
+            reports["consolidated_report"] = (
+                await structured_report_generator.get_consolidated_report(
+                    balance_sheet_report=reports["balance_sheet_report"],
+                    income_report=reports["income_report"],
+                    cash_flow_report=reports["cash_flow_report"],
+                    news_report=reports["news_report"],
+                )
             )
             print("Consolidated report generated successfully.", flush=True)
         except Exception as e:
