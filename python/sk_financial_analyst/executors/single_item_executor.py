@@ -77,14 +77,14 @@ async def generate_report(stock_ticker):
     print("key_vault_url:", key_vault_url, flush=True)
     print("news_analyst_model:", news_analyst_model, flush=True)
     print("bing_search_endpoint:", bing_search_endpoint, flush=True)
-    print("financial_analyst_model:", financial_analyst_model)
-    print("structured_report_generator_model:", structured_report_generator_model)
-    print("aoai_api_version:", aoai_api_version)
-    print("aoai_token:", aoai_token)
-    print("aoai_base_endpoint:", aoai_base_endpoint)
-    print("bing_search_api_key:", bing_search_api_key)
-    print("sec_identity:", sec_identity)
-    print("app_insights_connection_string:", app_insights_connection_string)
+    print("financial_analyst_model:", financial_analyst_model, flush=True)
+    print("structured_report_generator_model:", structured_report_generator_model, flush=True)
+    print("aoai_api_version:", aoai_api_version, flush=True)
+    print("aoai_token:", aoai_token, flush=True)
+    print("aoai_base_endpoint:", aoai_base_endpoint, flush=True)
+    print("bing_search_api_key:", bing_search_api_key, flush=True)
+    print("sec_identity:", sec_identity, flush=True)
+    print("app_insights_connection_string:", app_insights_connection_string, flush=True)
 
     # Generate a report
     # Initialize report object first
