@@ -55,6 +55,7 @@ class FinancialHealthAnalysis:
 
         # Get the news report for the stock ticker
         reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
+        print("News report generated successfully.", flush=True)
 
         # Create the financial analyst assistant
         financial_analyst = assistants.FinancialAnalyst(
@@ -77,6 +78,7 @@ class FinancialHealthAnalysis:
         reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
         )
+        print("Balance sheet report generated successfully.", flush=True)
 
         report_type = "income"
         income_report_metrics = """
@@ -90,6 +92,7 @@ class FinancialHealthAnalysis:
         reports["income_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
         )
+        print("Income report generated successfully.", flush=True)
 
         report_type = "cash_flow"
         cash_flow_report_metrics = """
@@ -100,6 +103,7 @@ class FinancialHealthAnalysis:
         reports["cash_flow_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
         )
+        print("Cash flow report generated successfully.", flush=True)
 
         # Create the report generator assistant
         structured_report_generator = assistants.StructuredReportGenerator(
@@ -116,5 +120,6 @@ class FinancialHealthAnalysis:
             cash_flow_report=reports["cash_flow_report"],
             news_report=reports["news_report"],
         )
+        print("Consolidated report generated successfully.", flush=True)
 
         return reports

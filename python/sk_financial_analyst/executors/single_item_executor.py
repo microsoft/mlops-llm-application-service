@@ -104,7 +104,6 @@ async def generate_report(config_file, stock_ticker):
     # invoke __call__ method to run report and return results back
     with tracer.start_as_current_span("financial_health_analysis"):
         report_results = await report(stock_ticker)
-        print("OpenAI Response:", report_results, flush=True)
 
     return report_results
 
