@@ -9,7 +9,9 @@ import sys
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader
-from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
+from sk_financial_analyst.llm_application.financial_health_analysis import (
+    FinancialHealthAnalysis,
+)
 from sk_financial_analyst.utils import report_generator
 from sk_financial_analyst.utils.telemetry_configurator import TelemetryConfigurator
 
@@ -32,14 +34,18 @@ async def generate_report(stock_ticker):
     auth_provider_endpoint = config_reader.get_value_by_name(
         config_data, "financial_health_analysis", "auth_provider_endpoint"
     )
-    key_vault_url = config_reader.get_value_by_name(config_data, "financial_health_analysis", "key_vault_url")
+    key_vault_url = config_reader.get_value_by_name(
+        config_data, "financial_health_analysis", "key_vault_url"
+    )
     news_analyst_model = config_reader.get_value_by_name(
         config_data, "assistants", "news_analyst", "llm_deployment_name"
     )
     bing_search_endpoint = config_reader.get_value_by_name(
         config_data, "assistants", "news_analyst", "bing_search_endpoint"
     )
-    max_news = config_reader.get_value_by_name(config_data, "assistants", "news_analyst", "max_news")
+    max_news = config_reader.get_value_by_name(
+        config_data, "assistants", "news_analyst", "max_news"
+    )
     financial_analyst_model = config_reader.get_value_by_name(
         config_data, "assistants", "financial_analyst", "llm_deployment_name"
     )
@@ -65,7 +71,9 @@ async def generate_report(stock_ticker):
     sec_identity = client.get_secret("SEC-IDENTITY").value
 
     # Get Application Insights connection string from Azure Key Vault
-    app_insights_connection_string = client.get_secret("app-insights-connection-string").value
+    app_insights_connection_string = client.get_secret(
+        "app-insights-connection-string"
+    ).value
 
     # Configure telemetry
     telemetry_configurator = TelemetryConfigurator(app_insights_connection_string)
@@ -78,7 +86,11 @@ async def generate_report(stock_ticker):
     print("news_analyst_model:", news_analyst_model, flush=True)
     print("bing_search_endpoint:", bing_search_endpoint, flush=True)
     print("financial_analyst_model:", financial_analyst_model, flush=True)
-    print("structured_report_generator_model:", structured_report_generator_model, flush=True)
+    print(
+        "structured_report_generator_model:",
+        structured_report_generator_model,
+        flush=True,
+    )
     print("aoai_api_version:", aoai_api_version, flush=True)
     print("aoai_token:", aoai_token, flush=True)
     print("aoai_base_endpoint:", aoai_base_endpoint, flush=True)
@@ -136,27 +148,37 @@ async def main(stock_ticker, output_folder, intermediate_data_folder, logging_en
     print(f"Financial health analysis for {stock_ticker} generated.")
 
     # Save the news report to a file
-    news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
+    news_report_file = os.path.join(
+        intermediate_data_folder, f"{stock_ticker}_news_report.txt"
+    )
     with open(news_report_file, "w") as file:
         file.write(report_results["news_report"])
 
     # Save the balance sheet report to a file
-    balance_sheet_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt")
+    balance_sheet_report_file = os.path.join(
+        intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt"
+    )
     with open(balance_sheet_report_file, "w") as file:
         file.write(report_results["balance_sheet_report"])
 
     # Save the income report to a file
-    income_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_income_report.txt")
+    income_report_file = os.path.join(
+        intermediate_data_folder, f"{stock_ticker}_income_report.txt"
+    )
     with open(income_report_file, "w") as file:
         file.write(report_results["income_report"])
 
     # Save the cash flow report to a file
-    cash_flow_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_cash_flow_report.txt")
+    cash_flow_report_file = os.path.join(
+        intermediate_data_folder, f"{stock_ticker}_cash_flow_report.txt"
+    )
     with open(cash_flow_report_file, "w") as file:
         file.write(report_results["cash_flow_report"])
 
     # Save the consolidated report to a JSON file
-    consolidated_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.json")
+    consolidated_report_file = os.path.join(
+        output_folder, f"{stock_ticker}_consolidated_report.json"
+    )
     with open(consolidated_report_file, "w") as file:
         file.write(report_results["consolidated_report"])
 
@@ -164,7 +186,9 @@ async def main(stock_ticker, output_folder, intermediate_data_folder, logging_en
     markdown_report = report_generator.json_to_markdown_report(consolidated_report_file)
 
     # Save the markdown report to a file
-    markdown_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.md")
+    markdown_report_file = os.path.join(
+        output_folder, f"{stock_ticker}_consolidated_report.md"
+    )
     with open(markdown_report_file, "w") as file:
         file.write(markdown_report)
 
@@ -197,14 +221,23 @@ def parse_args():
         default="./sk_financial_analyst/data/intermediate",
         help="The folder where the intermediate output data will be saved.",
     )
-    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
+    parser.add_argument(
+        "--logging_enabled", action="store_true", default=False, help="Enable logging."
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
     try:
-        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
+        asyncio.run(
+            main(
+                args.stock_ticker,
+                args.output_folder,
+                args.intermediate_data_folder,
+                args.logging_enabled,
+            )
+        )
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
         sys.exit(0)

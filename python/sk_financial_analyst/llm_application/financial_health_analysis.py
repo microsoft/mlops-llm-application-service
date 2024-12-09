@@ -54,7 +54,9 @@ class FinancialHealthAnalysis:
         )
 
         # Get the news report for the stock ticker
-        reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
+        reports["news_report"] = await news_analyst.get_news_report(
+            stock_ticker=stock_ticker
+        )
 
         # Create the financial analyst assistant
         financial_analyst = assistants.FinancialAnalyst(
@@ -75,7 +77,9 @@ class FinancialHealthAnalysis:
         """
 
         reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
+            stock_ticker=stock_ticker,
+            report_type=report_type,
+            report_metrics=balance_sheet_report_metrics,
         )
 
         report_type = "income"
@@ -88,7 +92,9 @@ class FinancialHealthAnalysis:
             return on equity
         """
         reports["income_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
+            stock_ticker=stock_ticker,
+            report_type=report_type,
+            report_metrics=income_report_metrics,
         )
 
         report_type = "cash_flow"
@@ -98,7 +104,9 @@ class FinancialHealthAnalysis:
             cash flow to debt ratio
         """
         reports["cash_flow_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
+            stock_ticker=stock_ticker,
+            report_type=report_type,
+            report_metrics=cash_flow_report_metrics,
         )
 
         # Create the report generator assistant
@@ -110,11 +118,13 @@ class FinancialHealthAnalysis:
         )
 
         # Generate the structured consolidated report
-        reports["consolidated_report"] = await structured_report_generator.get_consolidated_report(
-            balance_sheet_report=reports["balance_sheet_report"],
-            income_report=reports["income_report"],
-            cash_flow_report=reports["cash_flow_report"],
-            news_report=reports["news_report"],
+        reports["consolidated_report"] = (
+            await structured_report_generator.get_consolidated_report(
+                balance_sheet_report=reports["balance_sheet_report"],
+                income_report=reports["income_report"],
+                cash_flow_report=reports["cash_flow_report"],
+                news_report=reports["news_report"],
+            )
         )
 
         return reports

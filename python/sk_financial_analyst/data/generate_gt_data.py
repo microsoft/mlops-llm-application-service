@@ -49,13 +49,19 @@ class FinancialAnalysisGroundTruth:
 
         # Store dates from each statement
         for name, statement in self.statements.items():
-            self.dates[f"{name}_dates"] = [self.standardize_date(str(date)) for date in statement.periods]
+            self.dates[f"{name}_dates"] = [
+                self.standardize_date(str(date)) for date in statement.periods
+            ]
         self.dates["filing_date"] = self.standardize_date(str(self.filings.report_date))
 
     def fetch_stock_prices(self):
         """Fetch historical stock prices for all statement dates."""
         stock = yf.Ticker(self.ticker)
-        all_dates = {date for dates in self.dates.values() for date in (dates if isinstance(dates, list) else [dates])}
+        all_dates = {
+            date
+            for dates in self.dates.values()
+            for date in (dates if isinstance(dates, list) else [dates])
+        }
 
         for date_str in all_dates:
             date = datetime.strptime(date_str, "%Y-%m-%d")
@@ -102,7 +108,9 @@ class FinancialAnalysisGroundTruth:
                         statement_date = self.get_statement_date(date)
                         value = concept.value.get(statement_date, 0)
                         if value:
-                            self.values_for_metrics[metric_name][date] = float(str(value).replace(",", ""))
+                            self.values_for_metrics[metric_name][date] = float(
+                                str(value).replace(",", "")
+                            )
 
     def _find_concept(self, statement, concept_code):
         """Helper method to find concept in statement using various formats."""
@@ -127,7 +135,9 @@ class FinancialAnalysisGroundTruth:
 
             self.metrics[date] = {
                 "balance_sheet_analysis": self._calculate_balance_sheet_ratios(values),
-                "income_statement_analysis": self._calculate_income_statement_ratios(values),
+                "income_statement_analysis": self._calculate_income_statement_ratios(
+                    values
+                ),
                 "cash_flow_analysis": self._calculate_cash_flow_ratios(values),
             }
 
@@ -136,7 +146,9 @@ class FinancialAnalysisGroundTruth:
             return {}
 
         return {
-            "current_ratio": round(values["total_current_assets"] / values["total_current_liabilities"], 2),
+            "current_ratio": round(
+                values["total_current_assets"] / values["total_current_liabilities"], 2
+            ),
             "quick_ratio": round(
                 (
                     values["cash_and_cash_equivalents"]
@@ -146,8 +158,16 @@ class FinancialAnalysisGroundTruth:
                 / values["total_current_liabilities"],
                 2,
             ),
-            "working_capital": "{:,}".format(int(values["total_current_assets"] - values["total_current_liabilities"])),
-            "debt_to_equity_ratio": round(values["total_liabilities"] / max(values["total_stockholders_equity"], 1), 2),
+            "working_capital": "{:,}".format(
+                int(
+                    values["total_current_assets"] - values["total_current_liabilities"]
+                )
+            ),
+            "debt_to_equity_ratio": round(
+                values["total_liabilities"]
+                / max(values["total_stockholders_equity"], 1),
+                2,
+            ),
         }
 
     def _calculate_income_statement_ratios(self, values):
@@ -155,10 +175,22 @@ class FinancialAnalysisGroundTruth:
             return {}
 
         return {
-            "gross_margin": round((values["revenue"] - values["cost_of_revenue"]) / values["revenue"] * 100, 2),
+            "gross_margin": round(
+                (values["revenue"] - values["cost_of_revenue"])
+                / values["revenue"]
+                * 100,
+                2,
+            ),
             "profit_margin": round(values["net_income"] / values["revenue"] * 100, 2),
-            "operating_margin": round(values["operating_income"] / values["revenue"] * 100, 2),
-            "return_on_equity": round(values["net_income"] / max(values["total_stockholders_equity"], 1) * 100, 2),
+            "operating_margin": round(
+                values["operating_income"] / values["revenue"] * 100, 2
+            ),
+            "return_on_equity": round(
+                values["net_income"]
+                / max(values["total_stockholders_equity"], 1)
+                * 100,
+                2,
+            ),
         }
 
     def _calculate_cash_flow_ratios(self, values):
@@ -167,9 +199,14 @@ class FinancialAnalysisGroundTruth:
             return {}
 
         return {
-            "cash_flow_to_debt_ratio": round(values["net_cash_from_operating_activities"] / total_debt, 2),
+            "cash_flow_to_debt_ratio": round(
+                values["net_cash_from_operating_activities"] / total_debt, 2
+            ),
             "free_cash_flow": "{:,}".format(
-                int(values["net_cash_from_operating_activities"] + values["capital_expenditures"])
+                int(
+                    values["net_cash_from_operating_activities"]
+                    + values["capital_expenditures"]
+                )
             ),
         }
 
@@ -203,5 +240,7 @@ class FinancialAnalysisGroundTruth:
 
 
 if __name__ == "__main__":
-    generator = FinancialAnalysisGroundTruth(ticker="MSFT", email_identity="your.email@example.com")
+    generator = FinancialAnalysisGroundTruth(
+        ticker="MSFT", email_identity="your.email@example.com"
+    )
     json_path = generator.generate_ground_truth_json()
