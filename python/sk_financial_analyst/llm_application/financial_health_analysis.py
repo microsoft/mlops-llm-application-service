@@ -66,44 +66,54 @@ class FinancialHealthAnalysis:
         )
 
         # Get the financial reports for the stock ticker
+        try:
+            report_type = "balance_sheet"
+            balance_sheet_report_metrics = """
+                current ratio,
+                quick ratio,
+                working capital,
+                debt to equity ratio
+            """
+            reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
+                stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
+            )
+            print("Balance sheet report generated successfully.", flush=True)
+        except Exception as e:
+            print(f"Error while generating balance sheet report: {e}", flush=True)
+            reports["balance_sheet_report"] = None
 
-        report_type = "balance_sheet"
-        balance_sheet_report_metrics = """
-            current ratio,
-            quick ratio,
-            working capital,
-            debt to equity ratio
-        """
+        try:
+            report_type = "income"
+            income_report_metrics = """
+                gross margin,
+                profit margin,
+                operating margin,
+                basic earnings per share,
+                basic price to earnings ratio,
+                return on equity
+            """
+            reports["income_report"] = await financial_analyst.get_financial_report(
+                stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
+            )
+            print("Income report generated successfully.", flush=True)
+        except Exception as e:
+            print(f"Error while generating income report: {e}", flush=True)
+            reports["income_report"] = None
 
-        reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
-        )
-        print("Balance sheet report generated successfully.", flush=True)
-
-        report_type = "income"
-        income_report_metrics = """
-            gross margin,
-            profit margin,
-            operating margin,
-            basic earnings per share,
-            basic price to earnings ratio,
-            return on equity
-        """
-        reports["income_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
-        )
-        print("Income report generated successfully.", flush=True)
-
-        report_type = "cash_flow"
-        cash_flow_report_metrics = """
-            cash flow per share,
-            free cash flow,
-            cash flow to debt ratio
-        """
-        reports["cash_flow_report"] = await financial_analyst.get_financial_report(
-            stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
-        )
-        print("Cash flow report generated successfully.", flush=True)
+        try:
+            report_type = "cash_flow"
+            cash_flow_report_metrics = """
+                cash flow per share,
+                free cash flow,
+                cash flow to debt ratio
+            """
+            reports["cash_flow_report"] = await financial_analyst.get_financial_report(
+                stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
+            )
+            print("Cash flow report generated successfully.", flush=True)
+        except Exception as e:
+            print(f"Error while generating cash flow report: {e}", flush=True)
+            reports["cash_flow_report"] = None
 
         # Create the report generator assistant
         structured_report_generator = assistants.StructuredReportGenerator(
@@ -114,12 +124,16 @@ class FinancialHealthAnalysis:
         )
 
         # Generate the structured consolidated report
-        reports["consolidated_report"] = await structured_report_generator.get_consolidated_report(
-            balance_sheet_report=reports["balance_sheet_report"],
-            income_report=reports["income_report"],
-            cash_flow_report=reports["cash_flow_report"],
-            news_report=reports["news_report"],
-        )
-        print("Consolidated report generated successfully.", flush=True)
+        try:
+            reports["consolidated_report"] = await structured_report_generator.get_consolidated_report(
+                balance_sheet_report=reports["balance_sheet_report"],
+                income_report=reports["income_report"],
+                cash_flow_report=reports["cash_flow_report"],
+                news_report=reports["news_report"],
+            )
+            print("Consolidated report generated successfully.", flush=True)
+        except Exception as e:
+            print(f"Error while generating consolidated report: {e}", flush=True)
+            reports["consolidated_report"] = None
 
         return reports
