@@ -16,6 +16,9 @@ processors:
   batch:
 
 service:
+  telemetry:
+    logs:
+      level: debug
   pipelines:
     traces:
       receivers: [otlp]
@@ -24,7 +27,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [debug]
+      exporters: [azuremonitor]
     logs:
       receivers: [otlp]
       processors: [batch]
