@@ -150,6 +150,7 @@ class FinancialAnalyst:
         )
         kernel.add_service(chat_completion)
         print("Chat Completion FinancialAnalyst Client Details:", flush=True)
+        print(f"ChatCompletion Attributes: {chat_completion.__dict__}", flush=True)
         print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
         print(f"Endpoint: {chat_completion.endpoint}", flush=True)
         print(f"API Key: {chat_completion.api_key}", flush=True)
