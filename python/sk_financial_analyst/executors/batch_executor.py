@@ -15,13 +15,14 @@ from concurrent.futures import ProcessPoolExecutor
 from sk_financial_analyst.executors.single_item_executor import generate_report
 
 
-def process_batch_sync(batch_number, batch, retries, in_batch_concurrency, logging_enabled):
+def process_batch_sync(config_file, batch_number, batch, retries, in_batch_concurrency, logging_enabled):
     """
     Process a single batch of tickers.
 
     Synchronous wrap function using asyncio for concurrency within the batch.
 
     Args:
+        config_file (str): Path to the configuration file.
         batch_number (int): The current batch number.
         batch (list): List of stock tickers in the current batch.
         retries (int): Number of retry attempts for failed processes.
@@ -55,7 +56,7 @@ def process_batch_sync(batch_number, batch, retries, in_batch_concurrency, loggi
                 """
             )
             try:
-                report_results = await generate_report(ticker)
+                report_results = await generate_report(config_file, ticker)
                 print(
                     f"""
                     [Batch {batch_number}] Financial health analysis
@@ -175,9 +176,17 @@ async def main(
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         # Prepare the list of futures
         loop = asyncio.get_running_loop()
+        config_file = "sk_financial_analyst/config/config.yaml"
         futures = [
             loop.run_in_executor(
-                executor, process_batch_sync, batch_number, batch, retries, in_batch_concurrency, logging_enabled
+                executor,
+                process_batch_sync,
+                config_file,
+                batch_number,
+                batch,
+                retries,
+                in_batch_concurrency,
+                logging_enabled,
             )
             for batch_number, batch in batches
         ]

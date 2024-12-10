@@ -21,7 +21,7 @@ async def run_financial_health_analysis(stock_ticker: str):
     try:
         logger.info("Starting finacial report generation..")
         await asyncio.wait_for(
-            single_item_executor.main(stock_ticker, "./data/outputs", "./data/intermediate"), timeout=1200
+            single_item_executor.main(stock_ticker, "./data/outputs", "./data/intermediate", True), timeout=1200
         )  # 20m as timeout
         logger.info("Financial report generated successfully..")
         return {"message": f"Financial report successfully generated for {stock_ticker}"}
