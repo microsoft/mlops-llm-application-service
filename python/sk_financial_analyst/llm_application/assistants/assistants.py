@@ -64,7 +64,6 @@ class NewsAnalyst:
         kernel.add_service(chat_completion)
         print("Chat Completion News Client Details:", flush=True)
         print(f"ChatCompletion News Client Attributes: {chat_completion.__dict__}", flush=True)
-        print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
         print(f"Endpoint: {chat_completion.endpoint}", flush=True)
         print(f"API Key: {chat_completion.api_key}", flush=True)
 
