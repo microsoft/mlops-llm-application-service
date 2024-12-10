@@ -9,16 +9,16 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512M
+          memory: 1G
     restart: always
     command: [ "--config=/etc/otelcol-config.yml" ]
     volumes:
       - ./otel-config-azuremonitor.yaml:/etc/otelcol-config.yml
     ports:
-      - "4317" # OTLP gRPC receiver
-      - "4318"
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318"
     environment:
-      - APPLICATIONINSIGHTS_CONNECTION_STRING
+      - APPLICATIONINSIGHTS_CONNECTION_STRING=${APPLICATIONINSIGHTS_CONNECTION_STRING}
     networks:
       - default
 
@@ -42,16 +42,18 @@ services:
         AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
         AZURE_TENANT_ID: ${AZURE_TENANT_ID}
         APPLICATIONINSIGHTS_CONNECTION_STRING: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
-        OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4317
+        OTEL_EXPORTER_OTLP_ENDPOINT: "grpc://otelcol:4317"
 
     container_name: sk-financial-analyst-app
     deploy:
       resources:
         limits:
-          memory: 500M
+          memory: 1G
     restart: unless-stopped
     networks:
       - default
     depends_on:
       otelcol:
         condition: service_started
+    ports:
+      - "8000:8000"

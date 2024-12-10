@@ -30,9 +30,10 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
     """Generate a financial health analysis of a company."""
     config_file = "sk_financial_analyst/config/config.yaml"
     config_data = config_reader.load_yaml(config_file)
-
+    logger.info("Otel configuration started..")
     otel.config_otel()
     tracer = trace.get_tracer(__name__)
+    logger.info("Otel configuration successful..")
     # Load the configuration data
     with tracer.start_as_current_span("financial_analysis_report", kind=SpanKind.SERVER) as span:
         # Get values from the configuration data
@@ -58,6 +59,7 @@ async def main(stock_ticker, output_folder, intermediate_data_folder):
         aoai_api_version = config_reader.get_value_by_name(
             config_data, "assistants", "structured_report_generator", "aoai_api_version"
         )
+        logger.info("aoi api version: %s", aoai_api_version, exc_info=True)
         span.set_attribute("aoai_api_version", aoai_api_version)
 
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):

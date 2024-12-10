@@ -11,10 +11,10 @@ identity:
 properties:
   configuration: 
     ingress:
-        external: false # Internal access only
+        external: true # Internal access only
         targetPort: 8000  # Port exposed for the main application
         transport: auto
-        allowInsecure: false
+        allowInsecure: true
         traffic:
           - latestRevision: true
             weight: 100  # 100% traffic to the latest revision of the main app  
