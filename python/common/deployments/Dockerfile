@@ -9,9 +9,16 @@ ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    net-tools \
     curl \
+    telnet \
     && rm -rf /var/lib/apt/lists/*
+
+# Install grpcurl
+ARG GRPCURL_VERSION=1.8.7
+RUN curl -sSL https://github.com/fullstorydev/grpcurl/releases/download/v${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz | tar -xzv -C /usr/local/bin
+
+# Verify grpcurl installation
+RUN grpcurl --version
 
 # Set the working directory in the container
 WORKDIR /app
