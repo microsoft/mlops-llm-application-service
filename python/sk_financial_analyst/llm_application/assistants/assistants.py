@@ -172,13 +172,20 @@ class FinancialAnalyst:
         history.add_user_message(user_message)
 
         # Get the response from the model
-        result = await chat_completion.get_chat_message_content(
-            chat_history=history,
-            settings=execution_settings,
-            kernel=kernel,
-        )
-        print(f"Financial report API call successful: {result.content}", flush=True)
-        return result.content
+        try: 
+            result = await chat_completion.get_chat_message_content(
+                chat_history=history,
+                settings=execution_settings,
+                kernel=kernel,
+            )
+            print(f"Financial report API call successful: {result.content}", flush=True)
+            return result.content
+        except Exception as e:
+            print(f"Error in FinancialAnalyst: {e}", flush=True)
+            if hasattr(e, 'response'):
+                print(f"Response status: {e.response.status}", flush=True)
+                print(f"Response body: {e.response.text}", flush=True)
+            raise
 
 
 class StructuredReportGenerator:
