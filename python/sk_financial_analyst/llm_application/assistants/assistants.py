@@ -149,9 +149,6 @@ class FinancialAnalyst:
         kernel.add_service(chat_completion)
         print("Chat Completion FinancialAnalyst Client Details:", flush=True)
         print(f"ChatCompletion FinancialAnalyst Attributes: {chat_completion.__dict__}", flush=True)
-        print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
-        print(f"Endpoint: {chat_completion.endpoint}", flush=True)
-        print(f"API Key: {chat_completion.api_key}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
@@ -245,9 +242,6 @@ class StructuredReportGenerator:
         kernel.add_service(chat_completion)
         print("Chat Completion StructuredReport Client Details:", flush=True)
         print(f"ChatCompletion StructuredReport Client Attributes: {chat_completion.__dict__}", flush=True)
-        print(f"Deployment Name: {chat_completion.deployment_name}", flush=True)
-        print(f"Endpoint: {chat_completion.endpoint}", flush=True)
-        print(f"API Key: {chat_completion.api_key}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
