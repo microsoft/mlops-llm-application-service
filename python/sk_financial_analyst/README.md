@@ -111,3 +111,29 @@ uvicorn sk_financial_analyst.routes.routes:app --port 5000
 # once the app is up, the /get endpoint can be accessed using
 curl -v http://localhost:5000/api/generate_financial_report/MSFT
 ```
+
+### Deployment
+
+```bash
+cd python
+docker compose -f common/deployments/docker-compose.yaml up --build --remove-orphans --detach
+# to check the status of container(should be up and running)
+docker ps
+# to monitor logs
+docker logs <container_id>
+# to access the endpoint
+curl -v http://localhost:8000/api/generate_financial_report/MSFT
+```
+
+Detailed steps for deployment to an environment are [here][../../docs/containerApp_deployment_steps.md]
+
+### Observability
+
+The spans and attributes set for the span for the application are captured in the requests table of application insights as highlighted
+below.
+
+![Spans and attributes](./spans_local.png)
+
+The logs are traced in the dependencies table of application insights.
+
+![Logs](./logs_local.png)
