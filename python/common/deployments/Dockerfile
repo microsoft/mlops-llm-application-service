@@ -13,12 +13,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install otel-cli
-RUN curl -sSL https://github.com/tomkerkhove/otel-cli/releases/download/v0.27.0/otel-cli_0.27.0_linux_amd64.tar.gz | tar -xzv -C /usr/local/bin
-
-# Verify otel-cli installation
-RUN otel-cli --version
-
 # Set the working directory in the container
 WORKDIR /app
 

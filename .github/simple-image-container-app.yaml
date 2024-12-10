@@ -11,7 +11,7 @@ identity:
 properties:
   configuration: 
     ingress:
-        external: true # Internal access only
+        external: true
         targetPort: 8000  # Port exposed for the main application
         transport: auto
         allowInsecure: true
@@ -58,3 +58,7 @@ properties:
           type: http
           metadata:
             concurrentRequests: '50'
+
+networks:
+  default:
+    driver: bridge
