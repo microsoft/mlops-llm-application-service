@@ -2,9 +2,9 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: 0.0.0.0:4317
+        endpoint:
       http:
-        endpoint: 0.0.0.0:4318
+        endpoint:
 
 exporters:
   debug:
@@ -14,6 +14,9 @@ exporters:
 
 processors:
   batch:
+    send_batch_max_size: 100
+    send_batch_size: 10
+    timeout: 10s
 
 service:
   telemetry:
@@ -23,12 +26,12 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [azuremonitor]
+      exporters: [azuremonitor, debug]
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [azuremonitor]
+      exporters: [azuremonitor, debug]
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [azuremonitor]
+      exporters: [azuremonitor, debug]

@@ -3,24 +3,19 @@ networks:
     driver: bridge
 
 services:
-  # OpenTelemetry Collector
-  otelcol:
-    image: "otel/opentelemetry-collector-contrib:0.93.0"
-    deploy:
-      resources:
-        limits:
-          memory: 1G
+  otel-collector:
+    build:
+      context: ../../common/deployments/otel-collector
+      dockerfile: ./Dockerfile
     restart: always
-    command: [ "--config=/etc/otelcol-config.yml" ]
-    volumes:
-      - ./otel-config-azuremonitor.yaml:/etc/otelcol-config.yml
     ports:
-      - "4317:4317" # OTLP gRPC receiver
-      - "4318:4318"
+      - "1888:1888"   # pprof extension
+      - "13133:13133" # health_check extension
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP gRPC receiver
+      - "55679:55679" # zpages extension
     environment:
       - APPLICATIONINSIGHTS_CONNECTION_STRING=${APPLICATIONINSIGHTS_CONNECTION_STRING}
-    networks:
-      - default
 
   sk-financial-analyst-app:
     build:
@@ -42,7 +37,7 @@ services:
         AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
         AZURE_TENANT_ID: ${AZURE_TENANT_ID}
         APPLICATIONINSIGHTS_CONNECTION_STRING: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
-        OTEL_EXPORTER_OTLP_ENDPOINT: "grpc://otelcol:4317"
+        OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4317
 
     container_name: sk-financial-analyst-app
     deploy:
@@ -53,7 +48,7 @@ services:
     networks:
       - default
     depends_on:
-      otelcol:
+      otel-collector:
         condition: service_started
     ports:
       - "8000:8000"
