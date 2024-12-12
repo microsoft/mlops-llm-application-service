@@ -24,7 +24,7 @@ properties:
   template:
     containers:
       - image: $ACR_NAME.azurecr.io/$IMAGE_OTELCOL_NAME:$IMAGE_TAG
-        name: otelcollector
+        name: otel-collector
         ports:
           - containerPort: 4317  # Default OTLP gRPC port
         resources:

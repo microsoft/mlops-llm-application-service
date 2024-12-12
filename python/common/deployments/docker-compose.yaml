@@ -17,7 +17,7 @@ services:
     environment:
       - APPLICATIONINSIGHTS_CONNECTION_STRING=${APPLICATIONINSIGHTS_CONNECTION_STRING}
 
-  sk-financial-analyst-app:
+  sk-financial-analyst:
     build:
       context: ../..
       dockerfile: ./common/deployments/Dockerfile
@@ -39,7 +39,7 @@ services:
         APPLICATIONINSIGHTS_CONNECTION_STRING: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
         OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4317
 
-    container_name: sk-financial-analyst-app
+    container_name: sk-financial-analyst
     deploy:
       resources:
         limits:
