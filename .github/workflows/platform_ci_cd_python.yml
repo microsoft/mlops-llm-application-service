@@ -59,9 +59,9 @@
               docker compose -f common/deployments/docker-compose.yaml \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst-app:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
-              docker tag otel/opentelemetry-collector-contrib:0.93.0 llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
+              docker tag otel/opentelemetry-collector-contrib:0.93.0 llmappcontainerregistry.azurecr.io/deployments-otel-collector:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst-app:${{ github.sha }}
-              docker push llmappcontainerregistry.azurecr.io/opentelemetry-collector-contrib:${{ github.sha }}
+              docker push llmappcontainerregistry.azurecr.io/deployments-otel-collector:${{ github.sha }}
 
           - name: Set Environment Variables
             run: |
@@ -70,7 +70,7 @@
               echo "SUBSCRIPTION_ID=$(az account show --query id -o tsv)" >> $GITHUB_ENV
               echo "ENVIRONMENT_NAME=default" >> $GITHUB_ENV
               echo "ACR_NAME=llmappcontainerregistry" >> $GITHUB_ENV
-              echo "IMAGE_OTELCOL_NAME=opentelemetry-collector-contrib" >> $GITHUB_ENV 
+              echo "IMAGE_OTELCOL_NAME=deployments-otel-collector" >> $GITHUB_ENV 
               echo "IMAGE_LLMAPP_NAME=deployments-sk-financial-analyst-app" >> $GITHUB_ENV
               echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
               echo MI_CLIENT_ID="077e01b1-31dc-4c39-923f-dd7988033567" >> $GITHUB_ENV
