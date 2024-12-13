@@ -60,7 +60,7 @@
               docker compose -f common/deployments/docker-compose.yaml \
               up --build --remove-orphans --detach
               docker tag deployments-sk-financial-analyst:latest llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst:${{ github.sha }}
-              docker tag otel/opentelemetry-collector-contrib:0.93.0 llmappcontainerregistry.azurecr.io/deployments-otel-collector:${{ github.sha }}
+              docker tag deployments-otel-collector:latest llmappcontainerregistry.azurecr.io/deployments-otel-collector:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/deployments-sk-financial-analyst:${{ github.sha }}
               docker push llmappcontainerregistry.azurecr.io/deployments-otel-collector:${{ github.sha }}
 
