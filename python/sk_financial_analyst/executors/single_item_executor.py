@@ -65,7 +65,7 @@ async def generate_report(config_file, stock_ticker):
             config_data, "assistants", "structured_report_generator", "aoai_api_version"
         )
 
-        logger.info("aoi api version %s:", aoai_api_version)
+        logger.info("aoi api version: %s", aoai_api_version)
         span.set_attribute("aoai_api_version", aoai_api_version)
 
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
