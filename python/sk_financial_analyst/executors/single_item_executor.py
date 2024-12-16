@@ -9,6 +9,10 @@ import sys
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader
+from semantic_kernel import Kernel
+from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
+from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, OpenAIChatPromptExecutionSettings
+from semantic_kernel.contents.chat_history import ChatHistory
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 from sk_financial_analyst.utils import report_generator
 from sk_financial_analyst.utils.telemetry_configurator import TelemetryConfigurator
@@ -206,10 +210,60 @@ def parse_args():
     return parser.parse_args()
 
 
+async def test_azure_chat_completion():
+    try:
+        key_vault_url = "https://llm-app-keyvault.vault.azure.net/"
+        credential = DefaultAzureCredential()
+        client = SecretClient(vault_url=key_vault_url, credential=credential)
+
+        aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
+        aoai_api_key = client.get_secret("aoai-api-key").value
+        aoai_deployment_name = client.get_secret("aoai-deployment-name").value
+        aoai_api_version = client.get_secret("aoai-api-version").value
+
+        print(f"aoai_base_endpoint: {aoai_base_endpoint}")
+        print(f"aoai_api_key: {aoai_api_key}")
+        print(f"aoai_deployment_name: {aoai_deployment_name}")
+        print(f"aoai_api_version: {aoai_api_version}")
+
+        kernel = Kernel()
+
+        # Add Azure OpenAI chat completion
+        chat_completion = AzureChatCompletion(
+            deployment_name=aoai_deployment_name,
+            endpoint=aoai_base_endpoint,
+            api_key=aoai_api_key,
+            api_version=aoai_api_version,
+        )
+        kernel.add_service(chat_completion)
+        execution_settings = OpenAIChatPromptExecutionSettings()
+
+        chat_completion_service_by_type = kernel.get_service(type=ChatCompletionClientBase)
+        print(f"Chat Completion Service by Type: {chat_completion_service_by_type}")
+        print(f"OpenAIChatPromptExecution Settings: {execution_settings}")
+        print(f"ChatCompletion Attributes: {chat_completion.__dict__}")
+
+        history = ChatHistory()
+        history.add_system_message("You are a helpful story-writer assistant.")
+        history.add_user_message("Tell me a story.")
+
+        result = await chat_completion.get_chat_message_content(
+            chat_history=history,
+            settings=None,  # Use default settings for simplicity
+        )
+        print(f"Chat completion result: {result.content}")
+        return result.content
+
+    except Exception as e:
+        print(f"An error occurred during chat completion: %s", e, exc_info=True)
+        raise
+
+
 if __name__ == "__main__":
     args = parse_args()
     try:
-        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
+        asyncio.run(test_azure_chat_completion())
+        # asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
         sys.exit(0)
