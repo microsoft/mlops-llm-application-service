@@ -291,7 +291,7 @@ async def test_azure_chat_completion(config_file):
 if __name__ == "__main__":
     args = parse_args()
     try:
-        asyncio.run(test_azure_chat_completion())
+        asyncio.run(test_azure_chat_completion(args.config_file))
         # asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
