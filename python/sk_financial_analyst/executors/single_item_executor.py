@@ -186,6 +186,13 @@ def parse_args():
         """
     )
     parser.add_argument(
+        "--config_file",
+        type=str,
+        nargs="?",
+        default="sk_financial_analyst/config/config.yaml",
+        help="The path to the configuration file.",
+    )
+    parser.add_argument(
         "--stock_ticker",
         type=str,
         nargs="?",
@@ -210,27 +217,49 @@ def parse_args():
     return parser.parse_args()
 
 
-async def test_azure_chat_completion():
+async def test_azure_chat_completion(config_file):
     try:
-        key_vault_url = "https://llm-app-keyvault.vault.azure.net/"
+        config_data = config_reader.load_yaml(config_file)
+
+        # Get values from the configuration data
+        auth_provider_endpoint = config_reader.get_value_by_name(
+            config_data, "financial_health_analysis", "auth_provider_endpoint"
+        )
+        key_vault_url = config_reader.get_value_by_name(config_data, "financial_health_analysis", "key_vault_url")
+        news_analyst_model = config_reader.get_value_by_name(
+            config_data, "assistants", "news_analyst", "llm_deployment_name"
+        )
+        bing_search_endpoint = config_reader.get_value_by_name(
+            config_data, "assistants", "news_analyst", "bing_search_endpoint"
+        )
+        max_news = config_reader.get_value_by_name(config_data, "assistants", "news_analyst", "max_news")
+        financial_analyst_model = config_reader.get_value_by_name(
+            config_data, "assistants", "financial_analyst", "llm_deployment_name"
+        )
+        structured_report_generator_model = config_reader.get_value_by_name(
+            config_data, "assistants", "structured_report_generator", "llm_deployment_name"
+        )
+        aoai_api_version = config_reader.get_value_by_name(
+            config_data, "assistants", "structured_report_generator", "aoai_api_version"
+        )
+
         credential = DefaultAzureCredential()
         client = SecretClient(vault_url=key_vault_url, credential=credential)
 
         aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
         aoai_api_key = client.get_secret("aoai-api-key").value
-        aoai_deployment_name = client.get_secret("aoai-deployment-name").value
-        aoai_api_version = client.get_secret("aoai-api-version").value
 
         print(f"aoai_base_endpoint: {aoai_base_endpoint}")
         print(f"aoai_api_key: {aoai_api_key}")
-        print(f"aoai_deployment_name: {aoai_deployment_name}")
+        print(f"financial_analyst_model llm_deployment_name: {config_data['assistants']['financial_analyst']['llm_deployment_name']}")
+        print(f"structured_report_generator_model llm_deployment_name: {config_data['assistants']['structured_report_generator']['llm_deployment_name']}")
         print(f"aoai_api_version: {aoai_api_version}")
 
         kernel = Kernel()
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=aoai_deployment_name,
+            deployment_name=config_data['assistants']['financial_analyst']['llm_deployment_name'],
             endpoint=aoai_base_endpoint,
             api_key=aoai_api_key,
             api_version=aoai_api_version,
