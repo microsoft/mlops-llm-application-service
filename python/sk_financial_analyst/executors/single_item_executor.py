@@ -278,7 +278,7 @@ async def test_azure_chat_completion(config_file):
 
         result = await chat_completion.get_chat_message_content(
             chat_history=history,
-            settings=None,  # Use default settings for simplicity
+            settings=execution_settings,  # Use default settings for simplicity
         )
         print(f"Chat completion result: {result.content}")
         return result.content
