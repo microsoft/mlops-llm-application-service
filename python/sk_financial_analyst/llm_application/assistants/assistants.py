@@ -13,6 +13,7 @@ from plugins import plugins as plugins
 from semantic_kernel import Kernel
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
+from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
 from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_prompt_execution_settings import (
     AzureChatPromptExecutionSettings,
 )
@@ -152,15 +153,19 @@ class FinancialAnalyst:
 
         # Initialize the kernel
         kernel = Kernel()
+        print(f"llm_deployment_name: {self.llm_deployment_name}", flush=True)
+        print(f"aoai_base_endpoint: {self.aoai_base_endpoint}", flush=True)
+        print(f"aoai_token: {self.aoai_token}", flush=True) 
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
             deployment_name=self.llm_deployment_name,
             endpoint=self.aoai_base_endpoint,
-            api_key=self.aoai_token,
+            api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
-        print("Chat Completion FinancialAnalyst Client Details:", flush=True)
+        chat_completion_service_by_type = kernel.get_service(type=ChatCompletionClientBase)
+        print(f"Chat Completion FinancialAnalyst Client Details: {chat_completion_service_by_type}", flush=True)
         print(
             f"ChatCompletion FinancialAnalyst Attributes: {chat_completion.__dict__}",
             flush=True,
@@ -255,6 +260,9 @@ class StructuredReportGenerator:
 
         # Initialize the kernel
         kernel = Kernel()
+        print(f"llm_deployment_name: {self.llm_deployment_name}", flush=True)
+        print(f"aoai_base_endpoint: {self.aoai_base_endpoint}", flush=True)
+        print(f"aoai_token: {self.aoai_token}", flush=True)
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
@@ -264,7 +272,8 @@ class StructuredReportGenerator:
             api_version=self.aoai_api_version,
         )
         kernel.add_service(chat_completion)
-        print("Chat Completion StructuredReport Client Details:", flush=True)
+        chat_completion_service_by_type = kernel.get_service(type=ChatCompletionClientBase)
+        print(f"Chat Completion StructuredReport Client Details:{chat_completion_service_by_type}", flush=True)
         print(
             f"ChatCompletion StructuredReport Client Attributes: {chat_completion.__dict__}",
             flush=True,
