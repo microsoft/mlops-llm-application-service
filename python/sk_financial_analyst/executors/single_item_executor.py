@@ -255,7 +255,7 @@ async def test_azure_chat_completion():
         return result.content
 
     except Exception as e:
-        print(f"An error occurred during chat completion: %s", e) # exc_info=True)
+        print(f"An error occurred during chat completion: %s", {e}) # exc_info=True)
         raise
 
 
