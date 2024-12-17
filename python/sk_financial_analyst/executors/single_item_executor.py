@@ -116,7 +116,7 @@ async def main(config_file, stock_ticker, output_folder, intermediate_data_folde
 
     # Generate the report
     print(f"Generating financial health analysis for {stock_ticker}...")
-    report_results = await generate_report("sk_financial_analyst/config/config.yaml", stock_ticker)
+    report_results = await generate_report(config_file, stock_ticker)
     print(f"Financial health analysis for {stock_ticker} generated.")
 
     # Save the news report to a file
