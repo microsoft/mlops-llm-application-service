@@ -32,17 +32,13 @@ async def generate_report(config_file, stock_ticker):
     auth_provider_endpoint = config_reader.get_value_by_name(
         config_data, "financial_health_analysis", "auth_provider_endpoint"
     )
-    key_vault_url = config_reader.get_value_by_name(config_data, "financial_health_analysis", "key_vault_url")
-    news_analyst_model = config_reader.get_value_by_name(
-        config_data, "assistants", "news_analyst", "llm_deployment_name"
-    )
+    key_vault_url = os.getenv("KEY_VAULT_URL")
+    news_analyst_model = os.getenv("NEWS_ANALYST_MODEL_NAME")
     bing_search_endpoint = config_reader.get_value_by_name(
         config_data, "assistants", "news_analyst", "bing_search_endpoint"
     )
     max_news = config_reader.get_value_by_name(config_data, "assistants", "news_analyst", "max_news")
-    financial_analyst_model = config_reader.get_value_by_name(
-        config_data, "assistants", "financial_analyst", "llm_deployment_name"
-    )
+    financial_analyst_model = os.getenv("FINANCIAL_ANALYST_MODEL_NAME")
     structured_report_generator_model = config_reader.get_value_by_name(
         config_data, "assistants", "structured_report_generator", "llm_deployment_name"
     )
@@ -95,11 +91,12 @@ async def generate_report(config_file, stock_ticker):
     return report_results
 
 
-async def main(stock_ticker, output_folder, intermediate_data_folder, logging_enabled):
+async def main(config_file, stock_ticker, output_folder, intermediate_data_folder, logging_enabled):
     """
     Generate a financial health analysis of a company and save results.
 
     Args:
+        config_file (str): The path to the configuration file.
         stock_ticker (str): The stock ticker symbol of the company.
         output_folder (str): The folder where the output data will be saved.
         intermediate_data_folder (str): The folder where the
@@ -164,6 +161,13 @@ def parse_args():
         """
     )
     parser.add_argument(
+        "--config_file",
+        type=str,
+        nargs="?",
+        default="sk_financial_analyst/config/config.yaml",
+        help="The path to the configuration file.",
+    )
+    parser.add_argument(
         "--stock_ticker",
         type=str,
         nargs="?",
@@ -191,7 +195,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     try:
-        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
+        asyncio.run(main(args.config_file, args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
     except KeyboardInterrupt:
         print("\nProcess interrupted by user. Exiting...")
         sys.exit(0)
