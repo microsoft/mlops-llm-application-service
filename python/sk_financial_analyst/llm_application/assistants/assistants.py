@@ -137,6 +137,9 @@ class FinancialAnalyst:
         plus the latest stock price for the {stock_ticker} stock ticker.
         """
 
+        if not stock_ticker or not report_type:
+            raise ValueError("Both 'ticker' and 'report_type' arguments are required.")
+
         # Initialize the kernel
         kernel = Kernel()
 
