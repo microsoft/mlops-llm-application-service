@@ -131,6 +131,7 @@ class FinancialStatementsPlugin:
 
         # Set SEC identity
         edgar.set_identity(self.sec_identity)
+        print(f"plugins ticker: {ticker}, report_type: {report_type}", flush=True)
 
         # Get the latest quarterly financial reports for the stock ticker
         filings = edgar.Company(ticker).get_filings(form="10-Q").latest(1)

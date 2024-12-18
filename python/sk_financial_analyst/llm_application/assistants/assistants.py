@@ -107,6 +107,10 @@ class FinancialAnalyst:
         self.llm_deployment_name = llm_deployment_name
         self.sec_identity = sec_identity
 
+        print(f"assistants aoai_token: {aoai_token}", flush=True)
+        print(f"assistants aoai_base_endpoint: {aoai_base_endpoint}", flush=True)
+        print(f"assistants llm_deployment_name: {llm_deployment_name}", flush=True)
+
     async def get_financial_report(self, stock_ticker, report_type, report_metrics):
         """Generate  the analysis of financial statements."""
         # Define system and user messages
@@ -149,6 +153,7 @@ class FinancialAnalyst:
             deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
+        print(f"Kernel state: {kernel.__dict__}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
@@ -172,11 +177,15 @@ class FinancialAnalyst:
         history.add_user_message(user_message)
 
         # Get the response from the model
-        result = await chat_completion.get_chat_message_content(
-            chat_history=history,
-            settings=execution_settings,
-            kernel=kernel,
-        )
+        try:
+            result = await chat_completion.get_chat_message_content(
+                chat_history=history,
+                settings=execution_settings,
+                kernel=kernel,
+            )
+        except Exception as ex:
+            print(f"assistants.py get_financial_report Exception: {ex}", flush=True)
+            raise
 
         return result.content
 
