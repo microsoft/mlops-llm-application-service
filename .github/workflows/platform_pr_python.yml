@@ -55,4 +55,4 @@
               FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
               REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
             run: |
-              python -u -m sk_financial_analyst.executors.single_item_executor --config_file sk_financial_analyst/config/config.yaml --stock_ticker MSFT --output_folder ./sk_financial_analyst/data/outputs --intermediate_data_folder ./sk_financial_analyst/data/intermediate
+              python -u -m sk_financial_analyst.executors.single_item_executor --config_file sk_financial_analyst/config/config.yaml --stock_ticker MSFT --output_folder ./sk_financial_analyst/data/outputs --intermediate_data_folder ./sk_financial_analyst/data/intermediate --logging_enabled True
