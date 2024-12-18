@@ -33,6 +33,9 @@ class NewsAnalyst:
         self.bing_search_api_key = bing_search_api_key
         self.bing_search_endpoint = bing_search_endpoint
         self.max_news = max_news
+        print(f"assistants NewsAnalyst aoai_token: {aoai_token}", flush=True)
+        print(f"assistants NewsAnalyst aoai_base_endpoint: {aoai_base_endpoint}", flush=True)
+        print(f"assistants NewsAnalyst llm_deployment_name: {llm_deployment_name}", flush=True)
 
     async def get_news_report(self, stock_ticker):
         """Generate the financial analysis of news articles."""
@@ -62,6 +65,7 @@ class NewsAnalyst:
             deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
+        print(f"NewsAnalyst Kernel state: {kernel.__dict__}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
@@ -107,9 +111,9 @@ class FinancialAnalyst:
         self.llm_deployment_name = llm_deployment_name
         self.sec_identity = sec_identity
 
-        print(f"assistants aoai_token: {aoai_token}", flush=True)
-        print(f"assistants aoai_base_endpoint: {aoai_base_endpoint}", flush=True)
-        print(f"assistants llm_deployment_name: {llm_deployment_name}", flush=True)
+        print(f"assistants FinancialAnalyst aoai_token: {aoai_token}", flush=True)
+        print(f"assistants FinancialAnalyst aoai_base_endpoint: {aoai_base_endpoint}", flush=True)
+        print(f"assistants FinancialAnalyst llm_deployment_name: {llm_deployment_name}", flush=True)
 
     async def get_financial_report(self, stock_ticker, report_type, report_metrics):
         """Generate  the analysis of financial statements."""
@@ -184,16 +188,20 @@ class FinancialAnalyst:
                 print(f"Attempt {attempt + 1}: Calling get_chat_message_content", flush=True)
                 print(f"Chat history: {history.__dict__}", flush=True)
                 print(f"Execution settings: {execution_settings.__dict__}", flush=True)
+                # result = await chat_completion.get_chat_message_content(
+                #     chat_history=history,
+                #     settings=execution_settings,
+                #     kernel=kernel,
+                # )
                 result = await chat_completion.get_chat_message_content(
-                    chat_history=history,
-                    settings=execution_settings,
-                    kernel=kernel,
+                     chat_history=history,
+                     settings=execution_settings, 
                 )
+                print(f"Chat completion result: {result.content}")
+                return result.content
             except Exception as ex:
                 print(f"Attempt {attempt + 1} failed Exception: {ex} Location (assistants.py).", flush=True)
                 raise
-
-            return result.content
 
 
 class StructuredReportGenerator:
