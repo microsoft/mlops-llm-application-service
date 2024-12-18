@@ -182,26 +182,20 @@ class FinancialAnalyst:
         history.add_user_message(user_message)
 
         # Get the response from the model
-        retries = 3
-        for attempt in range(retries):
-            try:
-                print(f"Attempt {attempt + 1}: Calling get_chat_message_content", flush=True)
-                print(f"Chat history: {history.__dict__}", flush=True)
-                print(f"Execution settings: {execution_settings.__dict__}", flush=True)
-                # result = await chat_completion.get_chat_message_content(
-                #     chat_history=history,
-                #     settings=execution_settings,
-                #     kernel=kernel,
-                # )
-                result = await chat_completion.get_chat_message_content(
-                     chat_history=history,
-                     settings=execution_settings, 
-                )
-                print(f"Chat completion result: {result.content}")
-                return result.content
-            except Exception as ex:
-                print(f"Attempt {attempt + 1} failed Exception: {ex} Location (assistants.py).", flush=True)
-                raise
+        try:
+            print(f"Calling get_chat_message_content", flush=True)
+            print(f"Chat history: {history.__dict__}", flush=True)
+            print(f"Execution settings: {execution_settings.__dict__}", flush=True)
+            result = await chat_completion.get_chat_message_content(
+                chat_history=history,
+                settings=execution_settings,
+                kernel=kernel,
+            )
+            print(f"Chat completion result: {result.content}")
+            return result.content
+        except Exception as ex:
+            print(f"Chat completion failed with Exception: {ex} Location (assistants.py).", flush=True)
+            raise
 
 
 class StructuredReportGenerator:
