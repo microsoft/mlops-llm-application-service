@@ -157,20 +157,23 @@ class FinancialAnalyst:
             deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
         )
         kernel.add_service(chat_completion)
-        print(f"Kernel state: {kernel.__dict__}", flush=True)
+        print(f"Kernel state Financial chat_completion: {kernel.__dict__}", flush=True)
 
         # Set the logging level for  semantic_kernel.kernel to DEBUG.
         setup_logging()
         logging.getLogger("kernel").setLevel(logging.DEBUG)
 
         # Add the FinancialStatementsPlugin to the kernel
-        financial_statements_plugin = kernel.add_plugin(
+        kernel.add_plugin(
             plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity), plugin_name="FinancialStatementsPlugin"
         )
-        print(f"FinancialStatementsPlugin state: {financial_statements_plugin.__dict__}", flush=True)
+        print(f"Kernel state Financial after FinancialStatementsPlugin: {kernel.__dict__}", flush=True)
+        logging.getLogger("kernel").setLevel(logging.DEBUG)
 
         # Add the StockPricePlugin to the kernel
         kernel.add_plugin(plugins.StockPricePlugin(), plugin_name="StockPricePlugin")
+        logging.getLogger("kernel").setLevel(logging.DEBUG)
+        print(f"Kernel state Financial after StockPricePlugin: {kernel.__dict__}", flush=True)
 
         # Enable planning
         execution_settings = AzureChatPromptExecutionSettings(tool_choice="auto")
