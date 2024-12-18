@@ -64,7 +64,7 @@ class FinancialHealthAnalysis:
             llm_deployment_name=self.financial_analyst_model,
             sec_identity=self.sec_identity,
         )
-        logging.debug(f"FinancialAnalyst state: {financial_analyst.__dict__}")
+        print(f"FinancialAnalyst state: {financial_analyst.__dict__}")
 
         # Get the financial reports for the stock ticker
 
@@ -76,7 +76,7 @@ class FinancialHealthAnalysis:
             debt to equity ratio
         """
 
-        logging.debug(f"Requesting balance_sheet report for {stock_ticker} with metrics: {balance_sheet_report_metrics}")
+        print(f"Requesting balance_sheet report for {stock_ticker} with metrics: {balance_sheet_report_metrics}")
         reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
         )
@@ -90,7 +90,7 @@ class FinancialHealthAnalysis:
             basic price to earnings ratio,
             return on equity
         """
-        logging.debug(f"Requesting income report for {stock_ticker} with metrics: {income_report_metrics}")
+        print(f"Requesting income report for {stock_ticker} with metrics: {income_report_metrics}")
         reports["income_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=income_report_metrics
         )
@@ -101,7 +101,7 @@ class FinancialHealthAnalysis:
             free cash flow,
             cash flow to debt ratio
         """
-        logging.debug(f"Requesting cash_flow report for {stock_ticker} with metrics: {cash_flow_report_metrics}")
+        print(f"Requesting cash_flow report for {stock_ticker} with metrics: {cash_flow_report_metrics}")
         reports["cash_flow_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=cash_flow_report_metrics
         )

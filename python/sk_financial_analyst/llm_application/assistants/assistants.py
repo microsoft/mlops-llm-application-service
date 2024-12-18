@@ -139,6 +139,7 @@ class FinancialAnalyst:
 
         if not stock_ticker or not report_type:
             raise ValueError("Both 'ticker' and 'report_type' arguments are required.")
+        print(f"assistants.py get_financial_report stock_ticker: {stock_ticker}, get_financial_report report_type: {report_type}", flush=True)
 
         # Initialize the kernel
         kernel = Kernel()
