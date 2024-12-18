@@ -32,13 +32,17 @@ async def generate_report(config_file, stock_ticker):
     auth_provider_endpoint = config_reader.get_value_by_name(
         config_data, "financial_health_analysis", "auth_provider_endpoint"
     )
-    key_vault_url = os.getenv("KEY_VAULT_URL")
-    news_analyst_model = os.getenv("NEWS_ANALYST_MODEL_NAME")
+    key_vault_url = config_reader.get_value_by_name(config_data, "financial_health_analysis", "key_vault_url") # os.getenv("KEY_VAULT_URL")
+    news_analyst_model = config_reader.get_value_by_name(
+        config_data, "assistants", "news_analyst", "llm_deployment_name"
+    )# os.getenv("NEWS_ANALYST_MODEL_NAME")
     bing_search_endpoint = config_reader.get_value_by_name(
         config_data, "assistants", "news_analyst", "bing_search_endpoint"
     )
     max_news = config_reader.get_value_by_name(config_data, "assistants", "news_analyst", "max_news")
-    financial_analyst_model = os.getenv("FINANCIAL_ANALYST_MODEL_NAME")
+    financial_analyst_model = config_reader.get_value_by_name(
+        config_data, "assistants", "financial_analyst", "llm_deployment_name"
+    ) # os.getenv("FINANCIAL_ANALYST_MODEL_NAME")
     structured_report_generator_model = config_reader.get_value_by_name(
         config_data, "assistants", "structured_report_generator", "llm_deployment_name"
     )
