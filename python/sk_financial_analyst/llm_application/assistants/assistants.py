@@ -160,9 +160,10 @@ class FinancialAnalyst:
         logging.getLogger("kernel").setLevel(logging.DEBUG)
 
         # Add the FinancialStatementsPlugin to the kernel
-        kernel.add_plugin(
+        financial_statements_plugin = kernel.add_plugin(
             plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity), plugin_name="FinancialStatementsPlugin"
         )
+        print(f"FinancialStatementsPlugin state: {financial_statements_plugin.__dict__}", flush=True)
 
         # Add the StockPricePlugin to the kernel
         kernel.add_plugin(plugins.StockPricePlugin(), plugin_name="StockPricePlugin")
@@ -177,17 +178,22 @@ class FinancialAnalyst:
         history.add_user_message(user_message)
 
         # Get the response from the model
-        try:
-            result = await chat_completion.get_chat_message_content(
-                chat_history=history,
-                settings=execution_settings,
-                kernel=kernel,
-            )
-        except Exception as ex:
-            print(f"assistants.py get_financial_report Exception: {ex}", flush=True)
-            raise
+        retries = 3
+        for attempt in range(retries):
+            try:
+                print(f"Attempt {attempt + 1}: Calling get_chat_message_content", flush=True)
+                print(f"Chat history: {history.__dict__}", flush=True)
+                print(f"Execution settings: {execution_settings.__dict__}", flush=True)
+                result = await chat_completion.get_chat_message_content(
+                    chat_history=history,
+                    settings=execution_settings,
+                    kernel=kernel,
+                )
+            except Exception as ex:
+                print(f"Attempt {attempt + 1} failed Exception: {ex} Location (assistants.py).", flush=True)
+                raise
 
-        return result.content
+            return result.content
 
 
 class StructuredReportGenerator:
