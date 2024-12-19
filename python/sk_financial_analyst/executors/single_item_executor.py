@@ -40,10 +40,9 @@ async def generate_report(config_file, stock_ticker):
         config_data, "assistants", "news_analyst", "bing_search_endpoint"
     )
     max_news = config_reader.get_value_by_name(config_data, "assistants", "news_analyst", "max_news")
-    # financial_analyst_model = config_reader.get_value_by_name(
-    #     config_data, "assistants", "financial_analyst", "llm_deployment_name"
-    # )
-    financial_analyst_model=config_data['assistants']['financial_analyst']['llm_deployment_name']
+    financial_analyst_model = config_reader.get_value_by_name(
+        config_data, "assistants", "financial_analyst", "llm_deployment_name"
+    )
     structured_report_generator_model = config_reader.get_value_by_name(
         config_data, "assistants", "structured_report_generator", "llm_deployment_name"
     )
