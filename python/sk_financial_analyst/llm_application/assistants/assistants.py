@@ -136,7 +136,7 @@ class FinancialAnalyst:
         in the financial statement.
 
         When analyzing a financial statement of type 'cash_flow',
-        you should also get the corresponding 'balance_sheet' statement,
+        you should also get the corresponding 'balance_sheet' statement by calling get_financial_statements with report_type='balance_sheet',
         to be able to compute all asked metrics.
 
         When analyzing a financial statement of type 'income', you

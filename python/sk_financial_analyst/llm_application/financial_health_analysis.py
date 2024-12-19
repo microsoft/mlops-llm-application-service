@@ -76,7 +76,7 @@ class FinancialHealthAnalysis:
             debt to equity ratio
         """
 
-        print(f"Requesting balance_sheet report for {stock_ticker} with metrics: {balance_sheet_report_metrics}")
+        print(f"Requesting balance_sheet report for Stock ticker: {stock_ticker} Report Type:{report_type} with metrics: {balance_sheet_report_metrics}")
         reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
             stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
         )
