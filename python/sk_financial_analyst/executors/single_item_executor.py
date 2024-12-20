@@ -123,9 +123,9 @@ async def main(stock_ticker, output_folder, intermediate_data_folder, logging_en
     print(f"Financial health analysis for {stock_ticker} generated.")
 
     # Save the news report to a file
-    news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
-    with open(news_report_file, "w") as file:
-        file.write(report_results["news_report"])
+    # news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
+    # with open(news_report_file, "w") as file:
+    #     file.write(report_results["news_report"])
 
     # # Save the balance sheet report to a file
     # balance_sheet_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt")
