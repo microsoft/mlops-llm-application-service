@@ -24,7 +24,7 @@
 
       run-generate-eval-report:
         name: Run generate_eval_report
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         steps:
           - name: Checkout code
             uses: actions/checkout@v2
