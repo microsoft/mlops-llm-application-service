@@ -6,7 +6,7 @@ azure-keyvault-secrets==4.9.0
 azure-ai-ml==1.22.2
 python-dotenv==1.0.1
 yfinance==0.2.40
-semantic-kernel==1.11.0
+semantic-kernel==1.17.1
 azure-ai-evaluation
 flake8-docstrings==1.7.0
 flake8==7.1.1
