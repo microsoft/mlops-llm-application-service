@@ -54,29 +54,29 @@ class FinancialHealthAnalysis:
         )
 
         # Get the news report for the stock ticker
-        reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
+        # reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
 
         # # Create the financial analyst assistant
-        # financial_analyst = assistants.FinancialAnalyst(
-        #     aoai_token=self.aoai_token,
-        #     aoai_base_endpoint=self.aoai_base_endpoint,
-        #     llm_deployment_name=self.news_analyst_model,
-        #     sec_identity=self.sec_identity,
-        # )
+        financial_analyst = assistants.FinancialAnalyst(
+            aoai_token=self.aoai_token,
+            aoai_base_endpoint=self.aoai_base_endpoint,
+            llm_deployment_name=self.news_analyst_model,
+            sec_identity=self.sec_identity,
+        )
 
-        # # Get the financial reports for the stock ticker
+        # Get the financial reports for the stock ticker
 
-        # report_type = "balance_sheet"
-        # balance_sheet_report_metrics = """
-        #     current ratio,
-        #     quick ratio,
-        #     working capital,
-        #     debt to equity ratio
-        # """
+        report_type = "balance_sheet"
+        balance_sheet_report_metrics = """
+            current ratio,
+            quick ratio,
+            working capital,
+            debt to equity ratio
+        """
 
-        # reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
-        #     stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
-        # )
+        reports["balance_sheet_report"] = await financial_analyst.get_financial_report(
+            stock_ticker=stock_ticker, report_type=report_type, report_metrics=balance_sheet_report_metrics
+        )
 
         # report_type = "income"
         # income_report_metrics = """
