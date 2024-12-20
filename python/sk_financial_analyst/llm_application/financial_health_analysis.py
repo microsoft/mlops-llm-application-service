@@ -60,7 +60,7 @@ class FinancialHealthAnalysis:
         financial_analyst = assistants.FinancialAnalyst(
             aoai_token=self.aoai_token,
             aoai_base_endpoint=self.aoai_base_endpoint,
-            llm_deployment_name=self.financial_analyst_model,
+            llm_deployment_name=self.news_analyst_model,
             sec_identity=self.sec_identity,
         )
 
