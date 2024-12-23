@@ -1,6 +1,6 @@
 pyyaml==6.0.2
 requests==2.32.3
-edgartools==2.34.2
+edgartools==3.2.1
 azure-identity==1.19.0
 azure-keyvault-secrets==4.9.0
 azure-ai-ml==1.22.2
