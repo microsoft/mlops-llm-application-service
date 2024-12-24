@@ -7,8 +7,12 @@ on:
       - 'agromova/features/cicd_dev_container'
 
 env:
-  IMAGE_NAME: devops_container_image
-  REGISTRY: ${{ secrets.ACR_CONTAINER_REGISTRY }}.azurecr.io
+    IMAGE_NAME: devops_container_image
+    REGISTRY: ${{ secrets.ACR_CONTAINER_REGISTRY }}.azurecr.io
+
+permissions:
+    id-token: write
+    contents: read
 
 jobs:
   build-and-push-build-container:
