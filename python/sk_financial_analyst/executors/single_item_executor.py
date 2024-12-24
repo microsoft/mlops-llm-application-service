@@ -123,37 +123,37 @@ async def main(stock_ticker, output_folder, intermediate_data_folder, logging_en
     print(f"Financial health analysis for {stock_ticker} generated.")
 
     # Save the news report to a file
-    # news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
-    # with open(news_report_file, "w") as file:
-    #     file.write(report_results["news_report"])
+    news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
+    with open(news_report_file, "w") as file:
+        file.write(report_results["news_report"])
 
-    # # Save the balance sheet report to a file
-    # balance_sheet_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt")
-    # with open(balance_sheet_report_file, "w") as file:
-    #     file.write(report_results["balance_sheet_report"])
+    # Save the balance sheet report to a file
+    balance_sheet_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt")
+    with open(balance_sheet_report_file, "w") as file:
+        file.write(report_results["balance_sheet_report"])
 
-    # # Save the income report to a file
-    # income_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_income_report.txt")
-    # with open(income_report_file, "w") as file:
-    #     file.write(report_results["income_report"])
+    # Save the income report to a file
+    income_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_income_report.txt")
+    with open(income_report_file, "w") as file:
+        file.write(report_results["income_report"])
 
-    # # Save the cash flow report to a file
-    # cash_flow_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_cash_flow_report.txt")
-    # with open(cash_flow_report_file, "w") as file:
-    #     file.write(report_results["cash_flow_report"])
+    # Save the cash flow report to a file
+    cash_flow_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_cash_flow_report.txt")
+    with open(cash_flow_report_file, "w") as file:
+        file.write(report_results["cash_flow_report"])
 
-    # # Save the consolidated report to a JSON file
-    # consolidated_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.json")
-    # with open(consolidated_report_file, "w") as file:
-    #     file.write(report_results["consolidated_report"])
+    # Save the consolidated report to a JSON file
+    consolidated_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.json")
+    with open(consolidated_report_file, "w") as file:
+        file.write(report_results["consolidated_report"])
 
-    # # Generate the markdown report
-    # markdown_report = report_generator.json_to_markdown_report(consolidated_report_file)
+    # Generate the markdown report
+    markdown_report = report_generator.json_to_markdown_report(consolidated_report_file)
 
-    # # Save the markdown report to a file
-    # markdown_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.md")
-    # with open(markdown_report_file, "w") as file:
-    #     file.write(markdown_report)
+    # Save the markdown report to a file
+    markdown_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.md")
+    with open(markdown_report_file, "w") as file:
+        file.write(markdown_report)
 
 
 def parse_args():
