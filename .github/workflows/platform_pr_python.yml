@@ -24,6 +24,7 @@
 
       run-generate-eval-report:
         name: Run generate_eval_report
+        needs: build-validation-python
         runs-on: ubuntu-latest
         steps:
           - name: Checkout code
