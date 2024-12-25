@@ -56,7 +56,7 @@ class FinancialHealthAnalysis:
         # Get the news report for the stock ticker
         reports["news_report"] = await news_analyst.get_news_report(stock_ticker=stock_ticker)
 
-        # Create the financial analyst assistant
+        # # Create the financial analyst assistant
         financial_analyst = assistants.FinancialAnalyst(
             aoai_token=self.aoai_token,
             aoai_base_endpoint=self.aoai_base_endpoint,

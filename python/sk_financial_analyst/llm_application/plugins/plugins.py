@@ -141,6 +141,7 @@ class FinancialStatementsPlugin:
         income_stmt_periods = ten_q.income_statement.periods
         cash_flow_stmt = ten_q.cash_flow_statement.to_dataframe().to_dict()
         cash_flow_stmt_periods = ten_q.cash_flow_statement.periods
+        logging.getLogger("rich").setLevel(logging.INFO)
 
         # Return the financial report based on the report type
         if report_type == "balance_sheet":
