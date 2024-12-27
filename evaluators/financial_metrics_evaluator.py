@@ -59,7 +59,9 @@ class FinancialMetricsEvaluator:
         """
         return set(self.ground_truth.get("financial_metrics", {}).keys())
 
-    def extract_predicted_metrics(self, predictions: Dict[str, Any], date: str) -> Dict[str, float]:
+    def extract_predicted_metrics(
+        self, predictions: Dict[str, Any], date: str
+    ) -> Dict[str, float]:
         """
         Extract metrics from the predictions JSON structure.
 
@@ -106,7 +108,11 @@ class FinancialMetricsEvaluator:
             date_metrics = self.ground_truth["financial_metrics"][date]
 
             # Navigate through different analysis types
-            for analysis_type in ["balance_sheet_analysis", "income_statement_analysis", "cash_flow_analysis"]:
+            for analysis_type in [
+                "balance_sheet_analysis",
+                "income_statement_analysis",
+                "cash_flow_analysis",
+            ]:
                 if analysis_type in date_metrics:
                     for metric_name, value in date_metrics[analysis_type].items():
                         if metric_name in self.metrics_to_compare:
@@ -121,7 +127,10 @@ class FinancialMetricsEvaluator:
         return metrics
 
     def calculate_accuracy(
-        self, ground_truth_metrics: Dict[str, float], predicted_metrics: Dict[str, float], tolerance: float = 0.01
+        self,
+        ground_truth_metrics: Dict[str, float],
+        predicted_metrics: Dict[str, float],
+        tolerance: float = 0.01,
     ) -> Dict[str, Any]:
         """
         Calculate accuracy metrics between ground truth and predictions.
@@ -190,7 +199,9 @@ class FinancialMetricsEvaluator:
             ground_truth_metrics = self.extract_ground_truth_metrics(date)
             predicted_metrics = self.extract_predicted_metrics(predictions, date)
 
-            date_results = self.calculate_accuracy(ground_truth_metrics, predicted_metrics)
+            date_results = self.calculate_accuracy(
+                ground_truth_metrics, predicted_metrics
+            )
             results[date] = date_results
 
             overall_correct += date_results["correct_predictions"]
