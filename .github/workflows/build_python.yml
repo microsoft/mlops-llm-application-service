@@ -27,9 +27,9 @@ jobs:
       - name: Lint Python Code
         working-directory: ./python
         run: |
-          pip install pre-commit   
-          pre-commit install
-          pre-commit run --all-files
+          pip install black flake8
+          black --check .
+          flake8 .
 
 
       - name: Run Python Unit Tests
