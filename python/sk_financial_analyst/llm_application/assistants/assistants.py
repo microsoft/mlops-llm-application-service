@@ -11,7 +11,9 @@ import logging
 from assistants.data_models import ConsolidatedReport
 from plugins import plugins as plugins
 from semantic_kernel import Kernel
-from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
+from semantic_kernel.connectors.ai.function_choice_behavior import (
+    FunctionChoiceBehavior,
+)
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_prompt_execution_settings import (
     AzureChatPromptExecutionSettings,
@@ -24,7 +26,13 @@ class NewsAnalyst:
     """A class used to perform financial analysis of news articles."""
 
     def __init__(
-        self, aoai_token, aoai_base_endpoint, llm_deployment_name, bing_search_api_key, bing_search_endpoint, max_news
+        self,
+        aoai_token,
+        aoai_base_endpoint,
+        llm_deployment_name,
+        bing_search_api_key,
+        bing_search_endpoint,
+        max_news,
     ):
         """Initialize the NewsAnalyst class."""
         self.aoai_token = aoai_token
@@ -59,7 +67,9 @@ class NewsAnalyst:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token,
         )
         kernel.add_service(chat_completion)
 
@@ -79,7 +89,9 @@ class NewsAnalyst:
 
         # Enable planning
         execution_settings = AzureChatPromptExecutionSettings(tool_choice="auto")
-        execution_settings.function_choice_behavior = FunctionChoiceBehavior.Auto(auto_invoke=True, filters={})
+        execution_settings.function_choice_behavior = FunctionChoiceBehavior.Auto(
+            auto_invoke=True, filters={}
+        )
 
         # Set the chat history
         history = ChatHistory()
@@ -100,7 +112,9 @@ class NewsAnalyst:
 class FinancialAnalyst:
     """A class used to perform analysis of financial statements."""
 
-    def __init__(self, aoai_token, aoai_base_endpoint, llm_deployment_name, sec_identity):
+    def __init__(
+        self, aoai_token, aoai_base_endpoint, llm_deployment_name, sec_identity
+    ):
         """Initialize the FinancialAnalyst class."""
         self.aoai_token = aoai_token
         self.aoai_base_endpoint = aoai_base_endpoint
@@ -142,7 +156,9 @@ class FinancialAnalyst:
 
         # Add Azure OpenAI chat completion
         chat_completion = AzureChatCompletion(
-            deployment_name=self.llm_deployment_name, endpoint=self.aoai_base_endpoint, api_key=self.aoai_token
+            deployment_name=self.llm_deployment_name,
+            endpoint=self.aoai_base_endpoint,
+            api_key=self.aoai_token,
         )
         kernel.add_service(chat_completion)
 
@@ -152,7 +168,8 @@ class FinancialAnalyst:
 
         # Add the FinancialStatementsPlugin to the kernel
         kernel.add_plugin(
-            plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity), plugin_name="FinancialStatementsPlugin"
+            plugins.FinancialStatementsPlugin(sec_identity=self.sec_identity),
+            plugin_name="FinancialStatementsPlugin",
         )
 
         # Add the StockPricePlugin to the kernel
@@ -160,7 +177,9 @@ class FinancialAnalyst:
 
         # Enable planning
         execution_settings = AzureChatPromptExecutionSettings(tool_choice="auto")
-        execution_settings.function_choice_behavior = FunctionChoiceBehavior.Auto(auto_invoke=True, filters={})
+        execution_settings.function_choice_behavior = FunctionChoiceBehavior.Auto(
+            auto_invoke=True, filters={}
+        )
 
         # Set the chat history
         history = ChatHistory()
@@ -180,14 +199,18 @@ class FinancialAnalyst:
 class StructuredReportGenerator:
     """A class used to generate a consolidated financial report."""
 
-    def __init__(self, aoai_token, aoai_base_endpoint, llm_deployment_name, aoai_api_version):
+    def __init__(
+        self, aoai_token, aoai_base_endpoint, llm_deployment_name, aoai_api_version
+    ):
         """Initialize the ReportGenerator class."""
         self.aoai_token = aoai_token
         self.aoai_base_endpoint = aoai_base_endpoint
         self.llm_deployment_name = llm_deployment_name
         self.aoai_api_version = aoai_api_version
 
-    async def get_consolidated_report(self, balance_sheet_report, income_report, cash_flow_report, news_report):
+    async def get_consolidated_report(
+        self, balance_sheet_report, income_report, cash_flow_report, news_report
+    ):
         """Generate the consolidated financial analysis report."""
         # Define system and user messages
         system_message = """
@@ -242,7 +265,9 @@ class StructuredReportGenerator:
         logging.getLogger("kernel").setLevel(logging.DEBUG)
 
         # Set structured output
-        execution_settings = AzureChatPromptExecutionSettings(response_format=ConsolidatedReport)
+        execution_settings = AzureChatPromptExecutionSettings(
+            response_format=ConsolidatedReport
+        )
 
         # Set the chat history
         history = ChatHistory()

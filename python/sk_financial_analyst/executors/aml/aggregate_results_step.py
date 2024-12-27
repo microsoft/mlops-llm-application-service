@@ -16,9 +16,18 @@ def parse_args():
     Returns:
         argparse.Namespace: Parsed command-line arguments.
     """
-    parser = argparse.ArgumentParser(description="Aggregate JSONL files into a single file.")
-    parser.add_argument("--input_folder", type=str, required=True, help="Input folder containing JSONL files.")
-    parser.add_argument("--output_file", type=str, required=True, help="Output JSONL file path.")
+    parser = argparse.ArgumentParser(
+        description="Aggregate JSONL files into a single file."
+    )
+    parser.add_argument(
+        "--input_folder",
+        type=str,
+        required=True,
+        help="Input folder containing JSONL files.",
+    )
+    parser.add_argument(
+        "--output_file", type=str, required=True, help="Output JSONL file path."
+    )
     return parser.parse_args()
 
 

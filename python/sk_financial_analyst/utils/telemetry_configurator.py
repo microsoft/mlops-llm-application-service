@@ -27,11 +27,15 @@ class TelemetryConfigurator:
     def __init__(self, app_insights_connection_string):
         """Initialize the telemetry configurator."""
         self.app_insights_connection_string = app_insights_connection_string
-        self.resource = Resource.create({ResourceAttributes.SERVICE_NAME: "sk_financial_analyst"})
+        self.resource = Resource.create(
+            {ResourceAttributes.SERVICE_NAME: "sk_financial_analyst"}
+        )
 
     def set_up_logging(self):
         """Set Open Telemetry logging for the application."""
-        exporter = AzureMonitorLogExporter(connection_string=self.app_insights_connection_string)
+        exporter = AzureMonitorLogExporter(
+            connection_string=self.app_insights_connection_string
+        )
 
         # Create and set a global logger provider for the application.
         logger_provider = LoggerProvider(resource=self.resource)
@@ -56,7 +60,9 @@ class TelemetryConfigurator:
 
     def set_up_tracing(self):
         """Set Open Telemetry tracing for the application."""
-        exporter = AzureMonitorTraceExporter(connection_string=self.app_insights_connection_string)
+        exporter = AzureMonitorTraceExporter(
+            connection_string=self.app_insights_connection_string
+        )
 
         # Initialize a trace provider for the application.
         # This is a factory for creating tracers.
@@ -73,12 +79,16 @@ class TelemetryConfigurator:
 
     def set_up_metrics(self):
         """Set Open Telemetry metrics for the application."""
-        exporter = AzureMonitorMetricExporter(connection_string=self.app_insights_connection_string)
+        exporter = AzureMonitorMetricExporter(
+            connection_string=self.app_insights_connection_string
+        )
 
         # Initialize a metric provider for the application.
         # This is a factory for creating meters.
         meter_provider = MeterProvider(
-            metric_readers=[PeriodicExportingMetricReader(exporter, export_interval_millis=5000)],
+            metric_readers=[
+                PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
+            ],
             resource=self.resource,
             views=[
                 # Dropping all instrument names except for

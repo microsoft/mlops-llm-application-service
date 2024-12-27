@@ -6,7 +6,6 @@ from evaluators.financial_metrics_evaluator import FinancialMetricsEvaluator
 
 
 def main(financial_analisys_report: str, gt_report: str):
-
     json_evaluator = FinancialMetricsEvaluator(gt_report)
 
     evaluators_config = {

@@ -73,7 +73,11 @@ class Metric(KernelBaseModel):
 class FinancialAnalysis(KernelBaseModel):
     """A class representing a financial analysis."""
 
-    name: Literal["balance_sheet_statement_analysis", "income_statement_analysis", "cash_flow_statement_analysis"]
+    name: Literal[
+        "balance_sheet_statement_analysis",
+        "income_statement_analysis",
+        "cash_flow_statement_analysis",
+    ]
     metrics: List[Metric]
     analysis: str
 
@@ -81,7 +85,9 @@ class FinancialAnalysis(KernelBaseModel):
 class ConsolidatedReport(KernelBaseModel):
     """A class representing a consolidated analysis report."""
 
-    company_name: Annotated[str, "The name of the company, extracted from the financial statements."]
+    company_name: Annotated[
+        str, "The name of the company, extracted from the financial statements."
+    ]
     financial_analysis: List[FinancialAnalysis]
     news_analysis: NewsAnalysis
     conclusion: str

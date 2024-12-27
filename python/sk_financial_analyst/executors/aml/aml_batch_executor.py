@@ -42,19 +42,38 @@ def parse_args():
         default="ticker",
         help="The key in the JSONL file that contains the stock ticker symbol.",
     )
-    parser.add_argument("--batch_size", type=int, default=4, help="Number of tickers per batch.")
-    parser.add_argument("--instance_count", type=int, default=1, help="Number of instances to run the parallel run on.")
     parser.add_argument(
-        "--max_concurrency_per_instance", type=int, default=2, help="Maximum number of concurrent tasks per instance."
+        "--batch_size", type=int, default=4, help="Number of tickers per batch."
     )
     parser.add_argument(
-        "--in_batch_concurrency", type=int, default=4, help="Maximum number of concurrent tasks within each batch."
+        "--instance_count",
+        type=int,
+        default=1,
+        help="Number of instances to run the parallel run on.",
     )
     parser.add_argument(
-        "--batch_output_file", type=str, default="batch_outputs.jsonl", help="File name for the output JSONL file."
+        "--max_concurrency_per_instance",
+        type=int,
+        default=2,
+        help="Maximum number of concurrent tasks per instance.",
     )
     parser.add_argument(
-        "--output_folder", type=str, default="sk_financial_analyst_output", help="Folder for output files."
+        "--in_batch_concurrency",
+        type=int,
+        default=4,
+        help="Maximum number of concurrent tasks within each batch.",
+    )
+    parser.add_argument(
+        "--batch_output_file",
+        type=str,
+        default="batch_outputs.jsonl",
+        help="File name for the output JSONL file.",
+    )
+    parser.add_argument(
+        "--output_folder",
+        type=str,
+        default="sk_financial_analyst_output",
+        help="Folder for output files.",
     )
     parser.add_argument(
         "--intermediate_folder",
@@ -62,12 +81,27 @@ def parse_args():
         default="sk_financial_analyst_output/intermediate",
         help="Folder for intermediate output files.",
     )
-    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
-    parser.add_argument("--retries", type=int, default=3, help="Number of retry attempts for failed processes.")
     parser.add_argument(
-        "--aml_env_name", type=str, default="sk-financial-analyst-env", help="Name of the Azure ML environment."
+        "--logging_enabled", action="store_true", default=False, help="Enable logging."
     )
-    parser.add_argument("--cluster_name", type=str, default="cpu-cluster", help="Name of the Azure ML compute cluster.")
+    parser.add_argument(
+        "--retries",
+        type=int,
+        default=3,
+        help="Number of retry attempts for failed processes.",
+    )
+    parser.add_argument(
+        "--aml_env_name",
+        type=str,
+        default="sk-financial-analyst-env",
+        help="Name of the Azure ML environment.",
+    )
+    parser.add_argument(
+        "--cluster_name",
+        type=str,
+        default="cpu-cluster",
+        help="Name of the Azure ML compute cluster.",
+    )
     parser.add_argument(
         "--experiment_name",
         type=str,
@@ -123,7 +157,9 @@ def main():
     resource_group = os.getenv("AML_RESOURCE_GROUP_NAME")
     workspace = os.getenv("AML_WORKSPACE_NAME")
 
-    ml_client = MLClient(DefaultAzureCredential(), subscription_id, resource_group, workspace)
+    ml_client = MLClient(
+        DefaultAzureCredential(), subscription_id, resource_group, workspace
+    )
 
     # Define the environment
     try:
@@ -151,9 +187,15 @@ def main():
             mode=InputOutputModes.RO_MOUNT,
         ),
     }
-    output_folder_path = os.path.join("azureml://datastores/workspaceblobstore/paths", args.intermediate_folder)
+    output_folder_path = os.path.join(
+        "azureml://datastores/workspaceblobstore/paths", args.intermediate_folder
+    )
     outputs = {
-        "output_folder": Output(type=AssetTypes.URI_FOLDER, path=output_folder_path, mode=InputOutputModes.RW_MOUNT)
+        "output_folder": Output(
+            type=AssetTypes.URI_FOLDER,
+            path=output_folder_path,
+            mode=InputOutputModes.RW_MOUNT,
+        )
     }
 
     batch_output_file = args.batch_output_file
@@ -193,8 +235,14 @@ def main():
         ),
     )
 
-    inputs = {"input_folder": Input(type=AssetTypes.URI_FOLDER, mode=InputOutputModes.RO_MOUNT)}
-    output_folder_path = os.path.join("azureml://datastores/workspaceblobstore/paths", args.output_folder)
+    inputs = {
+        "input_folder": Input(
+            type=AssetTypes.URI_FOLDER, mode=InputOutputModes.RO_MOUNT
+        )
+    }
+    output_folder_path = os.path.join(
+        "azureml://datastores/workspaceblobstore/paths", args.output_folder
+    )
     output_file_path = os.path.join(output_folder_path, args.batch_output_file)
     outputs = {"output_file": Output(type=AssetTypes.URI_FILE, path=output_file_path)}
 
@@ -222,7 +270,9 @@ def main():
     pipeline_job.settings.default_compute = args.cluster_name
     pipeline_job.settings.force_rerun = True
 
-    job = ml_client.jobs.create_or_update(pipeline_job, experiment_name=args.experiment_name)
+    job = ml_client.jobs.create_or_update(
+        pipeline_job, experiment_name=args.experiment_name
+    )
     ml_client.jobs.stream(job.name)
 
 

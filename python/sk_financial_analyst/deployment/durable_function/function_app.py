@@ -17,7 +17,9 @@ def health_check(req: func.HttpRequest) -> func.HttpResponse:
     """Check health of the function."""
     version = 1
     logging.info(f"Health check version {version}")
-    return func.HttpResponse(f"This function executed successfully with version {version}.", status_code=200)
+    return func.HttpResponse(
+        f"This function executed successfully with version {version}.", status_code=200
+    )
 
 
 @app.route(route="GetReportAsync", auth_level=func.AuthLevel.FUNCTION)
@@ -27,14 +29,18 @@ async def http_start(req: func.HttpRequest, client):
     try:
         req_body = req.get_json()
         if not isinstance(req_body, dict):
-            return func.HttpResponse("String has been passed but json is expected", status_code=400)
+            return func.HttpResponse(
+                "String has been passed but json is expected", status_code=400
+            )
     except ValueError:
         return func.HttpResponse("Invalid JSON", status_code=400)
 
     stock_ticker = req_body.get("stock_ticker")
 
     if stock_ticker:
-        instance_id = await client.start_new("report_orchestrator", client_input={"stock_ticker": stock_ticker})
+        instance_id = await client.start_new(
+            "report_orchestrator", client_input={"stock_ticker": stock_ticker}
+        )
         response = client.create_check_status_response(req, instance_id)
         return response
     else:
@@ -69,7 +75,9 @@ async def generate_report(stock):
     structured_report_generator_model = os.environ.get("REPORT_GENERATOR_MODEL_NAME")
     aoai_api_version = os.environ.get("AOAI_API_VERSION")
 
-    credential = DefaultAzureCredential(managed_identity_client_id=managed_identity_client_id)
+    credential = DefaultAzureCredential(
+        managed_identity_client_id=managed_identity_client_id
+    )
     aoai_token = credential.get_token(auth_provider_endpoint).token
 
     # Get Azure OpenAI deployment name from Azure Key Vault

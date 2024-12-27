@@ -15,7 +15,9 @@ from concurrent.futures import ProcessPoolExecutor
 from sk_financial_analyst.executors.single_item_executor import generate_report
 
 
-def process_batch_sync(config_file, batch_number, batch, retries, in_batch_concurrency, logging_enabled):
+def process_batch_sync(
+    config_file, batch_number, batch, retries, in_batch_concurrency, logging_enabled
+):
     """
     Process a single batch of tickers.
 
@@ -154,7 +156,10 @@ async def main(
         sys.exit(1)
 
     # Split tickers into batches
-    batches = [(i // batch_size + 1, tickers[i : i + batch_size]) for i in range(0, len(tickers), batch_size)]
+    batches = [
+        (i // batch_size + 1, tickers[i : i + batch_size])
+        for i in range(0, len(tickers), batch_size)
+    ]
 
     # Create output folder if it does not exist
     os.makedirs(output_folder, exist_ok=True)
@@ -238,18 +243,36 @@ def parse_args():
         default="ticker",
         help="The key in the JSONL file that contains the stock ticker symbol.",
     )
-    parser.add_argument("--batch_size", type=int, default=4, help="Number of tickers per batch.")
     parser.add_argument(
-        "--max_workers", type=int, default=4, help="Number of processes for parallel processing of batches."
-    )
-    parser.add_argument("--retries", type=int, default=3, help="Number of retry attempts for failed processes.")
-    parser.add_argument(
-        "--batch_output_file", type=str, default="batch_outputs.jsonl", help="File name for the output JSONL file."
+        "--batch_size", type=int, default=4, help="Number of tickers per batch."
     )
     parser.add_argument(
-        "--output_folder", type=str, default="./sk_financial_analyst/data/outputs", help="Folder for output files."
+        "--max_workers",
+        type=int,
+        default=4,
+        help="Number of processes for parallel processing of batches.",
     )
-    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
+    parser.add_argument(
+        "--retries",
+        type=int,
+        default=3,
+        help="Number of retry attempts for failed processes.",
+    )
+    parser.add_argument(
+        "--batch_output_file",
+        type=str,
+        default="batch_outputs.jsonl",
+        help="File name for the output JSONL file.",
+    )
+    parser.add_argument(
+        "--output_folder",
+        type=str,
+        default="./sk_financial_analyst/data/outputs",
+        help="Folder for output files.",
+    )
+    parser.add_argument(
+        "--logging_enabled", action="store_true", default=False, help="Enable logging."
+    )
     parser.add_argument(
         "--in_batch_concurrency",
         type=int,

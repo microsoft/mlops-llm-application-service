@@ -30,7 +30,10 @@ class NewsPlugin:
         description="Get the latest news related to a stock ticker",
     )
     def get_news(
-        self, ticker: Annotated[str, "The stock ticker for getting news"], retries: int = 3, delay: int = 2
+        self,
+        ticker: Annotated[str, "The stock ticker for getting news"],
+        retries: int = 3,
+        delay: int = 2,
     ) -> Annotated[
         str,
         """News articles related to the stock ticker,
@@ -145,11 +148,26 @@ class FinancialStatementsPlugin:
 
         # Return the financial report based on the report type
         if report_type == "balance_sheet":
-            return "Balance Sheet Periods: " + str(balance_sheet_periods) + "\n" + str(balance_sheet)
+            return (
+                "Balance Sheet Periods: "
+                + str(balance_sheet_periods)
+                + "\n"
+                + str(balance_sheet)
+            )
         elif report_type == "income":
-            return "Income Statement Periods: " + str(income_stmt_periods) + "\n" + str(income_stmt)
+            return (
+                "Income Statement Periods: "
+                + str(income_stmt_periods)
+                + "\n"
+                + str(income_stmt)
+            )
         elif report_type == "cash_flow":
-            return "Cash Flow Statement Periods: " + str(cash_flow_stmt_periods) + "\n" + str(cash_flow_stmt)
+            return (
+                "Cash Flow Statement Periods: "
+                + str(cash_flow_stmt_periods)
+                + "\n"
+                + str(cash_flow_stmt)
+            )
         else:
             return "Invalid report type"
 
