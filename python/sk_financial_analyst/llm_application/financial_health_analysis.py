@@ -118,13 +118,13 @@ class FinancialHealthAnalysis:
         )
 
         # Generate the structured consolidated report
-        reports[
-            "consolidated_report"
-        ] = await structured_report_generator.get_consolidated_report(
-            balance_sheet_report=reports["balance_sheet_report"],
-            income_report=reports["income_report"],
-            cash_flow_report=reports["cash_flow_report"],
-            news_report=reports["news_report"],
+        reports["consolidated_report"] = (
+            await structured_report_generator.get_consolidated_report(
+                balance_sheet_report=reports["balance_sheet_report"],
+                income_report=reports["income_report"],
+                cash_flow_report=reports["cash_flow_report"],
+                news_report=reports["news_report"],
+            )
         )
 
         return reports
