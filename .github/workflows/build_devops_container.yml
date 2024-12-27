@@ -1,10 +1,14 @@
 name: Pre-build dev container image and Push to ACR
 
 on:
-  push:
-    branches:
-      #- 'development'
-      - 'agromova/features/cicd_dev_container'
+    pull_request:
+        branches:
+        - 'main'
+        paths:
+        - '.github/**'
+        - 'python/**'
+        - 'tests/**'
+        - 'evaluators/**'
 
 env:
     IMAGE_NAME: devops_container_image
