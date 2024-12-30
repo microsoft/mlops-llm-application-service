@@ -11,7 +11,7 @@ ENV PATH $CONDA_DEFAULT_ENVIRONMENT/bin:$PATH
 USER root
 
 # Update apt-get, install sudo and create a non-root user
-RUN apt-get update -y && apt-get install -y sudo \
+RUN apt-get update -y && apt-get dist-upgrade -y && apt-get install -y sudo \
     && useradd -m -s /bin/bash $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
