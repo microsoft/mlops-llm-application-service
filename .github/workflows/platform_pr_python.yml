@@ -22,13 +22,16 @@
         name: Build Validation Python
         uses: ./.github/workflows/build_python.yml
 
-      run-generate-eval-report:
-        name: Run generate_eval_report
+      run-generate-eval-report-in-container:
+        name: Run generate_eval_report_in_container
         needs: build-validation-python
         runs-on: ubuntu-latest
 
         container:
           image: llmappcontainerregistry.azurecr.io/devops_container_image:latest
+          credentials:
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
 
         steps:
           - name: Checkout code
