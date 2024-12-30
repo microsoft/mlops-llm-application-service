@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:dev-3.12
+FROM ubuntu:22.04
 
 # Initialize arguments
 ARG USERNAME=vscode
