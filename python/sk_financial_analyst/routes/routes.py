@@ -1,6 +1,7 @@
+"""Routes for the financial analysis microservice."""
+
 import asyncio
 import logging
-
 from fastapi import APIRouter, FastAPI
 from sk_financial_analyst.executors import single_item_executor
 
@@ -16,6 +17,15 @@ router = APIRouter()
     "/generate_financial_report/{stock_ticker}", summary="Generate Financial Report"
 )
 async def run_financial_health_analysis(stock_ticker: str):
+    """
+    Generate a financial health report asynchronously.
+
+    Args:
+        stock_ticker (str): The ticker symbol for the stock.
+
+    Returns:
+        dict: A success message after generating the financial report.
+    """
     try:
         await asyncio.wait_for(
             single_item_executor.main(
@@ -37,6 +47,12 @@ app.include_router(router, prefix="/api", tags=["Financial Reports"])
 
 @app.get("/", summary="Root Endpoint")
 def read_root():
+    """
+    Root endpoint for the financial health analysis API.
+
+    Returns:
+        dict: A welcome message.
+    """
     return {
         "message": "Welcome to the Financial Health Analysis API, a health endpoint!"
     }

@@ -1,13 +1,30 @@
+"""Generate ground truth data for financial analysis."""
+
 import json
 import os
 from datetime import datetime
-
 import edgar
 import yfinance as yf
 
 
 class FinancialAnalysisGroundTruth:
+    """
+    A class to generate ground truth data for financial analysis.
+
+    Attributes:
+        ticker (str): The stock ticker symbol.
+        form (str): The form type, default is '10-Q'.
+    """
+
     def __init__(self, ticker, email_identity, form="10-Q"):
+        """
+        Initialize the FinancialAnalysisGroundTruth with a ticker, email identity, and form type.
+
+        Args:
+            ticker (str): The stock ticker symbol.
+            email_identity (str):The email identity for EDGAR.
+            form (str, optional): The form type, default is '10-Q'.
+        """
         self.ticker = ticker
         self.form = form
         edgar.set_identity(email_identity)
@@ -113,7 +130,7 @@ class FinancialAnalysisGroundTruth:
                             )
 
     def _find_concept(self, statement, concept_code):
-        """Helper method to find concept in statement using various formats."""
+        """Identify a concept in a statement using various formats."""
         variants = [
             concept_code,
             concept_code.lower(),

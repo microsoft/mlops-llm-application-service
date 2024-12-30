@@ -1,11 +1,17 @@
+"""Evaluation module providing utilities for financial analysis comparisons."""
+
 import argparse
-
 from azure.ai.evaluation import evaluate
-
 from evaluators.financial_metrics_evaluator import FinancialMetricsEvaluator
 
 
 def main(financial_analisys_report: str, gt_report: str):
+    """Run the main evaluation for financial metrics.
+
+    Args:
+        financial_analisys_report (str): Path to or content of the financial analysis report.
+        gt_report (str): Path to or content of the ground truth report.
+    """
     json_evaluator = FinancialMetricsEvaluator(gt_report)
 
     evaluators_config = {
