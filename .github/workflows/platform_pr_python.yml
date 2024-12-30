@@ -26,6 +26,10 @@
         name: Run generate_eval_report
         needs: build-validation-python
         runs-on: ubuntu-latest
+
+        container:
+          image: ${{ secrets.ACR_CONTAINER_REGISTRY }}.azurecr.io/devops_container_image:latest
+
         steps:
           - name: Checkout code
             uses: actions/checkout@v2
