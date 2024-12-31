@@ -32,8 +32,13 @@ RUN sudo apt-get update \
 
 COPY python/requirements.txt .
 
-RUN conda init bash \
-    && conda create -n mlopsllm-env python=3.12 pip=23.0.1 -q -y \
+# Install Miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
+    && bash ~/miniconda.sh -b -p /opt/miniconda \
+    && rm ~/miniconda.sh \
+    && /opt/miniconda/bin/conda init bash
+
+RUN conda create -n mlopsllm-env python=3.12 pip=23.0.1 -q -y \
     && conda run -n mlopsllm-env pip install --no-cache-dir -r requirements.txt \
     && conda clean -a -y
 
