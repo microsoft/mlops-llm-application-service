@@ -5,7 +5,7 @@ ARG USERNAME=vscode
 
 ENV CONDA_ENVIRONMENT_PATH=/opt/miniconda/envs/mlopsllm-env
 ENV CONDA_DEFAULT_ENVIRONMENT=$CONDA_ENVIRONMENT_PATH
-ENV PATH $CONDA_DEFAULT_ENVIRONMENT/bin:$PATH
+ENV PATH=$PATH:$CONDA_DEFAULT_ENVIRONMENT/bin
 
 # Setup user for sudo
 USER root
@@ -29,6 +29,8 @@ RUN sudo apt-get update \
     && curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash \
     && az config set extension.use_dynamic_install=yes_without_prompt \
     && az extension add -n ml
+
+RUN which az && az --version
 
 COPY python/requirements.txt .
 
