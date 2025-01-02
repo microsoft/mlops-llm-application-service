@@ -14,6 +14,9 @@ RUN apt-get update -y && apt-get dist-upgrade -y && \
     rm /tmp/miniconda.sh && \
     /opt/miniconda/bin/conda init bash
 
+# Add Miniconda to PATH
+ENV PATH=/opt/miniconda/bin:$PATH
+
 # Create user and set permissions
 RUN useradd -m -s /bin/bash $USERNAME && \
     echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
@@ -28,7 +31,7 @@ WORKDIR /home/$USERNAME
 
 # Update PATH to include the Conda environment
 ENV CONDA_ENVIRONMENT_PATH=/opt/miniconda/envs/mlopsllm-env
-ENV PATH=$CONDA_ENVIRONMENT_PATH/bin:$PATH
+ENV PATH=$CONDA_ENVIRONMENT_PATH/bin:/opt/miniconda/bin:$PATH
 
 # Copy requirements first to leverage Docker cache
 COPY python/requirements.txt .
@@ -54,7 +57,7 @@ USER $USERNAME
 # Verify Azure CLI installation
 RUN which az && az --version
 
-# Activate Conda environment
+# Activate Conda environment by default
 RUN echo "conda activate mlopsllm-env" >> ~/.bashrc
 
 # Set default command
