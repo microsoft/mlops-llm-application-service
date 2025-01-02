@@ -37,7 +37,7 @@ ENV PATH=$CONDA_ENVIRONMENT_PATH/bin:/opt/miniconda/bin:$PATH
 COPY python/requirements.txt .
 
 # Create Conda environment and install dependencies
-RUN conda create -n mlopsllm-env python=3.12 pip=23.0.1 -y && \
+RUN conda create -n mlopsllm-env python=3.12 pip=23.2 -y && \
     conda run -n mlopsllm-env pip install --no-cache-dir -r requirements.txt && \
     conda clean -a -y
 
