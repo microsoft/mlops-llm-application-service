@@ -44,6 +44,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./.devcontainer/Dockerfile
+          file: ./.buildcontainer/Dockerfile 
           push: true
           tags: ${{ secrets.ACR_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
