@@ -28,7 +28,9 @@ RUN sudo apt-get update \
     && sudo apt-get install -y gnupg software-properties-common libc6 \
     && curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash \
     && az config set extension.use_dynamic_install=yes_without_prompt \
-    && az extension add -n ml
+    && az extension add -n ml \
+    && which az \
+    && az --version
 
 RUN which az && az --version
 

@@ -50,7 +50,9 @@
 
           - name: Check Azure CLI Availability
             run: |
+              echo "Current PATH: $PATH"
               which az
+              ls -l $(which az) || echo "az not found in the expected directory"
               az --version
 
           - name: Azure login
