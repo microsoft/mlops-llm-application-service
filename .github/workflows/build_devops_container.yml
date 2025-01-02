@@ -46,4 +46,5 @@ jobs:
           context: .
           file: ./.buildcontainer/Dockerfile 
           push: true
+          no-cache: true
           tags: ${{ secrets.ACR_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
