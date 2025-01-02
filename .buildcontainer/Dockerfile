@@ -1,23 +1,22 @@
 FROM ubuntu:22.04
 
-# Initialize arguments
 ARG USERNAME=vscode
 
-ENV CONDA_ENVIRONMENT_PATH=/opt/miniconda/envs/llm-env
-ENV CONDA_DEFAULT_ENVIRONMENT=$CONDA_ENVIRONMENT_PATH
-ENV PATH $CONDA_DEFAULT_ENVIRONMENT/bin:$PATH
-
-# Setup user for sudo
 USER root
 
-# Update apt-get, install sudo and create a non-root user
-RUN apt-get update -y && apt-get install -y sudo \
+RUN apt-get update -y && apt-get install -y sudo wget \
+    && wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh \
+    && bash /tmp/miniconda.sh -b -p /opt/miniconda \
+    && rm /tmp/miniconda.sh \
     && useradd -m -s /bin/bash $USERNAME \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     && chown -R $USERNAME:$USERNAME /opt/miniconda
 
-#Use the non-root user
+ENV CONDA_ENVIRONMENT_PATH=/opt/miniconda/envs/llm-env
+ENV CONDA_DEFAULT_ENVIRONMENT=$CONDA_ENVIRONMENT_PATH
+ENV PATH=$CONDA_DEFAULT_ENVIRONMENT/bin:$PATH
+
 USER $USERNAME
 
 # Install dependencies
