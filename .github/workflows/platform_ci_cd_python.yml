@@ -43,6 +43,16 @@
               inlineScript: |
                 az account show
 
+          # - name: Run generate_report
+          #   working-directory: python
+          #   env:
+          #     KEY_VAULT_URL: ${{ vars.KEY_VAULT_URL }}
+          #     NEWS_ANALYST_MODEL_NAME: ${{ vars.NEWS_ANALYST_MODEL_NAME }}
+          #     FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
+          #     REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
+          #   run: |
+          #     python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
+
           - name: Docker login ACR
             uses: Azure/docker-login@v1
             with:

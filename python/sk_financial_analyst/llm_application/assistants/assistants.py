@@ -117,7 +117,7 @@ class FinancialAnalyst:
         financial metrics derived from the financial statements.
         """
         user_message = f"""
-        Analyze the financial health of {stock_ticker}, from the perspective of
+        Analyze the financial health of {stock_ticker} stock ticker, from the perspective of
         its financial statement of the type {report_type}.
         Calculate the following metrics,
         providing your interpretation of the results:
