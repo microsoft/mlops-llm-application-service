@@ -8,10 +8,14 @@ import sys
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
+from azure.storage.blob import BlobServiceClient
 from common.configurator import config_reader
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 from sk_financial_analyst.utils import report_generator
 from sk_financial_analyst.utils.telemetry_configurator import TelemetryConfigurator
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 async def generate_report(config_file, stock_ticker):
@@ -48,6 +52,12 @@ async def generate_report(config_file, stock_ticker):
     )
     aoai_api_version = config_reader.get_value_by_name(
         config_data, "assistants", "structured_report_generator", "aoai_api_version"
+    )
+    storage_account_url = config_reader.get_value_by_name(
+        config_data, "financial_health_analysis", "storage_account_url"
+    )
+    storage_account_container = config_reader.get_value_by_name(
+        config_data, "financial_health_analysis", "storage_account_container"
     )
 
     # Get Azure OpenAI authentication token
@@ -92,10 +102,40 @@ async def generate_report(config_file, stock_ticker):
     with tracer.start_as_current_span("financial_health_analysis"):
         report_results = await report(stock_ticker)
 
+    # Create the BlobServiceClient object
+    blob_service_client = BlobServiceClient(storage_account_url, credential=credential)
+
+    try:
+        # Create the container
+        container_client = blob_service_client.get_container_client(storage_account_container)
+        if not container_client.exists():
+            container_client.create_container()
+        # Delete reports if already exists in container
+        # List blobs in the container
+        blob_list = container_client.list_blobs()
+
+        # Delete each blob in the container
+        for blob in blob_list:
+            container_client.delete_blob(blob.name)
+        logger.info("Deleted the existing blobs, saving current reports in container: %s", storage_account_container)
+
+    except Exception:
+        logger.exception("Error in creating container or deleting blobs in container %s", storage_account_container)
+        return
+
+    for blob_name, data in report_results.items():
+        try:
+            logger.info("blob name: %s", blob_name)
+            blob_client = container_client.get_blob_client(blob_name)
+            blob_client.upload_blob(data)
+            logger.info("Uploaded %s successfully.", blob_name)
+        except Exception:
+            logger.exception("Error uploading %s: ", blob_name)
+
     return report_results
 
 
-async def main(stock_ticker, output_folder, intermediate_data_folder, logging_enabled):
+async def main(stock_ticker, output_folder, intermediate_data_folder, logging_enabled, generate_local_files):
     """
     Generate a financial health analysis of a company and save results.
 
@@ -109,51 +149,52 @@ async def main(stock_ticker, output_folder, intermediate_data_folder, logging_en
     if not logging_enabled:
         logging.disable(sys.maxsize)
 
-    # Create the output folder if it does not exist
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    # Create the intermediate data folder if it does not exist
-    if not os.path.exists(intermediate_data_folder):
-        os.makedirs(intermediate_data_folder)
-
     # Generate the report
-    print(f"Generating financial health analysis for {stock_ticker}...")
+    logger.info("Generating financial health analysis for: %s", stock_ticker)
     report_results = await generate_report("./sk_financial_analyst/config/config.yaml", stock_ticker)
-    print(f"Financial health analysis for {stock_ticker} generated.")
+    logger.info("Financial health analysis for %s generated.", stock_ticker)
 
-    # Save the news report to a file
-    news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
-    with open(news_report_file, "w") as file:
-        file.write(report_results["news_report"])
+    if generate_local_files:
+        # Create the output folder if it does not exist
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
 
-    # Save the balance sheet report to a file
-    balance_sheet_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt")
-    with open(balance_sheet_report_file, "w") as file:
-        file.write(report_results["balance_sheet_report"])
+        # Create the intermediate data folder if it does not exist
+        if not os.path.exists(intermediate_data_folder):
+            os.makedirs(intermediate_data_folder)
 
-    # Save the income report to a file
-    income_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_income_report.txt")
-    with open(income_report_file, "w") as file:
-        file.write(report_results["income_report"])
+        # Save the news report to a file
+        news_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_news_report.txt")
+        with open(news_report_file, "w") as file:
+            file.write(report_results["news_report"])
 
-    # Save the cash flow report to a file
-    cash_flow_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_cash_flow_report.txt")
-    with open(cash_flow_report_file, "w") as file:
-        file.write(report_results["cash_flow_report"])
+        # Save the balance sheet report to a file
+        balance_sheet_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_balance_sheet_report.txt")
+        with open(balance_sheet_report_file, "w") as file:
+            file.write(report_results["balance_sheet_report"])
 
-    # Save the consolidated report to a JSON file
-    consolidated_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.json")
-    with open(consolidated_report_file, "w") as file:
-        file.write(report_results["consolidated_report"])
+        # Save the income report to a file
+        income_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_income_report.txt")
+        with open(income_report_file, "w") as file:
+            file.write(report_results["income_report"])
 
-    # Generate the markdown report
-    markdown_report = report_generator.json_to_markdown_report(consolidated_report_file)
+        # Save the cash flow report to a file
+        cash_flow_report_file = os.path.join(intermediate_data_folder, f"{stock_ticker}_cash_flow_report.txt")
+        with open(cash_flow_report_file, "w") as file:
+            file.write(report_results["cash_flow_report"])
 
-    # Save the markdown report to a file
-    markdown_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.md")
-    with open(markdown_report_file, "w") as file:
-        file.write(markdown_report)
+        # Save the consolidated report to a JSON file
+        consolidated_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.json")
+        with open(consolidated_report_file, "w") as file:
+            file.write(report_results["consolidated_report"])
+
+        # Generate the markdown report
+        markdown_report = report_generator.json_to_markdown_report(consolidated_report_file)
+
+        # Save the markdown report to a file
+        markdown_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.md")
+        with open(markdown_report_file, "w") as file:
+            file.write(markdown_report)
 
 
 def parse_args():
@@ -185,16 +226,30 @@ def parse_args():
         help="The folder where the intermediate output data will be saved.",
     )
     parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
+    parser.add_argument(
+        "--generate_local_files",
+        action="store_true",
+        default=False,
+        help="Generate the reports in your local directory.",
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
     try:
-        asyncio.run(main(args.stock_ticker, args.output_folder, args.intermediate_data_folder, args.logging_enabled))
+        asyncio.run(
+            main(
+                args.stock_ticker,
+                args.output_folder,
+                args.intermediate_data_folder,
+                args.logging_enabled,
+                args.generate_local_files,
+            )
+        )
     except KeyboardInterrupt:
-        print("\nProcess interrupted by user. Exiting...")
+        logger.exception("\nProcess interrupted by user. Exiting...")
         sys.exit(0)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    except Exception:
+        logger.exception("An unexpected error occurred")
         sys.exit(1)

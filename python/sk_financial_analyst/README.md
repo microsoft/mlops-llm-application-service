@@ -59,6 +59,11 @@ You need to create four secrets:
 
 Follow [this documentation](https://learn.microsoft.com/en-us/azure/key-vault/general/security-features#controlling-access-to-key-vault-data) to learn how to configure access for reading / writing secrets in Azure Key Vault.
 
+#### Access policy
+
+To read and write financial reports to blob storage, you need `Storage Blob Data Contributor` to blob storage account.
+To skip the local file generation set the `generate_local_files` argument to `False`
+
 #### .env
 
 Before running the code, create the `pyton/.env` file, using the provided `python/.env_sample` as example, and enter the needed values for your resource endpoints and deployment names.

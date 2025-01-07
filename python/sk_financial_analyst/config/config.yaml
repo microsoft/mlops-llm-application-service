@@ -12,3 +12,5 @@ assistants:
 financial_health_analysis:
   auth_provider_endpoint: "https://cognitiveservices.azure.com"
   key_vault_url: ${KEY_VAULT_URL}
+  storage_account_url: ${STORAGE_ACCOUNT_URL}
+  storage_account_container: ${STORAGE_ACCOUNT_CONTAINER}
