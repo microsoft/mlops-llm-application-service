@@ -6,7 +6,7 @@ import logging
 import os
 import sys
 
-from azure.identity import ManagedIdentityCredential
+from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader, otel
 from opentelemetry import trace
@@ -71,7 +71,12 @@ async def generate_report(config_file, stock_ticker):
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
             client_id = os.environ.get("AZURE_CLIENT_ID")
             # Get Azure OpenAI authentication token, ManagedIdentityCredential requires AZURE_CLIENT_ID to be set
-            credential = ManagedIdentityCredential(client_id=client_id, logging_enable=True)
+            credential = DefaultAzureCredential(
+                exclude_environment_credential=True,
+                exclude_workload_identity_credential=True,
+                managed_identity_client_id=client_id,
+                logging_enable=True,
+            )
 
             aoai_token = credential.get_token(auth_provider_endpoint).token
 
