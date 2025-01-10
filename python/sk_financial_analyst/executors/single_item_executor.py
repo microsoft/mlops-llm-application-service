@@ -5,7 +5,6 @@ import asyncio
 import logging
 import os
 import sys
-
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader
