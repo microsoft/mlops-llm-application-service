@@ -140,8 +140,8 @@ async def main(
     try:
         with open(input_file, "r") as f:
             lines = [json.loads(line) for line in f]
-    except FileNotFoundError:
-        print(f"Input file {input_file} not found.")
+    except FileNotFoundError as n:
+        print(f"Input file {input_file} not found: {n}")
         sys.exit(1)
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON from input file: {e}")
@@ -154,7 +154,7 @@ async def main(
         sys.exit(1)
 
     # Split tickers into batches
-    batches = [(i // batch_size + 1, tickers[i : i + batch_size]) for i in range(0, len(tickers), batch_size)]
+    batches = [(i // batch_size + 1, tickers[i : i + batch_size]) for i in range(0, len(tickers), batch_size)]  # noqa
 
     # Create output folder if it does not exist
     os.makedirs(output_folder, exist_ok=True)

@@ -1,0 +1,54 @@
+networks:
+  default:
+    driver: bridge
+
+services:
+  otel-collector:
+    build:
+      context: ../../common/deployments/otel-collector
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "1888:1888"   # pprof extension
+      - "13133:13133" # health_check extension
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
+      - "55679:55679" # zpages extension
+    environment:
+      - APPLICATIONINSIGHTS_CONNECTION_STRING=${APPLICATIONINSIGHTS_CONNECTION_STRING}
+
+  sk-financial-analyst:
+    build:
+      context: ../..
+      dockerfile: ./common/deployments/Dockerfile
+      args:
+        OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
+        NEWS_ANALYST_MODEL_NAME: "gpt-4o"
+        FINANCIAL_ANALYST_MODEL_NAME: "gpt-4o"
+        REPORT_GENERATOR_MODEL_NAME: "gpt-4o"
+        KEY_VAULT_URL: "https://llm-app-keyvault.vault.azure.net/"
+        OTEL_SERVICE_NAME: "sk-financial-analyst-dev"
+        OTEL_LOGS_EXPORTER: "otlp"
+        OTEL_TRACES_EXPORTER: "otlp"
+        OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+        OTEL_EXPORTER_OTLP_INSECURE: "true"
+        OTEL_LOG_LEVEL: "INFO"
+        OTEL_RESOURCE_ATTRIBUTES: "service.name=sk-financial-analyst-dev"
+        AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
+        AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+        APPLICATIONINSIGHTS_CONNECTION_STRING: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
+        OTEL_EXPORTER_OTLP_ENDPOINT: http://localhost:4317
+
+    container_name: sk-financial-analyst
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    restart: unless-stopped
+    networks:
+      - default
+    depends_on:
+      otel-collector:
+        condition: service_started
+    ports:
+      - "8000:8000"
