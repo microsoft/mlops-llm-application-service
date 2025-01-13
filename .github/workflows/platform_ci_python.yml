@@ -59,3 +59,13 @@
               tenant-id: ${{ secrets.AZURE_TENANT_ID }}
               subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+          - name: Run generate_report
+            working-directory: python
+            env:
+              KEY_VAULT_URL: ${{ vars.KEY_VAULT_URL }}
+              NEWS_ANALYST_MODEL_NAME: ${{ vars.NEWS_ANALYST_MODEL_NAME }}
+              FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
+              REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
+            run: |
+              python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
+

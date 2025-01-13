@@ -69,14 +69,17 @@ async def generate_report(config_file, stock_ticker):
         span.set_attribute("aoai_api_version", aoai_api_version)
 
         with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
-            client_id = os.environ.get("AZURE_CLIENT_ID")
-            # Get Azure OpenAI authentication token, ManagedIdentityCredential requires AZURE_CLIENT_ID to be set
-            credential = DefaultAzureCredential(
-                exclude_environment_credential=True,
-                exclude_workload_identity_credential=True,
-                managed_identity_client_id=client_id,
-                logging_enable=True,
-            )
+            managed_identity_client_id = os.environ.get("AZURE_CLIENT_ID")
+            credential_kwargs = {
+                "exclude_workload_identity_credential": True,
+                "exclude_environment_credential": True,
+                "logging_enable": True,
+            }
+            if managed_identity_client_id is None:
+                credential_kwargs["exclude_managed_identity_credential"] = True
+            else:
+                credential_kwargs["managed_identity_client_id"] = managed_identity_client_id
+            credential = DefaultAzureCredential(**credential_kwargs)
 
             aoai_token = credential.get_token(auth_provider_endpoint).token
 
@@ -90,6 +93,7 @@ async def generate_report(config_file, stock_ticker):
             # Get SEC identity from Azure Key Vault
             sec_identity = client.get_secret("sec-identity").value
 
+        with tracer.start_as_current_span("financial_health_analysis call.."):
             report = FinancialHealthAnalysis(
                 aoai_token,
                 aoai_base_endpoint,
@@ -104,10 +108,9 @@ async def generate_report(config_file, stock_ticker):
             )
 
             # invoke __call__ method to run report and return results back
-            with tracer.start_as_current_span("financial_health_analysis report.."):
-                report_results = await report(stock_ticker)
+            report_results = await report(stock_ticker)
 
-                return report_results
+            return report_results
 
 
 async def main(stock_ticker, output_folder, intermediate_data_folder, logging_enabled):
