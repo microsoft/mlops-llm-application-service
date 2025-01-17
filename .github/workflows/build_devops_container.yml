@@ -3,7 +3,7 @@ name: Pre-build Dev Container Image and Push to Azure Container Registry
 on:
   pull_request:
     branches:
-    - 'main'
+      - 'main'
     paths:
       - '.github/workflows/build_devops_container.yml' 
       - 'python/requirements.txt' 
