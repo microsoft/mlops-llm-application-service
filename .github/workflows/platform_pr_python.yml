@@ -2,8 +2,6 @@
     name: PR Platform Python Workflow
 
     on:
-      workflow_call:
-
       pull_request:
         branches:
           - 'main'
