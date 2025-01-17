@@ -1,14 +1,7 @@
 name: Pre-build Dev Container Image and Push to Azure Container Registry
 
 on:
-  pull_request:
-    branches:
-    - 'main'
-    paths:
-    - '.github/**'
-    - 'python/**'
-    - 'tests/**'
-    - 'evaluators/**'
+  workflow_dispatch:
 
 env:
     IMAGE_NAME: devops_container_image
