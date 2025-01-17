@@ -33,24 +33,28 @@
               inlineScript: |
                 az account show
 
-      run-generate-eval-report:
-        name: Run generate_eval_report
+      run-generate-eval-report-in-container:
+        name: Run generate_eval_report_in_container
         needs: build-and-deploy-python
         runs-on: ubuntu-latest
+
+        container:
+          image: llmappcontainerregistry.azurecr.io/devops_container_image:latest
+          credentials:
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
+          options: --user root
+
         steps:
           - name: Checkout code
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
 
-          - name: Set up Python
-            uses: actions/setup-python@v2
-            with:
-              python-version: '3.12'
-
-          - name: Install dependencies
-            working-directory: python
+          - name: Check Azure CLI Availability
             run: |
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
+              echo "Current PATH: $PATH"
+              which az
+              ls -l $(which az) || echo "az not found in the expected directory"
+              az --version
 
           - name: Azure login
             uses: azure/login@v2
@@ -67,4 +71,8 @@
               FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
               REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
             run: |
+              echo "Verifying Python Path"
+              which python
+              echo "Installed Packages:"
+              pip list
               python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
