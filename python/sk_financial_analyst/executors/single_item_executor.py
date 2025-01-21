@@ -42,9 +42,7 @@ async def generate_report(config_file, stock_ticker):
     tracer = trace.get_tracer(__name__)
     logger.info("Otel configuration successful..")
 
-    # with tracer.start_as_current_span("financial_analysis_report", kind=SpanKind.SERVER) as span:
-
-    if True:
+    with tracer.start_as_current_span("financial_analysis_report", kind=SpanKind.SERVER) as span:
         # Get values from the configuration data
         auth_provider_endpoint = config_reader.get_value_by_name(
             config_data, "financial_health_analysis", "auth_provider_endpoint"
@@ -55,7 +53,7 @@ async def generate_report(config_file, stock_ticker):
         news_analyst_model = config_reader.get_value_by_name(
             config_data, "assistants", "news_analyst", "llm_deployment_name"
         )
-        # span.set_attribute("news_analyst_model", news_analyst_model)
+        span.set_attribute("news_analyst_model", news_analyst_model)
         bing_search_endpoint = config_reader.get_value_by_name(
             config_data, "assistants", "news_analyst", "bing_search_endpoint"
         )
@@ -65,7 +63,7 @@ async def generate_report(config_file, stock_ticker):
         financial_analyst_model = config_reader.get_value_by_name(
             config_data, "assistants", "financial_analyst", "llm_deployment_name"
         )
-        # span.set_attribute("financial_analyst_model", financial_analyst_model)
+        span.set_attribute("financial_analyst_model", financial_analyst_model)
         structured_report_generator_model = config_reader.get_value_by_name(
             config_data,
             "assistants",
@@ -77,12 +75,10 @@ async def generate_report(config_file, stock_ticker):
         )
 
         logger.info("aoi api version: %s", aoai_api_version)
-        # span.set_attribute("aoai_api_version", aoai_api_version)
+        span.set_attribute("aoai_api_version", aoai_api_version)
 
-        # with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
-        if True:
+        with tracer.start_as_current_span("DefaultAzureCredential & SecretClient call"):
             managed_identity_client_id = os.environ.get("AZURE_CLIENT_ID")
-            print("managed_identity_client_id: ", managed_identity_client_id)
             credential_kwargs = {
                 "exclude_workload_identity_credential": True,
                 "exclude_environment_credential": True,
@@ -95,15 +91,12 @@ async def generate_report(config_file, stock_ticker):
                     managed_identity_client_id
                 )
             credential = DefaultAzureCredential(**credential_kwargs)
-            print("credential: ", credential)
 
             aoai_token = credential.get_token(auth_provider_endpoint).token
-            print("aoai_token: ", credential.get_token(auth_provider_endpoint).token)
 
             # Get Azure OpenAI deployment name from Azure Key Vault
             client = SecretClient(vault_url=key_vault_url, credential=credential)
             aoai_base_endpoint = client.get_secret("aoai-base-endpoint").value
-            print("aoai_base_endpoint: ", aoai_base_endpoint)
 
             # Get Bing Search key from Azure Key Vault
             bing_search_api_key = client.get_secret("bing-search-api-key").value
@@ -111,8 +104,7 @@ async def generate_report(config_file, stock_ticker):
             # Get SEC identity from Azure Key Vault
             sec_identity = client.get_secret("sec-identity").value
 
-        # with tracer.start_as_current_span("financial_health_analysis call.."):
-        if True:
+        with tracer.start_as_current_span("financial_health_analysis call.."):
             report = FinancialHealthAnalysis(
                 aoai_token,
                 aoai_base_endpoint,
