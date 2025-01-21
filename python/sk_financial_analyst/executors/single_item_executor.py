@@ -2,19 +2,19 @@
 
 import argparse
 import asyncio
+import json
 import logging
 import os
 import sys
-import json
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader, otel
 from opentelemetry import trace
 from opentelemetry.trace import SpanKind
-from sk_financial_analyst.llm_application.financial_health_analysis import (
-    FinancialHealthAnalysis,
-)
+
+from sk_financial_analyst.llm_application.financial_health_analysis import \
+    FinancialHealthAnalysis
 from sk_financial_analyst.utils import report_generator
 
 logger = logging.getLogger(__name__)
@@ -42,7 +42,9 @@ async def generate_report(config_file, stock_ticker):
     tracer = trace.get_tracer(__name__)
     logger.info("Otel configuration successful..")
 
-    with tracer.start_as_current_span("financial_analysis_report", kind=SpanKind.SERVER) as span:
+    with tracer.start_as_current_span(
+        "financial_analysis_report", kind=SpanKind.SERVER
+    ) as span:
         # Get values from the configuration data
         auth_provider_endpoint = config_reader.get_value_by_name(
             config_data, "financial_health_analysis", "auth_provider_endpoint"
