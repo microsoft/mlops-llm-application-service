@@ -1,8 +1,7 @@
 import argparse
 import os
 
-from azure.ai.evaluation import (AzureOpenAIModelConfiguration,
-                                 GroundednessEvaluator, evaluate)
+from azure.ai.evaluation import AzureOpenAIModelConfiguration, GroundednessEvaluator, evaluate
 from financial_metrics_evaluator import FinancialMetricsEvaluator
 
 

@@ -12,9 +12,7 @@ from azure.keyvault.secrets import SecretClient
 from common.configurator import config_reader, otel
 from opentelemetry import trace
 from opentelemetry.trace import SpanKind
-
-from sk_financial_analyst.llm_application.financial_health_analysis import \
-    FinancialHealthAnalysis
+from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 from sk_financial_analyst.utils import report_generator
 
 logger = logging.getLogger(__name__)
@@ -42,16 +40,12 @@ async def generate_report(config_file, stock_ticker):
     tracer = trace.get_tracer(__name__)
     logger.info("Otel configuration successful..")
 
-    with tracer.start_as_current_span(
-        "financial_analysis_report", kind=SpanKind.SERVER
-    ) as span:
+    with tracer.start_as_current_span("financial_analysis_report", kind=SpanKind.SERVER) as span:
         # Get values from the configuration data
         auth_provider_endpoint = config_reader.get_value_by_name(
             config_data, "financial_health_analysis", "auth_provider_endpoint"
         )
-        key_vault_url = config_reader.get_value_by_name(
-            config_data, "financial_health_analysis", "key_vault_url"
-        )
+        key_vault_url = config_reader.get_value_by_name(config_data, "financial_health_analysis", "key_vault_url")
         news_analyst_model = config_reader.get_value_by_name(
             config_data, "assistants", "news_analyst", "llm_deployment_name"
         )
@@ -59,9 +53,7 @@ async def generate_report(config_file, stock_ticker):
         bing_search_endpoint = config_reader.get_value_by_name(
             config_data, "assistants", "news_analyst", "bing_search_endpoint"
         )
-        max_news = config_reader.get_value_by_name(
-            config_data, "assistants", "news_analyst", "max_news"
-        )
+        max_news = config_reader.get_value_by_name(config_data, "assistants", "news_analyst", "max_news")
         financial_analyst_model = config_reader.get_value_by_name(
             config_data, "assistants", "financial_analyst", "llm_deployment_name"
         )
@@ -89,9 +81,7 @@ async def generate_report(config_file, stock_ticker):
             if managed_identity_client_id is None:
                 credential_kwargs["exclude_managed_identity_credential"] = True
             else:
-                credential_kwargs["managed_identity_client_id"] = (
-                    managed_identity_client_id
-                )
+                credential_kwargs["managed_identity_client_id"] = managed_identity_client_id
             credential = DefaultAzureCredential(**credential_kwargs)
 
             aoai_token = credential.get_token(auth_provider_endpoint).token
@@ -145,9 +135,7 @@ async def main(stock_ticker, output_folder, save_intermediate_results, logging_e
 
     # Generate the report
     print(f"Generating financial health analysis for {stock_ticker}...")
-    report_results = await generate_report(
-        "./sk_financial_analyst/config/config.yaml", stock_ticker
-    )
+    report_results = await generate_report("./sk_financial_analyst/config/config.yaml", stock_ticker)
     print(f"Financial health analysis for {stock_ticker} generated.")
 
     consolidated_report = json.loads(report_results["consolidated_report"])
@@ -161,9 +149,7 @@ async def main(stock_ticker, output_folder, save_intermediate_results, logging_e
         )
 
     # Save the consolidated report to a JSON file
-    consolidated_report_file = os.path.join(
-        output_folder, f"{stock_ticker}_consolidated_report.json"
-    )
+    consolidated_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.json")
     with open(consolidated_report_file, "w") as fp:
         json.dump(consolidated_report, fp)
 
@@ -171,9 +157,7 @@ async def main(stock_ticker, output_folder, save_intermediate_results, logging_e
     markdown_report = report_generator.json_to_markdown_report(consolidated_report_file)
 
     # Save the markdown report to a file
-    markdown_report_file = os.path.join(
-        output_folder, f"{stock_ticker}_consolidated_report.md"
-    )
+    markdown_report_file = os.path.join(output_folder, f"{stock_ticker}_consolidated_report.md")
     with open(markdown_report_file, "w") as file:
         file.write(markdown_report)
 
@@ -206,9 +190,7 @@ def parse_args():
         help="Store intermediate results produced by agents.",
     )
 
-    parser.add_argument(
-        "--logging_enabled", action="store_true", default=False, help="Enable logging."
-    )
+    parser.add_argument("--logging_enabled", action="store_true", default=False, help="Enable logging.")
     return parser.parse_args()
 
 
