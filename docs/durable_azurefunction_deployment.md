@@ -48,7 +48,7 @@ Therefore, App Settings page will contain some records that use connection strin
 Additional records should be added to App Settings of Azure Functions:
 
 - **AzureWebJobsStorage__accountname**: a storage account name of the associated storage account.
-- **AzureWebJobsStorage__credential**: **managedidentity** value should be here.
+- **AzureWebJobsStorage__credential**: **managedidentity** name should be here.
 - **AzureWebJobsStorage__clientId**: client id of the created User-Assigned Managed Identity should be in this field.
 
 ![New App Settings](./images/azure_function_settings_new.jpg)
