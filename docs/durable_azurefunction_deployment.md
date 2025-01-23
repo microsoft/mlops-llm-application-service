@@ -39,7 +39,7 @@ User-Assigned Managed Identity should have access to these records and **Key Vau
 
 ## Azure Functions Parameters
 
-Once we have User-Assigned Managed Identity it's important to setup Azure Function to use it for internal needs (got access to the associated storage account).
+Once we have User-Assigned Managed Identity it's important to setup Azure Function to use it for internal needs (get access to the associated storage account).
 Pay attention, that portal doesn't support User-Assigned Managed Identity in the deployment wizard for Azure Functions.
 Therefore, App Settings page will contain some records that use connection strings and keys - these records should be deleted.
 
