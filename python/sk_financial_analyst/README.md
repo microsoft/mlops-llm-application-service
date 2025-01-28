@@ -82,7 +82,7 @@ python -m sk_financial_analyst.executors.single_item_executor --stock_ticker <ST
 `<STOCK_TICKER>` is set by default to `MSFT`. You can run:
 
 ```bash
-python -m sk_financial_analyst.executors.single_item_executor --help
+python -m çsingle_item_executor --help
 ```
 
 to see all available command line options.
