@@ -56,6 +56,5 @@
               FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
               REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
               APPLICATIONINSIGHTS_CONNECTION_STRING: ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}}
-
             run: |
               python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
