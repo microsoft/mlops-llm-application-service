@@ -39,6 +39,7 @@
             uses: actions/checkout@v3
 
           - name: Check Azure CLI Availability
+            working-directory: python
             run: |
               echo "Current PATH: $PATH"
               which az
