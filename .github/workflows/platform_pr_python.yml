@@ -67,5 +67,6 @@
               echo "Verifying Python Path"
               which python
               echo "Installed Packages:"
+              echo APPLICATIONINSIGHTS_CONNECTION_STRING=${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} >> $GITHUB_ENV
               pip list
               python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
