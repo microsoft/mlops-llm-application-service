@@ -123,7 +123,7 @@ def main():
     # if application connection string is available, directly use azure monitor connection
     # else collector is used.
     if (os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING")) is not None:
-        configure_azure_monitor()
+        configure_azure_monitor(connection_string=os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING"))
     else:
         otel.config_otel()
     subscription_id = os.getenv("AZURE_SUBSCRIPTION_ID")
