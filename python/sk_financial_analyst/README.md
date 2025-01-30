@@ -35,7 +35,7 @@ Here is a diagram showing a high-level architecture:
 
 3. Install the required dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install --upgrade -r requirements.txt
 
 ### Configuration
 
