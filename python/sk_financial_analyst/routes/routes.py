@@ -3,7 +3,7 @@ import os
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
-from common.configurator import config_reader, otel
+from common.configurator import config_reader
 from fastapi import APIRouter, FastAPI
 from opentelemetry import trace
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
@@ -11,6 +11,8 @@ from opentelemetry.instrumentation.openai import OpenAIInstrumentor
 from opentelemetry.trace import SpanKind
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
 
+# Load the configuration data
+config_data = config_reader.load_yaml("./sk_financial_analyst/config/config.yaml")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # from llm_application import financial_health_analysis
@@ -19,7 +21,7 @@ app = FastAPI(title="Financial Health Analysis API", version="1.0.0")
 router = APIRouter()
 
 logger.info("Otel configuration started..")
-otel.config_otel()
+
 OpenAIInstrumentor().instrument()
 FastAPIInstrumentor.instrument_app(app)
 tracer = trace.get_tracer(__name__)
@@ -31,8 +33,7 @@ async def run_financial_health_analysis(stock_ticker: str):
     try:
         with tracer.start_as_current_span("run_financial_analysis_report", kind=SpanKind.SERVER) as span:
             logger.info("Starting finacial report generation..")
-            # Load the configuration data
-            config_data = config_reader.load_yaml("./sk_financial_analyst/config/config.yaml")
+
             key_vault_url = os.environ.get("KEY_VAULT_URL")
 
             # Get values from the configuration data

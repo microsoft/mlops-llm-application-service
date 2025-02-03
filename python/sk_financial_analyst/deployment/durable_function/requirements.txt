@@ -13,3 +13,11 @@ edgartools
 yfinance==0.2.40
 semantic-kernel
 pydantic==2.8.2
+## otel collector
+opentelemetry-instrumentation-openai==0.33.12
+opentelemetry-instrumentation-fastapi==0.49b2
+opentelemetry-distro==0.49b2
+opentelemetry-exporter-otlp==1.28.2
+## set this only when you want to directly instrument using
+## application insights without collector
+azure-monitor-opentelemetry==1.6.4

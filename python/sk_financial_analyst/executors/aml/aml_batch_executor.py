@@ -16,6 +16,8 @@ from azure.ai.ml.dsl import pipeline
 from azure.ai.ml.entities import Environment
 from azure.ai.ml.parallel import RunFunction, parallel_run_function
 from azure.identity import DefaultAzureCredential
+from azure.monitor.opentelemetry import configure_azure_monitor
+from common.configurator import otel
 from dotenv import load_dotenv
 
 
@@ -118,7 +120,12 @@ def main():
     """
     args = parse_args()
     load_dotenv(override=True)
-
+    # if application connection string is available, directly use azure monitor connection
+    # else collector is used.
+    if (os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING")) is not None:
+        configure_azure_monitor(connection_string=os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING"))
+    else:
+        otel.config_otel()
     subscription_id = os.getenv("AZURE_SUBSCRIPTION_ID")
     resource_group = os.getenv("AML_RESOURCE_GROUP_NAME")
     workspace = os.getenv("AML_WORKSPACE_NAME")
