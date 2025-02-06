@@ -1,7 +1,7 @@
 import argparse
 import os
 
-from azure.ai.evaluation import AzureOpenAIModelConfiguration, GroundednessEvaluator, evaluate
+from azure.ai.evaluation import AzureOpenAIModelConfiguration, GroundednessEvaluator, RetrievalEvaluator, evaluate
 from financial_metrics_evaluator import FinancialMetricsEvaluator
 
 
@@ -18,6 +18,7 @@ def main(financial_analisys_report: str, gt_report: str):
     )
 
     groundedness_eval = GroundednessEvaluator(model_config=model_config)
+    retrieval_eval = RetrievalEvaluator(model_config=model_config)
     json_evaluator = FinancialMetricsEvaluator(gt_report)
 
     evaluators_config = {
@@ -28,7 +29,14 @@ def main(financial_analisys_report: str, gt_report: str):
         },
         "groundedness_eval": {
             "column_mapping": {
-                "context": "${data.news_report}",
+                "context": "${data.intermediate_report}",
+                "response": "${data.financial_analysis}",
+            }
+        },
+        "retrieval_eval": {
+            "column_mapping": {
+                "query": "${data.company_name}",
+                "context": "${data.intermediate_report}",
                 "response": "${data.financial_analysis}",
             }
         },
@@ -39,6 +47,7 @@ def main(financial_analisys_report: str, gt_report: str):
         evaluators={
             "json_evaluator": json_evaluator,
             "groundedness_eval": groundedness_eval,
+            "retrieval_eval": retrieval_eval,
         },
         evaluator_config=evaluators_config,
         # Optionally provide your AI Studio project information to track your evaluation results in your Azure AI Studio project
