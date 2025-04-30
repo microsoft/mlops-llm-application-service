@@ -9,7 +9,7 @@ import sys
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
-from common.configurator import config_reader, otel
+from common.configurator import config_reader
 from opentelemetry import trace
 from opentelemetry.trace import SpanKind
 from sk_financial_analyst.llm_application.financial_health_analysis import FinancialHealthAnalysis
@@ -36,7 +36,7 @@ async def generate_report(config_file, stock_ticker):
     config_data = config_reader.load_yaml(config_file)
 
     logger.info("Otel configuration started..")
-    otel.config_otel()
+
     tracer = trace.get_tracer(__name__)
     logger.info("Otel configuration successful..")
 

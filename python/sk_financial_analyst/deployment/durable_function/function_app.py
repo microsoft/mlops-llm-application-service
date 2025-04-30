@@ -7,6 +7,8 @@ import azure.durable_functions as df
 import azure.functions as func
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
+from azure.monitor.opentelemetry import configure_azure_monitor
+from common.configurator import otel
 from llm_application.financial_health_analysis import FinancialHealthAnalysis
 
 app = df.DFApp(http_auth_level=func.AuthLevel.FUNCTION)
@@ -68,6 +70,11 @@ async def generate_report(stock):
     financial_analyst_model = os.environ.get("FINANCIAL_ANALYST_MODEL_NAME")
     structured_report_generator_model = os.environ.get("REPORT_GENERATOR_MODEL_NAME")
     aoai_api_version = os.environ.get("AOAI_API_VERSION")
+
+    if (os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING")) is not None:
+        configure_azure_monitor()
+    else:
+        otel.config_otel()
 
     credential = DefaultAzureCredential(managed_identity_client_id=managed_identity_client_id)
     aoai_token = credential.get_token(auth_provider_endpoint).token

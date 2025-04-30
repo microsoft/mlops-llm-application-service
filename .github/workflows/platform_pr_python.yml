@@ -39,11 +39,14 @@
             uses: actions/checkout@v3
 
           - name: Check Azure CLI Availability
+            working-directory: python
             run: |
               echo "Current PATH: $PATH"
               which az
               ls -l $(which az) || echo "az not found in the expected directory"
               az --version
+              python -m pip install --upgrade pip
+              pip install --upgrade -r requirements.txt
 
           - name: Azure login
             uses: azure/login@v2
@@ -59,9 +62,11 @@
               NEWS_ANALYST_MODEL_NAME: ${{ vars.NEWS_ANALYST_MODEL_NAME }}
               FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
               REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
+              APPLICATIONINSIGHTS_CONNECTION_STRING: ${{secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}}
             run: |
               echo "Verifying Python Path"
               which python
               echo "Installed Packages:"
+              echo APPLICATIONINSIGHTS_CONNECTION_STRING=${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING}} >> $GITHUB_ENV
               pip list
               python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
