@@ -31,5 +31,3 @@ repos:
       - id: isort
         name: isort-python
         args: ["--profile", "black", --line-length=120]
-
-
