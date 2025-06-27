@@ -19,49 +19,5 @@
 
     jobs:
       build-validation-python:
-        name: Build Validation Python
-        uses: ./.github/workflows/build_python.yml
-
-      run-generate-eval-report-in-container:
-        name: Run generate_eval_report_in_container
-        needs: build-validation-python
-        runs-on: ubuntu-latest
-
-        container:
-          image: llmappcontainerregistry.azurecr.io/devops_container_image:latest
-          credentials:
-            username: ${{ secrets.ACR_USERNAME }}
-            password: ${{ secrets.ACR_PASSWORD }}
-          options: --user root
-
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-
-          - name: Check Azure CLI Availability
-            run: |
-              echo "Current PATH: $PATH"
-              which az
-              ls -l $(which az) || echo "az not found in the expected directory"
-              az --version
-
-          - name: Azure login
-            uses: azure/login@v2
-            with:
-              client-id: ${{ secrets.AZURE_CLIENT_ID }}
-              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-          - name: Run generate_report
-            working-directory: python
-            env:
-              KEY_VAULT_URL: ${{ vars.KEY_VAULT_URL }}
-              NEWS_ANALYST_MODEL_NAME: ${{ vars.NEWS_ANALYST_MODEL_NAME }}
-              FINANCIAL_ANALYST_MODEL_NAME: ${{ vars.FINANCIAL_ANALYST_MODEL_NAME }}
-              REPORT_GENERATOR_MODEL_NAME: ${{ vars.REPORT_GENERATOR_MODEL_NAME }}
-            run: |
-              echo "Verifying Python Path"
-              which python
-              echo "Installed Packages:"
-              pip list
-              python -u -m sk_financial_analyst.executors.single_item_executor --logging_enabled
+        name: Validate Python Code
+        uses: ./.github/workflows/build_validation_python.yml
