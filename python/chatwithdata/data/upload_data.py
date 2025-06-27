@@ -3,13 +3,14 @@ Initialize blob storage with local data.
 
 We assume that this code will be executed just once to prepare a blob container for experiments.
 """
+
 import argparse
 import logging
 import os
 from pathlib import Path
+
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient
-
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +22,7 @@ console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.DEBUG)
 
 # Create a formatter and set it for the console handler
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 console_handler.setFormatter(formatter)
 
 # Add the console handler to the logger
@@ -38,9 +39,7 @@ def upload_data_files(
 ):
 
     account_url = STORAGE_ACCOUNT_URL.format(storage_account_name=storage_account_name)
-    blob_service_client = BlobServiceClient(
-        account_url=account_url, credential=credential
-    )
+    blob_service_client = BlobServiceClient(account_url=account_url, credential=credential)
     blob_container_client = blob_service_client.get_container_client(storage_container)
 
     if not blob_container_client.exists():
@@ -61,13 +60,12 @@ def upload_data_files(
         try:
             logger.info(f"Ready to copy: {str(file)} to {file_name}.")
             with open(file=str(file), mode="rb") as data:
-                blob_container_client.upload_blob(
-                    name=file_name, data=data, overwrite=True
-                )
+                blob_container_client.upload_blob(name=file_name, data=data, overwrite=True)
             logger.info("Done.")
         except Exception as e:
             logger.info(f"Exception uploading file name {file_name}: {e}")
             raise
+
 
 def main():
     """
@@ -97,7 +95,6 @@ def main():
     # Using default Azure credentials assuming that it has all needed permissions
     logger.info("Authenticate code into Azure using default credentials.")
     credential = DefaultAzureCredential()
-
 
     # Create the full document index
     logger.info("Uploading process has been started.")

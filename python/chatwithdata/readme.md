@@ -1,21 +1,21 @@
 # How to Set Up Azure Resources
 Create following three resources in your Azure Resource Group:
 * Azure AI Search
-* Azure Blob Storage 
-* Azure AI Foundry 
+* Azure Blob Storage
+* Azure AI Foundry
 
 
-# 1. Azure AI Search 
+# 1. Azure AI Search
 * Select Identity and enable System Assigned Managed Identity for Azure Search Service.
 
 * Go to Access Control (IAM) assign following role:
-- Search Index Data Contributor  
+- Search Index Data Contributor
 >**Note** Select Managed Identity for your user account.
 
-# 2. Azure Blob Storage 
+# 2. Azure Blob Storage
 * In Access Control (IAM) assign two following Role Permissions:
 
-- Storage Blob Data Contributor 
+- Storage Blob Data Contributor
 > **Note**: Select Managed Identity for the Azure AI Search resource
 
 - Storage Blob Data Contributo
@@ -23,7 +23,7 @@ Create following three resources in your Azure Resource Group:
 
 # 3. Azure AI Foundry
 * In Access Control (IAM) assign:
-- Cognitive Services OpenAI User 
+- Cognitive Services OpenAI User
 > **Note**: Select Managed Identity for the Azure AI Search resource
 
 
@@ -55,11 +55,11 @@ Log in to your Azure account to use your credentials in the code:
 az login -t <your-tenant-id>
 ```
 
-Step 1: Upload data to blob storage 
+Step 1: Upload data to blob storage
 ```bash
 cd python
 
-python -m data.upload_data --storage_name <storage_name> --container_name <container_name> 
+python -m data.upload_data --storage_name <storage_name> --container_name <container_name>
 ```
 
 Step 2: Create Index
